@@ -54,7 +54,6 @@ const DropdownOwner = () => {
             {/* List drawings and writings irrespective of universe */}
             <li className="nav-item">
                 <a className="nav-link" href="drawing.html">{userName}'s Drawings</a>
-                <a className="nav-link" href="writing.html">{userName}'s Writings</a>
             </li>
             <hr />
             {/* Other actions with your profile */}

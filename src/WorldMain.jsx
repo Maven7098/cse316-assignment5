@@ -7,7 +7,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import Dropdown from './Dropdown.jsx'
 // import DropdownGuest from './DropdownGuest.jsx'
-import DropdownOwner from './DropdownOwner.jsx'
+import DropdownWorld from './DropdownWorld.jsx'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')).render(
     {/* Nor can I do without the two div's */}
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <DropdownOwner />
+        <DropdownWorld />
         <div style={{marginTop:"76px"}}>
           <img src='placeholder.png'></img>
           <h1>World Title</h1>

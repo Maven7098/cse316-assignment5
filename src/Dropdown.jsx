@@ -81,10 +81,10 @@ const Dropdown = () => {
                 </ul>
                 {/* Not sure if I need a search button */}
                 {/* Handy, but can also be used for doxxing or other bad faith actions */}
-                {/* <form className="d-flex mt-3" role="search">
-                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form className="d-flex mt-3" role="search">
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-success" type="submit">Search</button>
-                </form> */}
+                </form>
             </div>
             </div>
         </div>
