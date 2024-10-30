@@ -10,16 +10,7 @@ import React from 'react'
 // ------------------------------Click to Open
 // 
 // ------------------------------[Register!]
-// ------------------------------if you are registered
 // ------------------------------[Sign in!]
-// ------------------------------USERMODE BUTTONS
-// ------------------------------[USER NEWS]
-// ------------------------------[LIST CHARACTER]
-// ------------------------------[LIST UNIVERSE] <- May need to study about relationship between universe and character once frontend finishes
-// ------------------------------<br />
-// ------------------------------[LIST ART]
-// ------------------------------[LIST WRITING]
-// ------------------------------[]
 // IF you are not logged in, GUEST mode applies
     // User button is replaced w/ "Sign In" button
     // Sidebar cannot expand as User button is required for sidebar activation
@@ -47,18 +38,28 @@ const DropdownGuest = () => {
                 {/* Register */}
                 <form>
                     {/* Name input */}
-                    <label for="inputName" className="col-sm-2 col-form-label">Username</label><br />
+                    <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
-                    <label for="inputPassword" className="col-sm-2 col-form-label">Password</label><br />
+                    <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     {/* Email button */}
-                    <button className="btn btn-primary">Continue with Email</button>
+                    <label for="inputEmail" className="col-sm-2 col-form-label">Email:</label>
+                    <input type="email" className="form-control" id="inputPassword" /><br />
+                    <button className="btn btn-primary">Register</button>
                 </form>
                 <br />
                 {/* Sign in */}
                 <span style={{marginRight: "16px"}}>Already registered?</span>
-                <button className="btn btn-outline-primary">Sign In</button>
+                <form>
+                    {/* Name input */}
+                    <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
+                    <input type="text" className="form-control" id="inputName" name="inputName" /><br />
+                    {/* Password input */}
+                    <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
+                    <input type="password" className="form-control" id="inputPassword" /><br />
+                    <button className="btn btn-primary">Register</button>
+                </form>
             </div>
             </div>
         </div>

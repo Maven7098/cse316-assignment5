@@ -2,7 +2,6 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import userIcon from './assets/react.svg';
 
 // Dropdown will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
@@ -16,13 +15,12 @@ import userIcon from './assets/react.svg';
 // ------------------------------<br />
 // ------------------------------[USER NEWS]
 // ------------------------------[LIST CHARACTER]
-// ------------------------------[LIST UNIVERSE] <- May need to study about relationship between universe and character once frontend finishes
+// ------------------------------[LIST WORLD]
 // ------------------------------<br />
 // ------------------------------[LIST ART]
 // ------------------------------[LIST WRITING]
 // ------------------------------<br />
 // ------------------------------[PROFILE]
-// ------------------------------[PREFERENCES]
 // ------------------------------[SIGN OUT]
 
 // IF you are not logged in, GUEST mode applies
@@ -32,7 +30,7 @@ import userIcon from './assets/react.svg';
     // User sidebar can be activated by 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
-const Dropdown = () => {
+const Dropdown = ({username, userid}) => {
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
@@ -53,7 +51,9 @@ const Dropdown = () => {
                     {/* Your user icon and name */}
                     <li className="nav-item">
                         <img src={userIcon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
-                        <a aria-current="page" href="#">Marlow58</a>
+                        {/* A USERNAME should be provided, but how could I provide it? */}
+                        {/* As a user is created, a new webpage of USERID should also be created */}
+                        <a aria-current="page" href="#">{username}</a>
                     </li>
                     <hr />
                     {/* List the bulletins/characters/universes */}
@@ -62,7 +62,7 @@ const Dropdown = () => {
                         <a className="nav-link" aria-current="page" href="#">Your Characters</a>
                         {/* This page will not only list the universes you made, but all universes you are currently in */}
                         {/* They will be divided later on */}
-                        <a className="nav-link" aria-current="page" href="#">Your Universes</a>
+                        <a className="nav-link" aria-current="page" href="#">Your Worlds</a>
                     </li>
                     <hr />
                     {/* List drawings and writings irrespective of universe */}
@@ -74,9 +74,8 @@ const Dropdown = () => {
                     {/* Other actions with your profile */}
                     <li className="nav-item">
                         {/* Chose to do 3 for the sake of rule of 3 */}
-                        <a className="dropdown-item" href="#">Settings</a>
                         <a className="dropdown-item" href="#">Profile</a>
-                        <a className="dropdown-item" href="guest.html">Sign out</a>
+                        <a className="dropdown-item" href="#">Sign out</a>
                     </li>
                 </ul>
                 {/* Not sure if I need a search button */}
