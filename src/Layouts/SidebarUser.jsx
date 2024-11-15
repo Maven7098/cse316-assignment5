@@ -1,4 +1,3 @@
-// import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -16,17 +15,12 @@ import userIcon from './assets/ikgefu-1024x1024.jpg';
 // [USER NEWS]
 // [LIST CHARACTER]
 // [LIST UNIVERSE] <- May need to study about relationship between universe and character once frontend finishes
-// <br />
-// [LIST ART]
-// [LIST WRITING]
 // No Profile/Preference/Sign Out features here
 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 // This one would be brighter, also no dropdown but instead a left sidebar, named it just for consistency
-const DropdownOwner = () => {
-  const userName = "Producer.P"
-//   const userIcon = "./assets/ikgefu-1024x1024.jpg"
+const SidebarUser = (selectedUser) => {
     return (
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width: "280px", height: "100vh"}}>
         <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -36,34 +30,39 @@ const DropdownOwner = () => {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-                <img src={userIcon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
-                <a aria-current="page" href="userhome.html">{userName}</a>
+                <img src={selectedUser.usericon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
+                <a aria-current="page" href="userhome.html">{selectedUser.username}</a>
             </li>
             <hr />
             {/* List the bulletins/characters/universes */}
             {/* The userName should be the person you are viewing */}
-            {/*  */}
             <li className="nav-item">
-                <a className="nav-link" aria-current="page" href="bulletin.html">{userName}'s Bulletins</a>
-                <a className="nav-link" aria-current="page" href="character.html">{userName}'s Characters</a>
+                <a className="nav-link" aria-current="page" href="#">{selectedUser.username}'s Bulletins</a>
+                <a className="nav-link" aria-current="page" href="#">{selectedUser.username}'s Characters</a>
                 {/* This page will not only list the universes you made, but all universes you are currently in */}
                 {/* They will be divided later on */}
-                <a className="nav-link" aria-current="page" href="universe.html">{userName}'s Universes</a>
+                <a className="nav-link" aria-current="page" href="#">{selectedUser.username}'s Worlds</a>
             </li>
+            
             <hr />
             {/* List drawings and writings irrespective of universe */}
-            <li className="nav-item">
-                <a className="nav-link" href="drawing.html">{userName}'s Drawings</a>
+            {/* Not thinking of implement at this point: Marked as "BEYOND CSE316" */}
+            {/* <li className="nav-item">
+                <a className="nav-link" href="#">{selectedUser.username}'s Drawings</a>
             </li>
+            <li className="nav-item">
+                <a className="nav-link" href="#">{selectedUser.username}'s Writings</a>
+            </li> */}
             <hr />
             {/* Other actions with your profile */}
-            <li className="nav-item">
-                {/* When viewing other users, only Profile remains, the other 2 options are disabled */}
-                <a className="dropdown-item" href="profile.html">{userName}'s Profile</a>
-            </li>
+            {/* Currently, Profiles do not have extra user data. Marked as "BEYOND CSE316" */}
+            {/* <li className="nav-item">
+                When viewing other users, only Profile remains, the other 2 options are disabled
+                <a className="dropdown-item" href="#">{selectedUser.username}'s Profile</a>
+            </li> */}
         </ul>
     </div>
   )
 }
 
-export default DropdownOwner
+export default SidebarUser

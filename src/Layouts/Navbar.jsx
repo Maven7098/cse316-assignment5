@@ -2,7 +2,13 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
 import userIcon from './assets/react.svg';
+=======
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
 
 // Dropdown will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
@@ -16,13 +22,27 @@ import userIcon from './assets/react.svg';
 // ------------------------------<br />
 // ------------------------------[USER NEWS]
 // ------------------------------[LIST CHARACTER]
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+// ------------------------------[LIST WORLD]
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
 // ------------------------------[LIST UNIVERSE] <- May need to study about relationship between universe and character once frontend finishes
+=======
+// ------------------------------[LIST WORLD]
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
 // ------------------------------<br />
 // ------------------------------[LIST ART]
 // ------------------------------[LIST WRITING]
 // ------------------------------<br />
 // ------------------------------[PROFILE]
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
 // ------------------------------[PREFERENCES]
+=======
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
 // ------------------------------[SIGN OUT]
 
 // IF you are not logged in, GUEST mode applies
@@ -32,7 +52,15 @@ import userIcon from './assets/react.svg';
     // User sidebar can be activated by 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+const Dropdown = ({username, userid}) => {
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
 const Dropdown = () => {
+=======
+const Dropdown = ({username, userid}) => {
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
@@ -53,7 +81,19 @@ const Dropdown = () => {
                     {/* Your user icon and name */}
                     <li className="nav-item">
                         <img src={userIcon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+                        {/* A USERNAME should be provided, but how could I provide it? */}
+                        {/* As a user is created, a new webpage of USERID should also be created */}
+                        <a aria-current="page" href="#">{username}</a>
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
                         <a aria-current="page" href="#">Marlow58</a>
+=======
+                        {/* A USERNAME should be provided, but how could I provide it? */}
+                        {/* As a user is created, a new webpage of USERID should also be created */}
+                        <a aria-current="page" href="#">{username}</a>
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
                     </li>
                     <hr />
                     {/* List the bulletins/characters/universes */}
@@ -62,7 +102,15 @@ const Dropdown = () => {
                         <a className="nav-link" aria-current="page" href="#">Your Characters</a>
                         {/* This page will not only list the universes you made, but all universes you are currently in */}
                         {/* They will be divided later on */}
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+                        <a className="nav-link" aria-current="page" href="#">Your Worlds</a>
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
                         <a className="nav-link" aria-current="page" href="#">Your Universes</a>
+=======
+                        <a className="nav-link" aria-current="page" href="#">Your Worlds</a>
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
                     </li>
                     <hr />
                     {/* List drawings and writings irrespective of universe */}
@@ -74,17 +122,41 @@ const Dropdown = () => {
                     {/* Other actions with your profile */}
                     <li className="nav-item">
                         {/* Chose to do 3 for the sake of rule of 3 */}
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
+                        <a className="dropdown-item" href="#">Profile</a>
+                        <a className="dropdown-item" href="#">Sign out</a>
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
                         <a className="dropdown-item" href="#">Settings</a>
                         <a className="dropdown-item" href="#">Profile</a>
                         <a className="dropdown-item" href="guest.html">Sign out</a>
+=======
+                        <a className="dropdown-item" href="#">Profile</a>
+                        <a className="dropdown-item" href="#">Sign out</a>
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
                     </li>
                 </ul>
                 {/* Not sure if I need a search button */}
                 {/* Handy, but can also be used for doxxing or other bad faith actions */}
+<<<<<<< HEAD:src/Layouts/Navbar.jsx
                 <form className="d-flex mt-3" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-success" type="submit">Search</button>
                 </form>
+=======
+<<<<<<< HEAD:src/Dropdown.jsx
+                {/* <form className="d-flex mt-3" role="search">
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button className="btn btn-success" type="submit">Search</button>
+                </form> */}
+=======
+                <form className="d-flex mt-3" role="search">
+                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <button className="btn btn-success" type="submit">Search</button>
+                </form>
+>>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/Dropdown.jsx
+>>>>>>> latest:src/Dropdown.jsx
             </div>
             </div>
         </div>

@@ -3,8 +3,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // This part is blank at the moment.
-// import worldName from 'Producer.P';
-import worldIcon from './assets/ikgefu-1024x1024.jpg';
 
 // The design of this page will be
 // TOP DROPDOWN - For you
@@ -24,14 +22,12 @@ import worldIcon from './assets/ikgefu-1024x1024.jpg';
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 // This one would be brighter, also no dropdown but instead a left sidebar, named it just for consistency
-const DropdownWorld = () => {
-  const worldName = "The Pseudoartist Clan"
-//   const userIcon = "./assets/ikgefu-1024x1024.jpg"
+const DropdownWorld = ({worldName, worldIcon}) => {
     return (
   <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width: "280px", height: "100vh"}}>
     <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <svg className="bi pe-none me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
-        <span className="fs-4">User</span>
+        <span className="fs-4">World</span>
     </a>
     <hr />
     <ul className="nav nav-pills flex-column mb-auto">

@@ -1,0 +1,31 @@
+import React from 'react';
+import SidebarUser from "./SidebarUser.jsx";
+import Navbar from "./Navbar.jsx";
+import NavbarGuest from "./NavbarGuest.jsx";
+import UserBulletin from "../User/UserBulletin.jsx";
+import UserCharacters from "../User/UserCharacters.jsx";
+import UserWorlds from "../User/UserWorlds.jsx";
+
+function UserLayoutRoutes({selectedUser,currentUser}) {
+    return ({
+        <>
+            <nav>
+                // 
+                (currentUser === undefined ? <NavbarGuest /> :<Navbar />)
+            </nav>{/*This is outside the routes component on purpose read below*/}
+            <Routes>
+                <Route index element={<Home />} />
+                <Route path="/Dashboard" element={<Dashboard />} />
+                <Route path="/Login" element={<Login />} />
+                <Route path="/Price" element={<Price />} />
+                <Route path="/Profile/:username" element={<Profile />} />
+                <Route path="/*" element={<ErrorPage />} />
+            </Routes>
+            <footer>
+                <Footer />
+            </footer>
+        </>
+    })
+}
+
+export default UserLayoutRoutes;

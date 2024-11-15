@@ -1,0 +1,47 @@
+Page list:
+
+// ROOT PAGE - I have yet to decide names for those.
+Root
+Search
+
+// SELECTED USER PAGE
+
+User/Main
+UserMain.jsx - Used as a frame for all other pages in the Selected User category.
+Contains a sidebar for the selected user.
+(Not sure if I should use React Router DOM)
+
+User/Bulletin
+UserBulletins.jsx - Generate a bulletin list
+UserGetBulletin.jsx - Modal to see bulletin
+UserAddBulletin.jsx - Modal to add bulletin
+
+User/Characters
+UserCharacters.jsx - Generate a character list
+UserCharacterData.jsx - Generate a character modal for the chosen character
+
+User/Worlds
+UserWorlds.jsx - Generate a world list. This world list can send you to the world directly.
+UserWorldAdd.jsx - Create a world!
+
+// SELECTED WORLD
+
+World/Main
+WorldMain.jsx - Used as a frame for all other pages in the Selected World category.
+Contains a sidebar for the selected world.
+(Not sure if I should use React Router DOM)
+
+World/Bulletin
+WorldBulletins.jsx - Generate a bulletin list
+WorldGetBulletin.jsx - Modal to see bulletin
+WorldAddBulletin.jsx - Modal to add bulletin
+
+World/Characters
+WorldCharacters.jsx - Generate a character list
+WorldCharacterData.jsx - Generate a character modal for the chosen character
+WorldCharacterAdd.jsx - Create a character!
+
+World/Members <- Missing
+WorldMembers.jsx - Generate a member list
+
+Help page - Not now...
