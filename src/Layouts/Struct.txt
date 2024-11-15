@@ -1,0 +1,32 @@
+[B] - Beyond CSE316. Do not implement any value with this prefix.
+
+User should hold the following:
+UserID
+UserName
+UserPasswd
+UserIcon
+UserEmail
+UserBulletins
+UserWorlds
+UserCharacters: Can be caught by UserWorlds -> Characters WHERE CharacterOwner === User
+[B]UserLoginDate
+[B]UserAccountSetDate
+
+World should hold the following:
+WorldID
+WorldName
+WorldIcon
+WorldStory
+
+Character should hold the following:
+CharacterID
+ChatacterName
+CharacterWorld
+CharacterCreator
+[B]CharacterLink - can only be linked to one 
+[B]CharacterOwner - Current owner of the character which may or may not be the creator
+[B]CharacterOwnerLog - Log of character trade acts
+
+Characters being unable to be used in multiple worlds is a design choice.
+Using characters to be used in multiple worlds is not a Beyond CSE316 requirement.
+(Not supported, in other words.)
