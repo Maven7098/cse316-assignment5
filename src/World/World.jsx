@@ -1,20 +1,20 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Dropdown from './Dropdown.jsx'
-// import DropdownGuest from './DropdownGuest.jsx'
-import DropdownWorld from './DropdownWorld.jsx'
+import Navbar from './Navbar.jsx'
+// import NavbarGuest from './NavbarGuest.jsx'
+import NavbarWorld from './NavbarWorld.jsx'
 import './index.css'
 import AddUniverse from './AddUniverse.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Dropdown />
-    {/* <DropdownGuest /> */}
-    {/* Unfortunately, we cannot put Index as a child of DropdownOwner */}
+    <Navbar />
+    {/* <NavbarGuest /> */}
+    {/* Unfortunately, we cannot put Index as a child of SidebarUser */}
     {/* Nor can I do without the two div's */}
     <div className="container-fluid">
       <div className="row flex-nowrap">
-        <DropdownWorld />
+        <NavbarWorld />
         <AddUniverse />
       </div>
     </div>

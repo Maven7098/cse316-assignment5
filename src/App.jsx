@@ -5,7 +5,7 @@ import RootPageRoutes from "./Layouts/RootPageRoutes";
 // Has a user sidebar
 import UserLayoutRoutes from "./Layouts/UserLayoutRoutes";
 // Has a world sidebar
-import UserLayoutRoutes from "./Layouts/WorldLayoutRoutes";
+import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes";
 
 function App() {
     return (

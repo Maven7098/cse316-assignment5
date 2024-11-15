@@ -4,9 +4,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 // The design of this page will be
-// TOP DROPDOWN - For you
-// MIDDLE DROPDOWN - For others
-// The second dropdown is about accessing the user of a character, if you are visiting someone else's character.
+// TOP Navbar - For you
+// MIDDLE Navbar - For others
+// The second Navbar is about accessing the user of a character, if you are visiting someone else's character.
 // Maybe the world version could be added, but only if this project has progressed to a sufficient point
 // USER VERSION
 // Type:HELP <- Other types include WORLD and HELP. Username is given
@@ -18,8 +18,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
-// This one would be brighter, also no dropdown but instead a left sidebar, named it just for consistency
-const DropdownHelp = () => {
+// This one would be brighter, also no Navbar but instead a left sidebar, named it just for consistency
+const NavbarHelp = () => {
     return (
   <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width: "280px", height: "100vh"}}>
     <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -53,4 +53,4 @@ const DropdownHelp = () => {
   )
 }
 
-export default DropdownHelp;
+export default NavbarHelp;

@@ -6,8 +6,8 @@ import UserCharacterData from './UserCharacterData.jsx'
 
 const UserCharacters = ({currentUser, selectedUser}) => {
   return (
-    // <DropdownGuest />
-    // Unfortunately, we cannot put Index as a child of DropdownOwner
+    // <NavbarGuest />
+    // Unfortunately, we cannot put Index as a child of SidebarUser
     // Nor can I do without the two div's
     <>
         <SidebarUser user={selectedUser} />

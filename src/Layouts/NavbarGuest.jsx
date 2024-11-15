@@ -5,15 +5,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import React from 'react'
 
-// Dropdown will be available starting "MEDIUM" screen size (as stated in Bootstrap)
+// Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
 // ------------------------------Click to Open
 // 
 // ------------------------------[Register!]
-<<<<<<< HEAD:src/Layouts/NavbarGuest.jsx
 // ------------------------------[Sign in!]
-=======
-<<<<<<< HEAD:src/DropdownGuest.jsx
 // ------------------------------if you are registered
 // ------------------------------[Sign in!]
 // ------------------------------USERMODE BUTTONS
@@ -24,10 +21,7 @@ import React from 'react'
 // ------------------------------[LIST ART]
 // ------------------------------[LIST WRITING]
 // ------------------------------[]
-=======
 // ------------------------------[Sign in!]
->>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/DropdownGuest.jsx
->>>>>>> latest:src/DropdownGuest.jsx
 // IF you are not logged in, GUEST mode applies
     // User button is replaced w/ "Sign In" button
     // Sidebar cannot expand as User button is required for sidebar activation
@@ -35,7 +29,7 @@ import React from 'react'
     // User sidebar can be activated by 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
-const DropdownGuest = () => {
+const NavbarGuest = () => {
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
@@ -55,24 +49,17 @@ const DropdownGuest = () => {
                 {/* Register */}
                 <form>
                     {/* Name input */}
-<<<<<<< HEAD:src/Layouts/NavbarGuest.jsx
                     <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
-=======
-<<<<<<< HEAD:src/DropdownGuest.jsx
                     <label for="inputName" className="col-sm-2 col-form-label">Username</label><br />
->>>>>>> latest:src/DropdownGuest.jsx
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
                     <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     {/* Email button */}
-<<<<<<< HEAD:src/Layouts/NavbarGuest.jsx
                     <label for="inputEmail" className="col-sm-2 col-form-label">Email:</label>
                     <input type="email" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
-=======
                     <button className="btn btn-primary">Continue with Email</button>
-=======
                     <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
@@ -82,18 +69,11 @@ const DropdownGuest = () => {
                     <label for="inputEmail" className="col-sm-2 col-form-label">Email:</label>
                     <input type="email" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
->>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/DropdownGuest.jsx
->>>>>>> latest:src/DropdownGuest.jsx
                 </form>
                 <br />
                 {/* Sign in */}
                 <span style={{marginRight: "16px"}}>Already registered?</span>
-<<<<<<< HEAD:src/Layouts/NavbarGuest.jsx
-=======
-<<<<<<< HEAD:src/DropdownGuest.jsx
                 <button className="btn btn-outline-primary">Sign In</button>
-=======
->>>>>>> latest:src/DropdownGuest.jsx
                 <form>
                     {/* Name input */}
                     <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
@@ -103,10 +83,6 @@ const DropdownGuest = () => {
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
                 </form>
-<<<<<<< HEAD:src/Layouts/NavbarGuest.jsx
-=======
->>>>>>> parent of a5f43b3 (Filename renaming to be more coherent, though needs fixing):src/shared/DropdownGuest.jsx
->>>>>>> latest:src/DropdownGuest.jsx
             </div>
             </div>
         </div>
@@ -114,4 +90,4 @@ const DropdownGuest = () => {
   )
 }
 
-export default DropdownGuest
+export default NavbarGuest
