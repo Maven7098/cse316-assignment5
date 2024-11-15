@@ -1,9 +1,8 @@
-// import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import React from 'react'
+import {Link, Outlet} from 'react-router-dom'
 
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
@@ -86,6 +85,7 @@ const NavbarGuest = () => {
             </div>
             </div>
         </div>
+        <Outlet />
     </nav>
   )
 }

@@ -68,6 +68,13 @@ const SidebarUser = (selectedUser) => {
                 <a className="Navbar-item" href="#">{selectedUser.userName}'s Profile</a>
             </li> */}
         </ul>
+        <div className="container-fluid">
+        <div className="row flex-nowrap">
+            (currentUser === undefined ? <NavbarGuest /> : <Navbar user={currentUser} />)
+            {/* This is where the rest of the content goes into */}
+            <Outlet />
+        </div>
+        </div>
     </div>
   )
 }

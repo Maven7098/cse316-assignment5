@@ -1,6 +1,6 @@
 import React from 'react';
 import SidebarUser from "./SidebarUser.jsx";
-import UserBulletin from "../User/UserBulletin.jsx";
+import UserBulletins from "../User/UserBulletins.jsx";
 import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
 import {Routes, Route, BrowserRouter} from 'react-router-dom'

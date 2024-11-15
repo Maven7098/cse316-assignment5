@@ -1,23 +1,34 @@
 import React from 'react'
-import { Outlet, Link, useNavigate, useParams,
-    RouterProvider, createBrowserRouter } from "react-router-dom"
-import Navbar from "./Navbar.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "../Layouts/Navbar.jsx";
 import NavbarGuest from "./NavbarGuest.jsx";
+import UserMain from '../User/UserMain.jsx';
+import UserBulletins from "../User/UserBulletins.jsx";
+import UserCharacters from "../User/UserCharacters.jsx";
+import UserWorlds from "../User/UserWorlds.jsx";
+import ErrorPage from "../ErrorPage.jsx"
 
-const RootPageRoutes = ({currentUser}) => {
+function RootPageRoutes ({userId}){
+  console.log(userId);
   return (
     <>
-    <nav>
-        ({currentUser} === undefined ? <NavbarGuest /> :<Navbar />)
-    </nav>
-    <Routes>
-        <Route index element={<Home />} />
-        <Route path={`/${currentUser.userId}`} element={<Dashboard />} />
-        <Route path={`/${currentUser.userId}/bulletins`} element={<UserBulletin selectedUser={currentUser} />} />
-        <Route path={`/${currentUser.userId}/characters`} element={<UserCharacters selectedUser={currentUser} />} />
-        <Route path={`/${currentUser.userId}/worlds`} element={<UserWorlds selectedUser={currentUser} currentUser={currentUser} />} />
-        <Route path="/*" element={<ErrorPage />} />
-    </Routes>
+      <nav>
+          (currentUser === undefined ? <NavbarGuest /> :<Navbar />)
+      </nav>
+      // IF current user is undefined
+      (!({userId} == undefined) && {
+      <Routes>
+        <Route path="/" element={<Navbar />}>
+          {/* <Route index element={<Home />} /> */}
+          <Route path={`/${userId}`} element={<UserMain />} />
+          <Route path={`/${userId}/bulletins`} element={<UserBulletins />} />
+          <Route path={`/${userId}/characters`} element={<UserCharacters />} />
+          <Route path={`/${userId}/worlds`} element={<UserWorlds />} />
+          <Route path="/*" element={<ErrorPage />} />
+        
+        </Route>
+      </Routes>
+      })
     </>
   )
 }
