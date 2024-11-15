@@ -38,7 +38,7 @@ const NavbarGuest = () => {
             <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
             <div className="offcanvas-header">
                 <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel">Your Profile</h5>
                 <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -48,24 +48,24 @@ const NavbarGuest = () => {
                 {/* Register */}
                 <form>
                     {/* Name input */}
-                    <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
-                    <label for="inputName" className="col-sm-2 col-form-label">Username</label><br />
+                    <label htmlFor="inputName" className="col-sm-2 col-form-label">Username:</label>
+                    <label htmlFor="inputName" className="col-sm-2 col-form-label">Username</label><br />
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
-                    <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
+                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password:</label>
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     {/* Email button */}
-                    <label for="inputEmail" className="col-sm-2 col-form-label">Email:</label>
+                    <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email:</label>
                     <input type="email" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
                     <button className="btn btn-primary">Continue with Email</button>
-                    <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
+                    <label htmlFor="inputName" className="col-sm-2 col-form-label">Username:</label>
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
-                    <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
+                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password:</label>
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     {/* Email button */}
-                    <label for="inputEmail" className="col-sm-2 col-form-label">Email:</label>
+                    <label htmlFor="inputEmail" className="col-sm-2 col-form-label">Email:</label>
                     <input type="email" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
                 </form>
@@ -75,10 +75,10 @@ const NavbarGuest = () => {
                 <button className="btn btn-outline-primary">Sign In</button>
                 <form>
                     {/* Name input */}
-                    <label for="inputName" className="col-sm-2 col-form-label">Username:</label>
+                    <label htmlFor="inputName" className="col-sm-2 col-form-label">Username:</label>
                     <input type="text" className="form-control" id="inputName" name="inputName" /><br />
                     {/* Password input */}
-                    <label for="inputPassword" className="col-sm-2 col-form-label">Password:</label>
+                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password:</label>
                     <input type="password" className="form-control" id="inputPassword" /><br />
                     <button className="btn btn-primary">Register</button>
                 </form>

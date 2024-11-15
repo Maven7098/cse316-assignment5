@@ -20,10 +20,10 @@ const testUser = {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "*",
     // I MUST pass this object elsewhere
     // since the Add World part requires to check if the selectedUser === currentUser
-    element: <RootPageRoutes currentUser={testUser.userId} />,
+    element: <RootPageRoutes currentUser={testUser} />,
   },
 ]);
 

@@ -4,7 +4,7 @@ import React from 'react'
 // import SidebarUser from "../Layouts/SidebarUser.jsx"
 import UserCharacterData from './UserCharacterData.jsx'
 
-const UserCharacters = ({selectedUser}) => {
+const UserCharacters = (selectedUser) => {
   return (
     // <NavbarGuest />
     // Unfortunately, we cannot put Index as a child of SidebarUser

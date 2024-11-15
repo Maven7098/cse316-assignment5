@@ -2,7 +2,7 @@ import React from 'react'
 import UserCharacters from './UserCharacters'
 import UserWorlds from './UserWorlds'
 
-const UserMain = ({selectedUser}) => {
+const UserMain = (selectedUser) => {
     JSON
   return (
     <div>

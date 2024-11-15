@@ -8,22 +8,22 @@ import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
 import ErrorPage from "../ErrorPage.jsx"
 
-function RootPageRoutes ({userId}){
-  console.log(userId);
+function RootPageRoutes (currentUser){
+  console.log(currentUser);
   return (
     <>
       <nav>
           (currentUser === undefined ? <NavbarGuest /> :<Navbar />)
       </nav>
       // IF current user is undefined
-      (!({userId} == undefined) && {
+      (!(currentUser == undefined) && {
       <Routes>
         <Route path="/" element={<Navbar />}>
           {/* <Route index element={<Home />} /> */}
-          <Route path={`/${userId}`} element={<UserMain />} />
-          <Route path={`/${userId}/bulletins`} element={<UserBulletins />} />
-          <Route path={`/${userId}/characters`} element={<UserCharacters />} />
-          <Route path={`/${userId}/worlds`} element={<UserWorlds />} />
+          <Route path={`/${currentUser.userId}`} element={<UserMain />} />
+          <Route path={`/${currentUser.userId}/bulletins`} element={<UserBulletins />} />
+          <Route path={`/${currentUser.userId}/characters`} element={<UserCharacters />} />
+          <Route path={`/${currentUser.userId}/worlds`} element={<UserWorlds />} />
           <Route path="/*" element={<ErrorPage />} />
         
         </Route>
