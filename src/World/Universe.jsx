@@ -1,5 +1,5 @@
 import React from 'react'
-import assets from "./assets/producer.p_world.json"
+import assets from "../assets/producer.p_world.json"
 // List recent characters
 // This should accept isOwner as prop
 // isOwner is a boolean value, is true if this function is invoked within a webpage of an owner
