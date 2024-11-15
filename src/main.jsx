@@ -1,27 +1,34 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import Dropdown from './shared/Navbar.jsx'
-// import DropdownGuest from './DropdownGuest.jsx'
-import SidebarOwner from './shared/SidebarOwner.jsx'
-import Index from './Index.jsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import "./index.css";
+import RootPageRoutes from "./Layouts/RootPageRoutes.jsx";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Dropdown />
-    {/* <DropdownGuest /> */}
-    {/* Unfortunately, we cannot put Index as a child of DropdownOwner */}
-    {/* Nor can I do without the two div's */}
-    <div className="container-fluid">
-      <div className="row flex-nowrap">
-        <SidebarOwner />
-        <div style={{display:"flex", flexDirection:"column", flex: "1 1 auto"}}>
-          <div className="column" style={{flex:"1 1 auto"}}>
-            <a className="btn btn-primary" role="button" href='charadd.html' style={{display:"flex", marginTop:"78px"}}>Add New Character</a>
-          </div>
-          <Index Index={{username: "Producer.P"}} />
-        </div>
-      </div>
-    </div>
-  </StrictMode>,
-)
+const testUser = {
+  userId: 0,
+  userName: "Marlow58",
+  userPasswd: "s0mp0n9u1n",
+  userIcon: "./assets/react.svg",
+  userEmail: "marlow58.pseudoartist.com",
+  userBulletins: "",
+  userWorlds: "",
+  userCharacters: ""
+};
+
+const router = createBrowserRouter([
+  {
+    path: "*",
+    // I MUST pass this object elsewhere
+    // since the Add World part requires to check if the selectedUser === currentUser
+    element: <RootPageRoutes currentUser={testUser} />,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

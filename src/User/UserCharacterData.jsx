@@ -2,7 +2,7 @@ import React from 'react'
 // TODO: Replace this with the back-end data
 import assets from '../assets/producer.p.json'
 
-const UserCharacterData = (user) => {
+const UserCharacterData = (selectedUser) => {
     // TODO: Back-end data
     // const [assets, setAssets] = useState([]);
     // useEffect(() => {
