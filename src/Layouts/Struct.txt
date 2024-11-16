@@ -37,13 +37,17 @@ Using Characters to be used in multiple worlds is not a Beyond CSE316 requiremen
 Not sure if I should have this structure for the posts/messages as well
 (they share the same structure)
 messageId
+messageTitle
 messageReplyId
 messageSenderId
 messageWorldId
+messageContent
 
 messageReplyId - what message did this message reply to? (messageId)
 messageSenderId - what character was used to send this message? (characterId)
 messageWorldId - at which world the message was sent? (worldId)
 
 postId
+postTitle
+postContent
 postUserId

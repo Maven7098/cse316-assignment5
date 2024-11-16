@@ -3,7 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import {Outlet, Link} from "react-router-dom";
-import "../index.css"
+// import "../index.css"
 
 // The design of this page will be
 // TOP Navbar - For you
@@ -24,7 +24,7 @@ import "../index.css"
 
 const SidebarUser = (selectedUser, render) => {
     return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{height:"100%", float:"left"}}>
+    <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
         <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg className="bi pe-none me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
             <span className="fs-4">User</span>
