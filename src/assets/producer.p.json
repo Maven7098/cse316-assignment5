@@ -1,44 +1,50 @@
 [
     {
-        "characterID": 1,
+        "characterId": 1,
         "characterName": "랑이",
         "characterOwner": "Producer.P",
         "characterStory": "랑이. Original character design copyrighted by Seed Novel. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/1544251087604-1024x1024.png"
     },
     {
-        "characterID": 2,
+        "characterId": 2,
         "characterName": "FLUvirus",
         "characterOwner": "Producer.P",
         "characterStory": "FLUvirus. Original character design by FLUvirus. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/1544336214182-1024x1024.png"
     },
     {
-        "characterID": 3,
+        "characterId": 3,
         "characterName": "Naru Eun",
         "characterOwner": "Producer.P",
         "characterStory": "Naru Eun. Original character designed by Naru. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/kjursdgf-1024x1024.png"
     },
     {
-        "characterID": 4,
+        "characterId": 4,
         "characterName": "JiRy",
         "characterOwner": "Producer.P",
         "characterStory": "Original character designed by JiRy. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/jiry-guyo_simple-1024x1024.jpg"
     },
     {
-        "characterID": 5,
+        "characterId": 5,
         "characterName": "Ariel",
         "characterOwner": "Producer.P",
         "characterStory": "Ariel. Original character designed by Ariel. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/Ariel-eyesClosed-1024x1024.png"
     },
     {
-        "characterID": 6,
+        "characterId": 6,
         "characterName": "Hoppo",
         "characterOwner": "Producer.P",
         "characterStory": "Hoppo. Original character designed by Hoppo. Image designed by Producer.P @ The Pseudoartist Clan.",
+        "characterWorld": "The Pseudoartist Clan",
         "characterImg": "src/assets/segsrg-1024x1024.jpg"
     }
 ]

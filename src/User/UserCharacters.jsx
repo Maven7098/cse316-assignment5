@@ -25,15 +25,35 @@ const UserCharacters = (selectedUser) => {
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
             {assets.map((char) => (
                 // This consists of a character frame
-                <div class="grid-member card" style={{width: "18rem"}}>
-                    <img src={char.characterImg} class="card-img-top" alt={char.characterName}></img>
-                    <div class="card-body">
-                        <h5 class="card-title">{char.characterName}</h5>
-                        <p class="card-text">{char.characterStory}</p>
+                <div className="grid-member card" style={{width: "18rem"}}>
+                    <img src={char.characterImg} className="card-img-top" alt={char.characterName}></img>
+                    <div className="card-body">
+                        <h5 className="card-title">{char.characterName}</h5>
+                        <p className="card-text">{char.characterStory}</p>
                         {/* Upon clicking this button, the user will be sent to a world */}
-                        <Link class="btn btn-primary"><i class="bi bi-house"></i>{char.characterWorld}</Link>
+                        <Link className="btn btn-primary"><i className="bi bi-house"></i>{char.characterWorld}</Link>
                         {/* Upon clicking this button, a modal will pop up */}
-                        <a href="#" class="btn btn-primary">More...</a>
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#characterModal${char.characterId}`}>More...</button>
+                    </div>
+
+                    <div className="card-modal">
+                      <div className="modal fade" id={`characterModal${char.characterId}`} tabIndex="-1" aria-labelledby="characterModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h1 className="modal-title fs-5" id="characterModalLabel">{char.characterName}</h1>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                              <img src={char.characterImg} className="card-img-top" alt={char.characterName}></img>
+                              <p>{char.characterStory}</p>
+                            </div>
+                            <div className="modal-footer">
+                              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
             ))}
