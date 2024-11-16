@@ -20,10 +20,10 @@ function RootPageRoutes (currentUser){
             <Routes>
         <Route path="/" element={<Navbar currentUser={currentUser} />}>
           {/* <Route index element={<Home />} /> */}
-          <Route path={`/:userId`} element={<UserMain selectedUser={currentUser} />} />
-          <Route path={`/:userId/bulletins`} element={<UserBulletins selectedUser={currentUser} />} />
-          <Route path={`/:userId/characters`} element={<UserCharacters selectedUser={currentUser} />} />
-          <Route path={`/:userId/worlds`} element={<UserWorlds selectedUser={currentUser} />} />
+          <Route path={`users/:userId`} element={<UserMain selectedUser={currentUser} />} />
+          <Route path={`users/:userId/bulletins`} element={<UserBulletins selectedUser={currentUser} />} />
+          <Route path={`users/:userId/characters`} element={<UserCharacters selectedUser={currentUser} />} />
+          <Route path={`users/:userId/worlds`} element={<UserWorlds selectedUser={currentUser} />} />
           <Route path="/*" element={<ErrorPage />} />
         </Route>
       </Routes>

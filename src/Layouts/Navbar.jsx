@@ -75,20 +75,20 @@ const Navbar = (currentUser) => {
                             <img src={currentUser.userIcon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
                             {/* A USERNAME should be provided, but how could I provide it? */}
                             {/* As a user is created, a new webpage of USERID should also be created */}
-                            <Link aria-current="page" to={`${currentUser.userId}`}>{currentUser.userName}</Link>
+                            <Link aria-current="page" to={`users/${currentUser.userId}`}>{currentUser.userName}</Link>
                         </li>
                         <hr />
                         {/* List the bulletins/characters/universes */}
                         <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/bulletins`}>Your Bulletins</Link>
-                            <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/characters`}>Your Characters</Link>
-                            <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/worlds`}>Your Worlds</Link>
+                            <Link className="nav-link" aria-current="page" to={`users/${currentUser.userId}/bulletins`}>Your Bulletins</Link>
+                            <Link className="nav-link" aria-current="page" to={`users/${currentUser.userId}/characters`}>Your Characters</Link>
+                            <Link className="nav-link" aria-current="page" to={`users/${currentUser.userId}/worlds`}>Your Worlds</Link>
                         </li>
                         <hr />
                         {/* Other actions with your profile */}
                         <li className="nav-item">
                             {/* Chose to do 3 for the sake of rule of 3 */}
-                            <Link className="Navbar-item" to={`${currentUser.userId}/profile`}>Profile</Link>
+                            <Link className="Navbar-item" to={`users/${currentUser.userId}/profile`}>Profile</Link>
                             <br />
                             <Link className="Navbar-item" to={`/`}>Sign out</Link>
                         </li>

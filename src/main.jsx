@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import RootPageRoutes from "./Layouts/RootPageRoutes";
 import UserLayoutRoutes from "./Layouts/UserLayoutRoutes.jsx";
+// import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes.jsx";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
         path: ":userId",
         element: <UserLayoutRoutes currentUser={testUser} />,
       },
+      // {
+      //   path: ":worldId",
+      //   element: <WorldLayoutRoutes currentUser={testUser} />
+      // }
     ],
   },
 ]);
