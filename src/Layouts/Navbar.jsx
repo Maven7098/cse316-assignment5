@@ -1,4 +1,4 @@
-// import React from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -28,7 +28,22 @@ import {Link, Outlet} from 'react-router-dom'
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 
 const Navbar = (currentUser) => {
+    // This part is rendered BEFORE React Router and is not registering the correct user.
+    console.log("Who are you? "+ currentUser);
+
+    currentUser = {
+        userId: 0,
+        userName: "Marlow58",
+        userPasswd: "s0mp0n9u1n",
+        userIcon: "../assets/react.svg",
+        userEmail: "marlow58.pseudoartist.com",
+        userBulletins: "",
+        userWorlds: "",
+        userCharacters: ""
+      };
+
   return (
+    <>
     <nav className="navbar navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
             {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
@@ -66,7 +81,7 @@ const Navbar = (currentUser) => {
                         {/* List the bulletins/characters/universes */}
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/bulletins`}>Your Bulletins</Link>
-                            <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/character`}>Your Characters</Link>
+                            <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/characters`}>Your Characters</Link>
                             <Link className="nav-link" aria-current="page" to={`${currentUser.userId}/worlds`}>Your Worlds</Link>
                         </li>
                         <hr />
@@ -74,15 +89,18 @@ const Navbar = (currentUser) => {
                         <li className="nav-item">
                             {/* Chose to do 3 for the sake of rule of 3 */}
                             <Link className="Navbar-item" to={`${currentUser.userId}/profile`}>Profile</Link>
-                            <Link className="Navbar-item" to={`${currentUser.userId}`}>Sign out</Link>
+                            <br />
+                            <Link className="Navbar-item" to={`/`}>Sign out</Link>
                         </li>
                     </ul>
                 </div>
                 </div>
             </div>
         </div>
-        <Outlet />
     </nav>
+    
+    <Outlet />
+    </>
   )
 }
 

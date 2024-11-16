@@ -15,7 +15,7 @@ const UserCharacterData = (selectedUser) => {
     <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
     {assets.map((char) => (
         // This consists of a character frame
-        <div class="grid-member card" style="width: 18rem;">
+        <div class="grid-member card" style={{width: "18rem"}}>
             <img src={char.characterImg} class="card-img-top" alt={char.characterName}></img>
             <div class="card-body">
                 <h5 class="card-title">{char.characterName}</h5>

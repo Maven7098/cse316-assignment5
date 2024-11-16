@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import RootPageRoutes from "./Layouts/RootPageRoutes";
+import UserLayoutRoutes from "./Layouts/UserLayoutRoutes.jsx";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import "./index.css";
-import RootPageRoutes from "./Layouts/RootPageRoutes.jsx";
 
 const testUser = {
   userId: 0,
@@ -18,12 +18,23 @@ const testUser = {
   userCharacters: ""
 };
 
+// const [currentUser, setCurrentUser] = React.useState(testUser);
+// TODO: User should be undefined
+// const [currentUser, setCurrentUser] = useState(undefined);
+
+
 const router = createBrowserRouter([
   {
     path: "*",
     // I MUST pass this object elsewhere
     // since the Add World part requires to check if the selectedUser === currentUser
     element: <RootPageRoutes currentUser={testUser} />,
+    children: [
+      {
+        path: ":userId",
+        element: <UserLayoutRoutes currentUser={testUser} />,
+      },
+    ],
   },
 ]);
 

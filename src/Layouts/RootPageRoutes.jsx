@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import Navbar from "../Layouts/Navbar.jsx";
 import NavbarGuest from "./NavbarGuest.jsx";
 import UserMain from '../User/UserMain.jsx';
@@ -9,26 +9,25 @@ import UserWorlds from "../User/UserWorlds.jsx";
 import ErrorPage from "../ErrorPage.jsx"
 
 function RootPageRoutes (currentUser){
+  
+  console.log(!(currentUser == undefined));
   console.log(currentUser);
   return (
     <>
       <nav>
-          (currentUser === undefined ? <NavbarGuest /> :<Navbar />)
+          <Navbar />
       </nav>
-      // IF current user is undefined
-      (!(currentUser == undefined) && {
-      <Routes>
-        <Route path="/" element={<Navbar />}>
+            <Routes>
+        <Route path="/" element={<Navbar currentUser={currentUser} />}>
           {/* <Route index element={<Home />} /> */}
-          <Route path={`/${currentUser.userId}`} element={<UserMain />} />
-          <Route path={`/${currentUser.userId}/bulletins`} element={<UserBulletins />} />
-          <Route path={`/${currentUser.userId}/characters`} element={<UserCharacters />} />
-          <Route path={`/${currentUser.userId}/worlds`} element={<UserWorlds />} />
+          <Route path={`/:userId`} element={<UserMain selectedUser={currentUser} />} />
+          <Route path={`/:userId/bulletins`} element={<UserBulletins selectedUser={currentUser} />} />
+          <Route path={`/:userId/characters`} element={<UserCharacters selectedUser={currentUser} />} />
+          <Route path={`/:userId/worlds`} element={<UserWorlds selectedUser={currentUser} />} />
           <Route path="/*" element={<ErrorPage />} />
-        
         </Route>
       </Routes>
-      })
+      <Outlet />
     </>
   )
 }
