@@ -1,32 +1,32 @@
 [B] - Beyond CSE316. Do not implement any value with this prefix.
 
 User should hold the following:
-UserID
-UserName
-UserPasswd
-UserIcon
-UserEmail
-UserBulletins
-UserWorlds
-UserCharacters: Can be caught by UserWorlds -> Characters WHERE CharacterOwner === User
-[B]UserLoginDate
-[B]UserAccountSetDate
+userId
+userName
+userPasswd
+userIcon
+userEmail
+userBulletins
+userWorlds
+userCharacters: Can be caught by userworlds -> characters WHERE characterOwner === user
+[B]userLoginDate
+[B]userAccountSetDate
 
 World should hold the following:
-WorldID
-WorldName
-WorldIcon
-WorldStory
+worldId
+worldName
+worldIcon
+worldStory
 
 Character should hold the following:
-CharacterID
-ChatacterName
-CharacterWorld
-CharacterCreator
-[B]CharacterLink - can only be linked to one 
-[B]CharacterOwner - Current owner of the character which may or may not be the creator
-[B]CharacterOwnerLog - Log of character trade acts
+characterId
+characterName
+characterworld
+characterCreator
+[B]characterLink - can only be linked to one 
+[B]characterOwner - Current owner of the character which may or may not be the creator
+[B]characterOwnerLog - Log of character trade acts
 
 Characters being unable to be used in multiple worlds is a design choice.
-Using characters to be used in multiple worlds is not a Beyond CSE316 requirement.
+Using Characters to be used in multiple worlds is not a Beyond CSE316 requirement.
 (Not supported, in other words.)
