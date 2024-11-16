@@ -39,7 +39,7 @@ const BulletinEditWorld = ({myCharacters}) => {
                         <label htmlFor="characterName" className="col-sm-2 col-form-label">Title</label><br />
                         <input type="text" value={characterName} id="characterName" className="form-control" onChange={onChangeForm} /><br />
                         <label htmlFor="characterName" className="col-sm-2 col-form-label">Send as:</label><br />
-                        <select class="form-select" aria-label="Default select example">
+                        <select className="form-select" aria-label="Default select example">
                             
                         </select>
                         <label htmlFor="characterStory">Message: </label>
