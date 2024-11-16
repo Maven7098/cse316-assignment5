@@ -29,7 +29,7 @@ createRoot(document.getElementById('root')).render(
           <p>World Story</p>
           <a className="btn btn-primary" href="#" role="button">Enter World Chat</a> <br></br>
           <br></br>
-          <a class="btn btn-secondary" href="#" role="button">Add Character to World</a> 
+          <a className="btn btn-secondary" href="#" role="button">Add Character to World</a> 
         </div>
         <h1>Description</h1>
         <p>Dummy text</p>

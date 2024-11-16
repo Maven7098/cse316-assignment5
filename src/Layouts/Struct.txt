@@ -1,32 +1,53 @@
 [B] - Beyond CSE316. Do not implement any value with this prefix.
 
 User should hold the following:
-UserID
-UserName
-UserPasswd
-UserIcon
-UserEmail
-UserBulletins
-UserWorlds
-UserCharacters: Can be caught by UserWorlds -> Characters WHERE CharacterOwner === User
-[B]UserLoginDate
-[B]UserAccountSetDate
+userId
+userName
+userPasswd
+userIcon
+userEmail
+userBulletins
+userWorlds
+userCharacters: 
+[B]userLoginDate
+[B]userAccountSetDate
 
 World should hold the following:
-WorldID
-WorldName
-WorldIcon
-WorldStory
+worldId
+worldName
+worldIcon
+worldStory
+worldCreator - creator of world (userId)
+worldMember - member of world (list of userIds)
+worldMember can be obtained by character.characterWorld === this.worldId THEN GET character.characterCreator
 
 Character should hold the following:
-CharacterID
-ChatacterName
-CharacterWorld
-CharacterCreator
-[B]CharacterLink - can only be linked to one 
-[B]CharacterOwner - Current owner of the character which may or may not be the creator
-[B]CharacterOwnerLog - Log of character trade acts
+characterId
+characterName
+characterWorld - world that character belongs to (worldId)
+characterCreator - creator of character (userId)
+[B]characterLink - can only be linked to one 
+[B]characterOwner - Current owner of the character which may or may not be the creator
+[B]characterOwnerLog - Log of character trade acts
 
 Characters being unable to be used in multiple worlds is a design choice.
-Using characters to be used in multiple worlds is not a Beyond CSE316 requirement.
+Using Characters to be used in multiple worlds is not a Beyond CSE316 requirement.
 (Not supported, in other words.)
+
+Not sure if I should have this structure for the posts/messages as well
+(they share the same structure)
+messageId
+messageTitle
+messageReplyId
+messageSenderId
+messageWorldId
+messageContent
+
+messageReplyId - what message did this message reply to? (messageId)
+messageSenderId - what character was used to send this message? (characterId)
+messageWorldId - at which world the message was sent? (worldId)
+
+postId
+postTitle
+postContent
+postUserId
