@@ -3,15 +3,14 @@ CSE316 Group 3 Team Project<br />
 
 # TODO - Frontend
 Implement Frontend - Global Home<br />
-Implement Frontend - Global > Trending (variation of User > Character screen)<br />
+Implement Frontend - Global > Search<br />
 
+# TODO - Frontend/User
 Implement Frontend - User Home<br />
-// Among User frontends, User > Bulletin is the only one that does not follow the Character screen<br />
-// It instead lists all the text inputs, and only text is allowed.<br />
-Implement Frontend - User > Bulletin<br />
+Implement Frontend - User > Bulletin - Now move to backend<br />
 // The following are variations of the User > Characters screen, with a few modifications<br />
-Implement Frontend - User > Character<br />
-Implement Frontend - User > Worlds - Instead of pulling it from the User/Character JSON file, pull the file from User/Worlds JSON file<br />
+Implement Frontend - User > Character - Now move to backend<br />
+Implement Frontend - User > Worlds - Now move to backend<br />
 User/Worlds file has 3 values - name:[World], img:[image link] and status:[Founder,Admin,Member]<br />
 
 Implement an edit button as a user.<br />
@@ -24,9 +23,13 @@ Implement Frontend - User Modal (image version)<br />
 Implement Frontend - User Modal (text version)<br />
 
 # TODO - Backend
-To be continued after CSE316 midterm...<br />
+Create a design for world and users
 
 # Beyond CSE316
+# Beyond CSE316 - Frontend
+Implement Frontend - Global > Trending (variation of User > Character screen)<br />
+
+# Beyond CSE316 - Frontend/User
 Implement a WYSIWYG editor when adding or editing characters (the MVP will only use a text input w/o markup).<br />
 For this expansion, I chose BSD 3-clause as Quilt also uses this license<br />
 Implement an internal forum for Worlds<br />
