@@ -1,7 +1,7 @@
 import React from 'react'
 // import Navbar from "../Layouts/Navbar.jsx"
 // import NavbarGuest from "../Layouts/NavbarGuest.jsx"
-// import SidebarUser from "../Layouts/SidebarUser.jsx"
+import SidebarUser from "../Layouts/SidebarUser.jsx"
 
 import {Link} from 'react-router-dom'
 
@@ -20,6 +20,7 @@ const UserCharacters = (selectedUser) => {
 
   return (
     <>
+      <SidebarUser selectedUser={selectedUser} />
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>

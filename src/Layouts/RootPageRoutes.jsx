@@ -7,6 +7,7 @@ import UserBulletins from "../User/UserBulletins.jsx";
 import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
 import ErrorPage from "../ErrorPage.jsx"
+import UserLayoutRoutes from './UserLayoutRoutes.jsx';
 
 function RootPageRoutes (currentUser){
   
@@ -14,10 +15,7 @@ function RootPageRoutes (currentUser){
   console.log(currentUser);
   return (
     <>
-      <nav>
-          <Navbar />
-      </nav>
-            <Routes>
+      <Routes>
         <Route path="/" element={<Navbar currentUser={currentUser} />}>
           {/* <Route index element={<Home />} /> */}
           <Route path={`users/:userId`} element={<UserMain selectedUser={currentUser} />} />

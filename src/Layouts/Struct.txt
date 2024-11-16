@@ -8,7 +8,7 @@ userIcon
 userEmail
 userBulletins
 userWorlds
-userCharacters: Can be caught by userworlds -> characters WHERE characterOwner === user
+userCharacters: 
 [B]userLoginDate
 [B]userAccountSetDate
 
@@ -17,12 +17,15 @@ worldId
 worldName
 worldIcon
 worldStory
+worldCreator - creator of world (userId)
+worldMember - member of world (list of userIds)
+worldMember can be obtained by character.characterWorld === this.worldId THEN GET character.characterCreator
 
 Character should hold the following:
 characterId
 characterName
-characterworld
-characterCreator
+characterWorld - world that character belongs to (worldId)
+characterCreator - creator of character (userId)
 [B]characterLink - can only be linked to one 
 [B]characterOwner - Current owner of the character which may or may not be the creator
 [B]characterOwnerLog - Log of character trade acts
@@ -30,3 +33,17 @@ characterCreator
 Characters being unable to be used in multiple worlds is a design choice.
 Using Characters to be used in multiple worlds is not a Beyond CSE316 requirement.
 (Not supported, in other words.)
+
+Not sure if I should have this structure for the posts/messages as well
+(they share the same structure)
+messageId
+messageReplyId
+messageSenderId
+messageWorldId
+
+messageReplyId - what message did this message reply to? (messageId)
+messageSenderId - what character was used to send this message? (characterId)
+messageWorldId - at which world the message was sent? (worldId)
+
+postId
+postUserId

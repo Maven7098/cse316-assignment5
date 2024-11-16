@@ -15,11 +15,11 @@ function UserLayoutRoutes({selectedUser,currentUser}) {
                 <SidebarUser user={selectedUser} />
             </nav>
             <Routes>
-                <Route index element={<Home />} />
-                <Route path={`/${selectedUser.userId}`} element={<Dashboard />} />
-                <Route path={`/${selectedUser.userId}/bulletins`} element={<UserBulletin selectedUser={selectedUser} />} />
-                <Route path={`/${selectedUser.userId}/characters`} element={<UserCharacters selectedUser={selectedUser} />} />
-                <Route path={`/${selectedUser.userId}/worlds`} element={<UserWorlds selectedUser={selectedUser} currentUser={currentUser} />} />
+                {/* <Route index element={<Home />} /> */}
+                <Route path={`users/${selectedUser.userId}`} element={<Dashboard />} />
+                <Route path={`users/${selectedUser.userId}/bulletins`} element={<UserBulletins selectedUser={selectedUser} />} />
+                <Route path={`users/${selectedUser.userId}/characters`} element={<UserCharacters selectedUser={selectedUser} />} />
+                <Route path={`users/${selectedUser.userId}/worlds`} element={<UserWorlds selectedUser={selectedUser} currentUser={currentUser} />} />
                 <Route path="/*" element={<ErrorPage />} />
             </Routes>
             {/* <footer>

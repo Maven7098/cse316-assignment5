@@ -3,10 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import {Outlet, Link} from "react-router-dom";
-
-// This part is blank at the moment.
-// import userName from 'Producer.P';
-// import userIcon from './assets/ikgefu-1024x1024.jpg';
+import "../index.css"
 
 // The design of this page will be
 // TOP Navbar - For you
@@ -25,9 +22,9 @@ import {Outlet, Link} from "react-router-dom";
 // This one would be brighter, also no Navbar but instead a left sidebar, named it just for consistency
 
 
-const SidebarUser = (selectedUser) => {
+const SidebarUser = (selectedUser, render) => {
     return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width: "280px", height: "100vh"}}>
+    <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{height:"100%", float:"left"}}>
         <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg className="bi pe-none me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
             <span className="fs-4">User</span>
@@ -35,7 +32,7 @@ const SidebarUser = (selectedUser) => {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-                <Link to={`/${selectedUser.userId}`}>
+                <Link to={`users/${selectedUser.userId}`}>
                     <img src={selectedUser.userIcon} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
                     <a aria-current="page" href="userhome.html">{selectedUser.userName}</a>
                 </Link>
@@ -44,37 +41,15 @@ const SidebarUser = (selectedUser) => {
             {/* List the bulletins/characters/universes */}
             {/* The userName should be the person you are viewing */}
             <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to={`/${selectedUser.userId}/bulletins`}>{selectedUser.userName}'s Bulletins</Link>
-                <Link className="nav-link" aria-current="page" to={`/${selectedUser.userId}/characters`}>{selectedUser.userName}'s Characters</Link>
+                <Link className="nav-link" aria-current="page" to={`users/${selectedUser.userId}/bulletins`}>{selectedUser.userName}'s Bulletins</Link>
+                <Link className="nav-link" aria-current="page" to={`users/${selectedUser.userId}/characters`}>{selectedUser.userName}'s Characters</Link>
                 {/* This page will not only list the universes you made, but all worlds you are currently in */}
                 {/* They will be divided later on */}
-                <Link className="nav-link" aria-current="page" to={`/${selectedUser.userId}/worlds`}>{selectedUser.userName}'s Worlds</Link>
+                <Link className="nav-link" aria-current="page" to={`users/${selectedUser.userId}/worlds`}>{selectedUser.userName}'s Worlds</Link>
             </li>
             
             <hr />
-            {/* List drawings and writings irrespective of universe */}
-            {/* Not thinking of implement at this point: Marked as "BEYOND CSE316" */}
-            {/* <li className="nav-item">
-                <a className="nav-link" href="#">{selectedUser.userName}'s Drawings</a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link" href="#">{selectedUser.userName}'s Writings</a>
-            </li> */}
-            <hr />
-            {/* Other actions with your profile */}
-            {/* Currently, Profiles do not have extra user data. Marked as "BEYOND CSE316" */}
-            {/* <li className="nav-item">
-                When viewing other users, only Profile remains, the other 2 options are disabled
-                <a className="Navbar-item" href="#">{selectedUser.userName}'s Profile</a>
-            </li> */}
         </ul>
-        <div className="container-fluid">
-        <div className="row flex-nowrap">
-            (currentUser === undefined ? <NavbarGuest /> : <Navbar user={currentUser} />)
-            {/* This is where the rest of the content goes into */}
-            <Outlet />
-        </div>
-        </div>
     </div>
   )
 }
