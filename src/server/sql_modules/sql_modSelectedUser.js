@@ -1,4 +1,4 @@
-function mysql_modUser(con, newUser){
+function mysql_modSelectedUser(con, newUser){
     return new Promise(function(resolve, reject){
     // Modify a user
     // Corresponds to PUT - /users/:id in routerUser.js
@@ -14,4 +14,4 @@ function mysql_modUser(con, newUser){
     });
 })}
 
-export default mysql_modUser;
+export default mysql_modSelectedUser;

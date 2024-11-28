@@ -66,7 +66,7 @@ var con = mysql.createConnection({
 
 // GET - users
 // Get the user list
-router.get('/users', async (req,res)=>{
+routerGuest.get('/users', async (req,res)=>{
     try {
         const result = await mysql_getUsers(con)
         res.send(result)
@@ -79,7 +79,7 @@ router.get('/users', async (req,res)=>{
 });
 
 // Get information about individual user
-router.get('/users/:id', async (req,res)=>{
+routerGuest.get('/users/:id', async (req,res)=>{
     try {
         // Find the facility with the matching ID
         const result = await mysql_getSelectedUser(con, req.params.id);
@@ -101,7 +101,7 @@ router.get('/users/:id', async (req,res)=>{
 
 // GET - world
 // Get the worlds list
-router.get('/worlds', async (req,res)=>{
+routerGuest.get('/worlds', async (req,res)=>{
   try {
       const result = await mysql_getWorlds(con)
       res.send(result)
@@ -111,7 +111,7 @@ router.get('/worlds', async (req,res)=>{
 });
 
 // Get information about individual world
-router.get('/worlds/:id', async (req,res)=>{
+routerGuest.get('/worlds/:id', async (req,res)=>{
   try {
       // Find the facility with the matching ID
       const result = await mysql_getSelectedWorld(con, req.params.id);
@@ -137,7 +137,7 @@ router.get('/worlds/:id', async (req,res)=>{
 // As the list of character Ids are stringified for both, we need to parse them in the front-end whenever you need a list of characters
 
 // Get the selected character
-router.get('/characters/:id', async (req,res)=>{
+routerGuest.get('/characters/:id', async (req,res)=>{
   try {
       // Find the facility with the matching ID
       const result = await mysql_getSelectedCharacter(con, req.params.id);
@@ -159,7 +159,7 @@ router.get('/characters/:id', async (req,res)=>{
 // GET - message
 
 // Get the list of posts from a selected user
-router.get('/users/:id/posts', async (req,res)=>{
+routerGuest.get('/users/:id/posts', async (req,res)=>{
   try {
       // Find the facility with the matching ID
       const result = await mysql_getPosts(con, req.params.id);
@@ -177,7 +177,7 @@ router.get('/users/:id/posts', async (req,res)=>{
     }
 });
 // Get the list of messages from a selected world
-router.get('/worlds/:id/messages', async (req,res)=>{
+routerGuest.get('/worlds/:id/messages', async (req,res)=>{
   try {
       // Find the facility with the matching ID
       const result = await mysql_getMessages(con, req.params.id);

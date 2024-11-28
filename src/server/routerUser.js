@@ -1,11 +1,10 @@
 // This is CommonJS format.
 // As React uses ECMAScript, I will use ECMAScript for the others as well
 import express from 'express';
-import Joi from 'joi';
 
 // These 2 will be used as dummies before MySQL comes online
 import mysql from 'mysql2';
-let routerGuest = express.Router();
+let routerUser = express.Router();
 
 // MySQL calls - Note that this DOES NOT map 1:1 to the front-end.
 
@@ -15,32 +14,40 @@ let routerGuest = express.Router();
 // MESSAGE - Create Message, Modify Message
 
 // For Users
-// PUT - used in profile page
-import mysql_modUser from './sql_modules/sql_modUser.js';
+// GET - served in routerGuest.js
+// POST - served in routerMain.js - used for user registration
+// PUT
+import mysql_modSelectedUser from './sql_modules/sql_modSelectedUser.js';
+// DELETE - May not be needed
 
 // For Worlds
+// GET - served in routerGuest.js
 // POST
-import mysql_addWorld from './sql_addWorld.js'; // Add a world (from the user page)
+import mysql_addWorld from './sql_modules/sql_addWorld.js'; // Add a world (from the user page)
 // PUT
-import mysql_modWorld from './sql_modWorld.js';
+import mysql_modSelectedWorld from './sql_modules/sql_modSelectedWorld.js';
 // DELETE - May not be needed
 // I did not state any requirements for delete requirements. I don't know if I should delete anything.
 // Left as Beyond CSE316 requirement
 
 // For Characters
+// GET - served in routerGuest.js
 // POST
-import mysql_addCharacter from './sql_addCharacter.js'; // Add a world (from the user page)
+import mysql_addCharacter from './sql_modules/sql_addCharacter.js'; // Add a character (from the world page)
 // PUT
-import mysql_modCharacter from './sql_modCharacter.js';
+import mysql_modSelectedCharacter from './sql_modules/sql_modSelectedCharacter.js'; // Modify a character
 // DELETE - May not be needed
 // I did not state any requirements for delete requirements. I don't know if I should delete anything.
 // Left as Beyond CSE316 requirement
 
 // For Messages or Posts
+// GET - served in routerGuest.js
 // POST
-import mysql_addMessage from './sql_addMessage.js'; // Add a world (from the user page)
+import mysql_addMessage from './sql_modules/sql_addMessage.js'; // Add a message (from the world page)
+import mysql_addPost from './sql_modules/sql_addPost.js'; // Add a post (from the user page)
 // PUT
-import mysql_modMessage from './sql_modMessage.js'; // Should I edit message?
+import mysql_modSelectedMessage from './sql_modules/sql_modSelectedMessage.js'; // Should I edit message?
+import mysql_modSelectedPost from './sql_modules/sql_modSelectedPost.js'; // Should I edit message?
 // DELETE - May not be needed
 // I did not state any requirements for delete requirements. I don't know if I should delete anything.
 // Left as Beyond CSE316 requirement
@@ -56,185 +63,204 @@ var con = mysql.createConnection({
 // For Users
 
 // PUT - users
-router.put('/users/:id', async (req,res)=>{
+routerUser.put('/users/:id', async (req,res)=>{
     try {
-        const result = await mysql_modUsers(con)
-        res.send(result)
-      } catch (err) {
-        res.status(500).send({
-          success: false,
-          error: err,
-        })
-      }
-});
-
-// Get information about individual user
-router.get('/users/:id', async (req,res)=>{
-    try {
-        // Find the facility with the matching ID
-        const result = await mysql_getSelectedUser(con, req.params.id);
-        // If the facility is not found, return 404
-        if(!result){
-            res.status(404).send('The user with given id was not found');
-            return;
+        // a newUser object to be sent to SQL call 
+        const newUser = {
+          userId: req.params.id,
+          userName: "'" + req.body.userName + "'",
+          userPasswd: "'" + req.body.userPasswd + "'",
+          userEmail: "'" + req.body.userEmail + "'",
+          userIcon: "'" + req.body.userIcon + "'"
         }
+
+        // Modify the data in database
+        const result = await mysql_modSelectedUser(con, newUser)
         res.send(result)
       } catch (err) {
         res.status(500).send({
           success: false,
           error: err,
         })
-      }
+    }
 });
 
-// POST - users
-// Add a user
-router.post('/facilities', (req,res)=>{
+// POST - worlds
+routerUser.post('/worlds/:id', async (req,res)=>{
     // Instantiate newFacility object
-    // Note that req.body.days start as an array, but I need to replace that with the String
-    const days = JSON.stringify(req.body.days).slice(1,this.length-1)
-    mysql_addFacilities(req.body.title, req.body.description, req.body.image, days, req.body.capacityMin, req.body.capacityMax, req.body.location, req.body.suny)
+    try {
+      // a newWorld object to be sent to SQL call 
+      const newWorld = {
+        worldId: req.params.id,
+        worldName: "'" + req.body.worldName + "'",
+        worldIcon: "'" + req.body.worldIcon + "'",
+        worldStory: "'" + req.body.worldStory + "'",
+        worldCreator: req.body.worldCreator
+      }
 
-    // Push new facility to facilities to finish
-    // res.post(newFacility);
-});
-
-// PUT - facilities
-// router.put('/facilities/:id', (req,res)=>{
-//     // Instantiate newFacility object
-//     mysql_modFacilities(req.body.id, req.body.title, req.body.description, req.body.image, req.body.days, req.body.capacityMin, req.body.capacityMax, req.body.location, req.body.suny)
-    
-//     // // Push newFacility to facilities to finish
-//     // res.post(newFacility);
-// });
-
-// DELETE - facilities
-// router.delete('/facilities/:id', (req,res)=>{
-//     mysql_delFacilities(req.body.id);
-//     // // Find the facility with the matching ID
-//     // const facility = facilities.find((facility) => facility.id === parseInt(req.params.id));
-
-//     // // If the facility is not found, return 404
-//     // if (!facility) {
-//     //     res.status(404).send('The course with given id was not found.');
-//     // };
-    
-//     // // Else, find the facility in question among facilities
-//     // const index = facilities.indexOf(facility);
-//     // // Delete the facility in facilities
-//     // facilities.splice(index, 1);
-    
-//     // res.send(facility);
-// });
-
-// Now do the same for the reservations as well
-
-// GET - reservation
-// Get the reservation list
-router.get('/reserves', async (req,res)=>{
-  try {
-      const result = await mysql_getReserves(con)
+      // Modify the data in database
+      const result = await mysql_addWorld(con, newWorld)
       res.send(result)
     } catch (err) {
-      res.status(500).send("Error: "+err);
-    }
+      res.status(500).send({
+        success: false,
+        error: err,
+      })
+  }
 });
 
-// Get information about individual reservation
-// router.get('/reserves/:id', (req,res)=>{
-//     // Find the reservation with the matching ID
-//     const reserve = reserves.find((reserve) => reserve.id === parseInt(req.params.id));
+// PUT - worlds
+routerUser.put('/worlds/:id', async (req,res)=>{
+    // Instantiate newFacility object
+    try {
+      // a newWorld object to be sent to SQL call 
+      // worldCreator cannot be changed once created
+      const newWorld = {
+        worldId: req.params.id,
+        worldName: "'" + req.body.worldName + "'",
+        worldIcon: "'" + req.body.worldIcon + "'",
+        worldStory: "'" + req.body.worldStory + "'"
+      }
 
-//     // If the facility is not found, return 404
-//     if (!facility) {
-//         res.status(404).send('The course with given id was not found.');
-//     };
+      // Modify the data in database
+      const result = await mysql_modSelectedWorld(con, newWorld)
+      res.send(result)
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        error: err,
+      })
+  }
+});
 
-//     // Else, return the facility in question
-//     res.send(facility);
-// });
-
-// POST - reservations
-// router.post('/facilities', (req,res)=>{
-//     // Instantiate newReserve object
-//     const newReserve = {
-//         id: facilities.length + 1,
-//         title: req.body.title,
-//         description: req.body.description,
-//         image: req.body.image,
-//         days: req.body.days,
-//         capacityMin: req.body.capacityMin,
-//         capacityMax: req.body.capacityMax,
-//         location: req.body.location,
-//         suny: req.body.suny
-//     }
-
-//     // Push new reservation to reservations to finish
-//     res.post(newReserve);
-// });
-router.post('/reserves', async (req,res)=>{
+// POST - characters
+routerUser.post('/characters', async (req,res)=>{
   try {
-    let reserve={
+    let newCharacter={
       // For some reason, when forms are submitted this way, the brackets come off
       // "'" was added for strings and the date type for this reason
-      reserveDate: "'"+req.body.reserveDate+"'",
-      reserveCap: req.body.reserveCap,
-      reservePurpose: "'"+req.body.reservePurpose+"'",
-      facilityId: req.body.facilityId,
-      userId: req.body.userId
+      characterName: "'"+req.body.characterName+"'",
+      characterIcon: "'" + req.body.characterIcon + "'",
+      characterStory: "'" + req.body.characterStory + "'",
+      characterWorld: req.body.characterWorld,
+      characterCreator: req.body.characterCreator
     }
-    // const middle = validateReserve(con, reserve);
-    // if (middle.error) {
-    //     res.status(400).send(middle.error.details[0].message);
-    //     return;
-    // }
-    console.log(reserve);
-    const result = await mysql_addReserve(con, reserve);
+    const result = await mysql_addCharacter(con, newCharacter);
     res.send(result)
   } catch (err) {
     res.status(500).send("Error: "+err)
   }
-    // Instantiate newFacility object
-    
-
-    // Push new facility to facilities to finish
-    // res.post(newFacility);
 });
 
-// PUT - reservations
-// router.put('/reserves/:id', (req,res)=>{
-//     // Instantiate newFacility object
-//     mysql_modReserve(req.body.reserveId, req.body.reserveDate,req.body.reserveCap,req.body.reservePurpose,req.body.facilityId,req.body.userId)
-    
-//     // // Push newFacility to facilities to finish
-//     // res.post(newFacility);
-// });
-
-// DELETE - reservations
-// router.delete('/reserves/:id', (req,res)=>{
-//     // Find the reservation with the matching ID
-//     const reserve = reserves.find((reserve) => reserve.id === parseInt(req.params.id));
-
-//     // If the facility is not found, return 404
-//     if (!reserve) {
-//         res.status(404).send('The course with given id was not found.');
-//     };
-    
-//     // Else, find the reservation in question among reservations
-//     const index = reserves.indexOf(reserve);
-//     // Delete the reservation in reservations
-//     reserves.splice(index, 1);
-    
-//     res.send(reserve);
-// });
-router.delete('/reserves/:id', async (req,res)=>{
+// PUT - characters
+routerUser.put('/characters/:id', async (req,res)=>{
+  // Instantiate newFacility object
   try {
-    const result = await mysql_delReserve(con, req.params.id);
+    // a newCharacter object to be sent to SQL call 
+    // characterWorld and characterCreator cannot be changed once character is created
+    const newCharacter = {
+      characterId: req.params.id,
+      characterName: "'"+req.body.characterName+"'",
+      characterIcon: "'" + req.body.characterIcon + "'",
+      characterStory: "'" + req.body.characterStory + "'"
+    }
+
+    // Modify the data in database
+    const result = await mysql_modSelectedCharacter(con, newCharacter)
+    res.send(result)
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      error: err,
+    })
+}
+});
+
+// Question: Should I add a DELETE call?
+// routerUser.delete('/reserves/:id', async (req,res)=>{
+//   try {
+//     const result = await mysql_delReserve(con, req.params.id);
+//     res.send(result)
+//   } catch (err) {
+//     res.status(500).send("Error: "+err)
+//   }
+// })
+
+// POST - messages
+routerUser.post('/worlds/:id/messages', async (req,res)=>{
+  try {
+    let newMessage={
+      // For some reason, when forms are submitted this way, the brackets come off
+      // "'" was added for strings and the date type for this reason
+      messageTitle: "'" + req.body.messageTitle + "'",
+      messageReplyId: req.body.messageReplyId,
+      messageSenderId: req.body.messageSenderId,
+      messageContent: "'" + req.body.messageContent + "'"
+    }
+    const result = await mysql_addMessage(con, newMessage);
     res.send(result)
   } catch (err) {
     res.status(500).send("Error: "+err)
   }
-})
+});
+// POST - posts
+routerUser.post('/users/:id/posts', async (req,res)=>{
+  try {
+    let newPost={
+      // For some reason, when forms are submitted this way, the brackets come off
+      // "'" was added for strings and the date type for this reason
+      messageTitle: "'" + req.body.messageTitle + "'",
+      messageSenderId: req.params.id,
+      messageContent: "'" + req.body.messageContent + "'"
+    }
+    const result = await mysql_addPost(con, newPost);
+    res.send(result)
+  } catch (err) {
+    res.status(500).send("Error: "+err)
+  }
+});
+// PUT - messages
+routerUser.put('/worlds/:id/messages', async (req,res)=>{
+  // Instantiate newFacility object
+  try {
+    // a newCharacter object to be sent to SQL call 
+    // messageReplyId and messageSenderId cannot be changed once message is sent
+    const newMessage = {
+      messageId: req.body.messageId,
+      messageContent: "'" + req.body.messageContent + "'"
+    }
+
+    // Modify the data in database
+    const result = await mysql_modSelectedMessage(con, newMessage)
+    res.send(result)
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      error: err,
+    })
+}
+});
+// PUT - posts
+routerUser.put('/users/:id/posts', async (req,res)=>{
+  // Instantiate newFacility object
+  try {
+    // a newCharacter object to be sent to SQL call 
+    // postId
+    const newPost = {
+      messageId: req.body.messageId,
+      messageContent: "'" + req.body.messageContent + "'"
+    }
+
+    // Modify the data in database
+    const result = await mysql_modSelectedPost(con, newPost)
+    res.send(result)
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      error: err,
+    })
+}
+});
 
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
@@ -253,7 +279,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Upload image - from https://www.freecodecamp.org/news/simplify-your-file-upload-process-in-express-js/
-router.post('/upload', upload.single('file'), (req, res) => {
+routerUser.post('/upload', upload.single('file'), (req, res) => {
   // Handle the uploaded file
   console.log(req.file.filename);
   res.send(req.file.filename);
