@@ -3,9 +3,9 @@ import React from 'react'
 import SidebarUser from '../Layouts/SidebarUser';
 
 // Dummy assets to get us started with the posts.
-import assets from "../assets/producer.p_post.json"
+// import assets from "../assets/producer.p_post.json"
 
-const UserBulletins = (currentUser, selectedUser) => {
+const UserBulletins = (currentUserId, selectedUser) => {
 
   // TODO: Add a backend to send the messages over
   const [newPost, setNewPost] = React.useState({
@@ -24,12 +24,12 @@ const UserBulletins = (currentUser, selectedUser) => {
   // TODO: Get the user data from the backend
   const [postTable, setPostTable] = React.useState([]);
   const [varTable, setVarTable] = React.useState(0);
-  // useEffect(() => {
-  //     axios.get('http://localhost:3000/api/users')
-  //     .then(response => setUserTable(response.data))
-  //     .then(console.log(userTable)).then("Table Reset")
-  //     .catch(error => console.log(error));
-  // }, [varTable]);
+  useEffect(() => {
+      axios.get('http://localhost:3000/api/users')
+      .then(response => setUserTable(response.data))
+      .then(console.log(userTable)).then("Table Reset")
+      .catch(error => console.log(error));
+  }, [varTable]);
 
   const validateFail = (item) => {
       alert(item);
@@ -51,7 +51,7 @@ const UserBulletins = (currentUser, selectedUser) => {
 
       // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
       // const newPasswd = generate_hash(newUser.userEmail, newUser.userPasswd);
-      console.log(newPost.postTitle + " / " + newPost.postContent + " / " + currentUser.userId);
+      console.log(newPost.postTitle + " / " + newPost.postContent + " / " + currentUserId.userId);
       // axios.post('http://localhost:3000/api/users', null)
       // .catch((err)=>"Dummy Error to force 1st POST request");
       // // TODO: Send the user data to the database to create a new user
@@ -59,7 +59,7 @@ const UserBulletins = (currentUser, selectedUser) => {
       // postId: newPost.postId,
       // postTitle: newPost.postTitle,
       // postContent: newPost.postContent,
-      // postUserId: currentUser.userId,
+      // postUserId: currentUserIdId.userId,
       // }).then(validateFail("The facility is now reserved"))
       //   .catch(error => console.log(error));
   }
@@ -73,7 +73,7 @@ const UserBulletins = (currentUser, selectedUser) => {
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* TODO: Add a modal form to write a new message */}
-              {selectedUser === currentUser &&
+              {selectedUser === currentUserId &&
                 <button type="button" className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
               }
               {/* A modal to write */}

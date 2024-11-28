@@ -25,7 +25,8 @@ import Cookies from 'js-cookie'
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 
 // TODO: Set the state to current user once you log in
-const NavbarGuest = () => {
+const NavbarGuest = (setCurrentUserId) => {
+    console.log(setCurrentUserId);
 
     // Blank strings are given, as otherwise React will complain as if we are using uncontrolled forms
     const [newUser, setNewUser] = useState({
@@ -41,9 +42,9 @@ const NavbarGuest = () => {
 
     const validateFail = (item) => {
         alert(item);
-        console.log(userName);
-        console.log(userPasswd);
-        console.log(userEmail);
+        console.log(newUser.userName);
+        console.log(newUser.userPasswd);
+        console.log(newUser.userEmail);
     }
 
     const addNewUser = (event)=> {
@@ -55,7 +56,7 @@ const NavbarGuest = () => {
         console.log(newUser.userName, newUser.userPasswd, newUser.userEmail);
 
         // TODO: Send the user data to the database to create a new user
-        axios.post('http://localhost:3000/api/users', {
+        axios.post('http://localhost:3000/signup', {
             userName: newUser.userName,
             userPasswd: newPasswd,
             userEmail: newUser.userEmail
@@ -68,19 +69,22 @@ const NavbarGuest = () => {
         event.preventDefault();
 
         // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
-        const newPasswd = hashutil(newUser.userName, newUser.userPasswd);
-        console.log(newUser.userName, newUser.userPasswd, newUser.userEmail);
+        const newPasswd = hashutil(oldUser.userName, oldUser.userPasswd);
+        console.log(oldUser.userName, oldUser.userPasswd);
 
         // TODO: Send the user data to the database to log in
         // TODO: Send the user data to the database to create a new user
-        axios.post('http://localhost:3000/api/users', {
-            userName: newUser.userName,
+        axios.post('http://localhost:3000/login', {
+            userName: oldUser.userName,
             userPasswd: newPasswd
         }).then(function (response){
             // Once authenticated, set the token and user
+            console.log(response.data);
             Cookies.set("accessToken",response.data.accessToken);
-            Cookies.set("currentUser",response.data.currentUser);
+            Cookies.set("currentUser",response.data.user.userId);
             console.log(Cookies.get());
+
+            setCurrentUserId(response.data.currentUser);
         })
           .catch(error => console.log(error));
     }
@@ -105,15 +109,15 @@ const NavbarGuest = () => {
                 <form onSubmit={addNewUser}>
                     {/* Name input */}
                     <label htmlFor="userName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={onChangeForm(setNewUser)} /><br />
+                    <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
 
                     {/* Password input */}
                     <label htmlFor="userPasswd" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={onChangeForm(setNewUser)} /><br />
+                    <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
 
                     {/* Email button */}
                     <label htmlFor="userEmail" className="col-sm-2 col-form-label">Email:</label>
-                    <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={onChangeForm(setNewUser)} /><br />
+                    <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
                     
                     {/* TODO: Create a user with a userName, userPasswd and userEmail values */}
                     {/* Using POST request */}
@@ -126,10 +130,10 @@ const NavbarGuest = () => {
                 <form onSubmit={loginUser}>
                     {/* Name input */}
                     <label htmlFor="oldUserName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" id="oldUserName" name="userName" value={oldUser.userName} onChange={onChangeForm(setOldUser)} /><br />
+                    <input type="text" className="form-control" id="oldUserName" name="userName" value={oldUser.userName} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
                     {/* Password input */}
                     <label htmlFor="oldUserPasswd" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={onChangeForm(setOldUser)} /><br />
+                    <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
                     {/* TODO: Fetch the user with the correct password and username from the database */}
                     {/* Using GET request */}
                     <button className="btn btn-primary">Sign In</button>

@@ -7,7 +7,7 @@ import {Routes, Route, BrowserRouter} from 'react-router-dom'
 // Leave the footer for later
 // import Footer from "./Footer.jsx"
 
-function UserLayoutRoutes({selectedUser,currentUser}) {
+function UserLayoutRoutes({selectedUser,currentUserId}) {
     return (
         <>
             <nav>
@@ -15,12 +15,14 @@ function UserLayoutRoutes({selectedUser,currentUser}) {
                 <SidebarUser user={selectedUser} />
             </nav>
             <Routes>
+                <Route path={`/users/${selectedUser.userId}`} element={<SidebarUser selectedUser={selectedUser} />}>
                 {/* <Route index element={<Home />} /> */}
                 <Route path={`users/${selectedUser.userId}`} element={<Dashboard />} />
                 <Route path={`users/${selectedUser.userId}/bulletins`} element={<UserBulletins selectedUser={selectedUser} />} />
                 <Route path={`users/${selectedUser.userId}/characters`} element={<UserCharacters selectedUser={selectedUser} />} />
-                <Route path={`users/${selectedUser.userId}/worlds`} element={<UserWorlds selectedUser={selectedUser} currentUser={currentUser} />} />
+                <Route path={`users/${selectedUser.userId}/worlds`} element={<UserWorlds selectedUser={selectedUser} currentUserId={currentUserId} />} />
                 <Route path="/*" element={<ErrorPage />} />
+                </Route>
             </Routes>
             {/* <footer>
                 <Footer />

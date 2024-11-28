@@ -22,7 +22,7 @@ import {Outlet, Link} from "react-router-dom";
 // This one would be brighter, also no Navbar but instead a left sidebar, named it just for consistency
 
 
-const SidebarUser = (selectedUser, render) => {
+const SidebarUser = (selectedUser) => {
     return (
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
         <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">

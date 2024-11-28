@@ -1,34 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import RootPageRoutes from "./Layouts/RootPageRoutes";
+import RootPageLayoutRoutes from "./Layouts/RootPageLayoutRoutes.jsx";
 import UserLayoutRoutes from "./Layouts/UserLayoutRoutes.jsx";
-// import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes.jsx";
+import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes.jsx";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-
-// const [currentUser, setCurrentUser] = React.useState(testUser);
-// TODO: User should be undefined
-// const [currentUser, setCurrentUser] = useState(undefined);
-
+import {  createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "*",
     // I MUST pass this object elsewhere
-    // since the Add World part requires to check if the selectedUser === currentUser
-    element: <RootPageRoutes currentUser={testUser} />,
+    // since the Add World part requires to check if the selectedUser === currentUserId
+    element: <RootPageLayoutRoutes />,
     children: [
       {
         path: ":userId",
-        element: <UserLayoutRoutes currentUser={testUser} />,
+        element: <UserLayoutRoutes />,
       },
-      // {
-      //   path: ":worldId",
-      //   element: <WorldLayoutRoutes currentUser={testUser} />
-      // }
+      {
+        path: ":worldId",
+        element: <WorldLayoutRoutes />
+      }
     ],
   },
 ]);
@@ -37,4 +29,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
-);
+);  

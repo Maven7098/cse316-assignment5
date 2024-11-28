@@ -26,7 +26,7 @@ function mysql_getSelectedUser(con, userId){
                 // The list of worlds and characters, being lists, are stringified before exit
                 console.log(result)
                 // IF result is defined, and has more than 1 element, return the user item
-                if(result !== undefined && result.length > 0){
+                if(result != undefined && result.length > 0){
                     const ret = {
                         userId:result[0].userId,
                         userName:result[0].userName,

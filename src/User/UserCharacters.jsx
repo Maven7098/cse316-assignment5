@@ -6,17 +6,17 @@ import SidebarUser from "../Layouts/SidebarUser.jsx"
 import {Link} from 'react-router-dom'
 
 // TODO: Replace this with the back-end data
-import assets from '../assets/producer.p.json'
+// import assets from '../assets/producer.p.json'
 
 const UserCharacters = (selectedUser) => {
   // TODO: Back-end data
-    // const [assets, setAssets] = useState([]);
-    // useEffect(() => {
-    //     axios.get(`http://localhost:3000/api/users/${user.id}`)
-    //       .then(response => setAssets(response.data))
-    //       .catch(error => console.log(error));
-    //   }, []);
-    //   console.log(assets);
+    const [assets, setAssets] = useState([]);
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/users/${user.id}`)
+          .then(response => setAssets(response.data))
+          .catch(error => console.log(error));
+      }, []);
+      console.log(assets);
 
   return (
     <>

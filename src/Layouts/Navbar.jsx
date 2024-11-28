@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
 import {Link, Outlet} from 'react-router-dom'
 
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
@@ -27,7 +30,7 @@ import {Link, Outlet} from 'react-router-dom'
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 
-const Navbar = (currentUserId) => {
+const Navbar = (currentUserId, setCurrentUserId) => {
     console.log(currentUserId);
 
     const [currentUser, setCurrentUser] = React.useState({
@@ -42,7 +45,7 @@ const Navbar = (currentUserId) => {
         axios.get(`http://localhost:3000/api/users/${currentUserId.userId}`)
           .then(response => setCurrentUser(response.data))
           .catch(function (error) {
-            console.log(error.response.status);
+            console.log(error);
         })
         }, []);
     console.log(currentUser);
@@ -59,6 +62,7 @@ const Navbar = (currentUserId) => {
           Cookies.remove('accessToken');
           // Check if the cookies are gone!
           console.log(Cookies.get());
+          setCurrentUserId({});
           location.reload();
         })
         .catch(err=>console.log(err));
