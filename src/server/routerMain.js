@@ -26,7 +26,7 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "pass4root",
-    database: "cse316_assignment3"
+    database: "cse316_assignment5"
 });
 
 // Signup, Login and Logout

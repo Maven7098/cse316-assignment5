@@ -6,6 +6,13 @@ import express from 'express';
 import mysql from 'mysql2';
 let routerUser = express.Router();
 
+import multer from 'multer';
+// Directory name should be relative, else the file won't upload
+import path from 'path';
+// Since I am using ECMAScript (rather than CommonJS), I have to define __dirname separately
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 // MySQL calls - Note that this DOES NOT map 1:1 to the front-end.
 
 // This area only contains places w/ restricted access
@@ -57,7 +64,7 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "pass4root",
-  database: "cse316_assignment3"
+  database: "cse316_assignment5"
 });
 
 // For Users

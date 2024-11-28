@@ -37,7 +37,7 @@ import mysql_getSelectedWorld from './sql_modules/sql_getSelectedWorld.js'; // G
 // GET
 // Not sure if I need to get a list of characters.
 // A list of Individual Characters can be obtained in the getSelectedUser getSelectedWorld
-import mysql_getSelectedCharacter from './sql_getSelectedCharacter.js'; // 
+import mysql_getSelectedCharacter from './sql_modules/sql_getSelectedCharacter.js'; // 
 // POST - served in routerUser.js
 // PUT - served in routerUser.js
 // DELETE - May not be needed
@@ -46,8 +46,8 @@ import mysql_getSelectedCharacter from './sql_getSelectedCharacter.js'; //
 
 // For Messages or Posts
 // GET
-import mysql_getPosts from './sql_getPosts.js' // Get a list of posts (for selected user)
-import mysql_getMessages from './sql_getMessages.js'; // Get a list of messages (for selected world)
+import mysql_getPosts from './sql_modules/sql_getPosts.js' // Get a list of posts (for selected user)
+import mysql_getMessages from './sql_modules/sql_getMessages.js'; // Get a list of messages (for selected world)
 // POST - served in routerUser.js
 // PUT - served in routerUser.js
 // DELETE - May not be needed
@@ -59,7 +59,7 @@ var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "pass4root",
-  database: "cse316_assignment3"
+  database: "cse316_assignment5"
 });
 
 // Users
