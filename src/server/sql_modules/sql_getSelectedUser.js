@@ -13,20 +13,19 @@ function mysql_getSelectedUser(con, userId){
             con.query(sql, function (err, result) {
                 if (err) reject(err);
                 console.log(result);
-                // Create an array of facilities to be returned
-                const userWorlds = [];
-                const userCharacters = [];
-                // Turn the worldId and characterId as arrays
-                result.map((user)=>{
-                    userWorlds.push(user.worldId)
-                    userCharacters.push(user.characterId)
-                })
 
                 // Define the returning user
                 // The list of worlds and characters, being lists, are stringified before exit
-                console.log(result)
                 // IF result is defined, and has more than 1 element, return the user item
                 if(result != undefined && result.length > 0){
+                    // Create an array of facilities to be returned
+                    const userWorlds = [];
+                    const userCharacters = [];
+                    // Turn the worldId and characterId as arrays
+                    result.map((user)=>{
+                        userWorlds.push(user.worldId)
+                        userCharacters.push(user.characterId)
+                    })
                     const ret = {
                         userId:result[0].userId,
                         userName:result[0].userName,

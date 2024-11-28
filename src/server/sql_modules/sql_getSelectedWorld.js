@@ -11,20 +11,19 @@ function mysql_getSelectedWorld(con, worldId){
             con.query(sql, function (err, result) {
                 if (err) reject(err);
 
-                const worldMembers = [];
-                const worldCharacters = [];
-                // Turn the userId and characterId as arrays
-                result.map((world)=>{
-                    worldMembers.push(world.characterCreator)
-                    worldCharacters.push(world.characterId)
-                })
-
                 // Theoretically we can find the list of members without array
                 // LIST CHARACTERS WHERE CHARACTERS == WORLD
                 // THEN LIST CHARACTERS.OWNERS
 
                 // The fact that 1 character only belongs to 1 world is a design choice
                 if(result !== undefined && result.length > 0){
+                    const worldMembers = [];
+                    const worldCharacters = [];
+                    // Turn the userId and characterId as arrays
+                    result.map((world)=>{
+                        worldMembers.push(world.characterCreator)
+                        worldCharacters.push(world.characterId)
+                    })
                     const ret = {
                         worldId: result[0].worldId,
                         worldName: result[0].worldName,

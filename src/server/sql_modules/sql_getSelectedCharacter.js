@@ -10,7 +10,7 @@ function mysql_getSelectedCharacter(con, characterId){
             var sql = `SELECT * from characters WHERE characterId=${characterId};`
             con.query(sql, function (err, result) {
                 if (err) reject(err);
-
+                
                 // The fact that 1 character only belongs to 1 world is a design choice
                 const ret = {
                     characterId: result.characterId,

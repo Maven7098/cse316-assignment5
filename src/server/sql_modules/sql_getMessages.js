@@ -10,21 +10,26 @@ function mysql_getMessages(con, worldId){
             var sql = `SELECT m.* FROM characters c LEFT JOIN messages m ON c.characterId = m.messageSenderId WHERE m.messageType=1 AND c.characterWorld=${worldId};`
             con.query(sql, function (err, result) {
                 if (err) reject(err);
-                
-                // A list of all the posts of a selected user
-                const ret=[];
-                
-                // Map the list, we need the sender Id (a list of characters) as well as a list of Replies
-                // ReplyId is 0 if this message does not reply to anything.
-                // ReplyId cannot be changed (you can't have a message reply to another message).
-                result.map((message)=>ret.push({
-                    messageId: message.messageId,
-                    messageTitle: message.messageTitle,
-                    messageContent: message.messageContent,
-                    messageReplyId: message.messageReplyId,
-                    messageSenderId: message.messageSenderId
-                }))
-                resolve(ret);
+
+                if(result != undefined){
+                    // A list of all the posts of a selected user
+                    const ret=[];
+                    
+                    // Map the list, we need the sender Id (a list of characters) as well as a list of Replies
+                    // ReplyId is 0 if this message does not reply to anything.
+                    // ReplyId cannot be changed (you can't have a message reply to another message).
+                    result.map((message)=>ret.push({
+                        messageId: message.messageId,
+                        messageTitle: message.messageTitle,
+                        messageContent: message.messageContent,
+                        messageReplyId: message.messageReplyId,
+                        messageSenderId: message.messageSenderId
+                    }))
+                    resolve(ret);
+                }
+                else{
+                    reject("undefined: result not found")
+                }
             });
         });
     })

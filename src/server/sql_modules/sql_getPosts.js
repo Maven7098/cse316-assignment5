@@ -8,17 +8,21 @@ function mysql_getPosts(con, userId){
             var sql = `SELECT * from messages WHERE messageType=0 AND messageSenderId=${userId};`
             con.query(sql, function (err, result) {
                 if (err) reject(err);
-                
-                // A list of all the posts of a selected user
-                const ret=[];
-                
-                // Map the list, we only need ID, title and content for posts, since posts cannot reply
-                result.map((message)=>ret.push({
-                    messageId: message.messageId,
-                    messageTitle: message.messageTitle,
-                    messageContent: message.messageContent
-                }))
-                resolve(ret);
+                if(result != undefined){
+                    // A list of all the posts of a selected user
+                    const ret=[];
+                    
+                    // Map the list, we only need ID, title and content for posts, since posts cannot reply
+                    result.map((message)=>ret.push({
+                        messageId: message.messageId,
+                        messageTitle: message.messageTitle,
+                        messageContent: message.messageContent
+                    }))
+                    resolve(ret);
+                }
+                else{
+                    reject("undefined: result not found")
+                }
             });
         });
     })
