@@ -187,7 +187,7 @@ routerUser.put('/characters/:id', async (req,res)=>{
 // })
 
 // POST - messages
-routerUser.post('/worlds/:id/messages', async (req,res)=>{
+routerUser.post('/messages/:id', async (req,res)=>{
   try {
     let newMessage={
       // For some reason, when forms are submitted this way, the brackets come off
@@ -204,7 +204,7 @@ routerUser.post('/worlds/:id/messages', async (req,res)=>{
   }
 });
 // POST - posts
-routerUser.post('/users/:id/posts', async (req,res)=>{
+routerUser.post('/messages/:id', async (req,res)=>{
   try {
     let newPost={
       // For some reason, when forms are submitted this way, the brackets come off
@@ -220,7 +220,7 @@ routerUser.post('/users/:id/posts', async (req,res)=>{
   }
 });
 // PUT - messages
-routerUser.put('/worlds/:id/messages', async (req,res)=>{
+routerUser.put('/messages/:id', async (req,res)=>{
   // Instantiate newFacility object
   try {
     // a newCharacter object to be sent to SQL call 
@@ -241,7 +241,7 @@ routerUser.put('/worlds/:id/messages', async (req,res)=>{
 }
 });
 // PUT - posts
-routerUser.put('/users/:id/posts', async (req,res)=>{
+routerUser.put('/messages/:id', async (req,res)=>{
   // Instantiate newFacility object
   try {
     // a newCharacter object to be sent to SQL call 
