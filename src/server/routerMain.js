@@ -14,6 +14,10 @@ const { sign } = jwt
 
 import mysql from 'mysql2';
 
+import mysql_getUserPasswd from './sql_modules/sql_getUserPasswd.js';
+import mysql_getUsers from './sql_modules/sql_getUsers.js';
+import mysql_addUser from './sql_modules/sql_addUser.js';
+
 app.use(express.json());
 
 app.use(cors());
@@ -36,7 +40,7 @@ app.post('/login', async (req,res) => {
     // const userEmail = req.body.userEmail
     // Password should be hashed in the client, not the server, as we cannot use HTTPS.
     // const userPasswd = req.body.userPasswd
-    const userName = "'" + req.body.userName + "'";
+    // const userName = "'" + req.body.userName + "'";
     const hashPasswd = "'" + req.body.userPasswd + "'";
     let newUser;
 
