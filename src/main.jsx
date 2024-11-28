@@ -9,17 +9,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-const testUser = {
-  userId: 0,
-  userName: "Marlow58",
-  userPasswd: "s0mp0n9u1n",
-  userIcon: "./assets/react.svg",
-  userEmail: "marlow58.pseudoartist.com",
-  userBulletins: "",
-  userWorlds: "",
-  userCharacters: ""
-};
-
 // const [currentUser, setCurrentUser] = React.useState(testUser);
 // TODO: User should be undefined
 // const [currentUser, setCurrentUser] = useState(undefined);
