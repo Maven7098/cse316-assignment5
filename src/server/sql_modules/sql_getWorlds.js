@@ -7,7 +7,7 @@ function mysql_getSelectedWorld(con, worldId){
         con.connect(function(err) {
             if (err) throw err;
             console.log("Connected!");
-            var sql = `SELECT * FROM worlds WHERE worldId=${worldId};`
+            var sql = `SELECT * FROM worlds;`
             // Theoretically we can find the list of members without array
             // But doing this for all worlds is rather costly; see sql_getSelectedWorld.js
             con.query(sql, function (err, result) {

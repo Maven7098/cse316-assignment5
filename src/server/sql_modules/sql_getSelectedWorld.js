@@ -24,18 +24,23 @@ function mysql_getSelectedWorld(con, worldId){
                 // THEN LIST CHARACTERS.OWNERS
 
                 // The fact that 1 character only belongs to 1 world is a design choice
-                const ret = {
-                    worldId: result[0].worldId,
-                    worldName: result[0].worldName,
-                    worldIcon: result[0].worldIcon,
-                    worldStory: result[0].worldStory,
-                    worldCreator: result[0].worldCreator,
-                    worldMembers: JSON.stringify(worldMembers),
-                    worldCharacters: JSON.stringify(worldCharacters)
+                if(result !== undefined && result.length > 0){
+                    const ret = {
+                        worldId: result[0].worldId,
+                        worldName: result[0].worldName,
+                        worldIcon: result[0].worldIcon,
+                        worldStory: result[0].worldStory,
+                        worldCreator: result[0].worldCreator,
+                        worldMembers: JSON.stringify(worldMembers),
+                        worldCharacters: JSON.stringify(worldCharacters)
+                    }
+                    // Return the first element of the array
+                    // Not that there are multiple worlds sharing an ID
+                    resolve(ret);
                 }
-                // Return the first element of the array
-                // Not that there are multiple worlds sharing an ID
-                resolve(ret[0]);
+                else{
+                    reject("No world with given ID found");
+                }
             });
         });
     });

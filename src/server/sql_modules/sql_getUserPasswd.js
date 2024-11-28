@@ -13,7 +13,7 @@ function mysql_getSelectedUser(con, userPasswd){
                 console.log(result);
 
                 // Return the userId
-                resolve(result.userId);
+                resolve(result[0]);
             });
         });
     });

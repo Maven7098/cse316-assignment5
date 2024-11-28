@@ -48,7 +48,8 @@ app.post('/login', async (req,res) => {
     // Or should I do this in the front-end?
 
     try{
-        newUser = await mysql_getUserPasswd(con, userName, hashPasswd);
+        newUser = await mysql_getUserPasswd(con, hashPasswd);
+        console.log(newUser)
         if(!newUser){
             res.status(404).send('Wrong email or wrong password');
             return;
@@ -118,7 +119,7 @@ app.delete('/logout', (req,res) => {
 
 // Generate Access Token
 function generateAccessToken(user) {
-    console.log(`Access token generated for ${user.userName}`);
+    console.log(`Access token generated`);
     return sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'})
 }
 

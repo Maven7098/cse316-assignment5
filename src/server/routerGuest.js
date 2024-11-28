@@ -159,7 +159,7 @@ routerGuest.get('/characters/:id', async (req,res)=>{
 // GET - message
 
 // Get the list of posts from a selected user
-routerGuest.get('/messages/:id', async (req,res)=>{
+routerGuest.get('/posts/:id', async (req,res)=>{
   try {
       // Find the facility with the matching ID
       const result = await mysql_getPosts(con, req.params.id);

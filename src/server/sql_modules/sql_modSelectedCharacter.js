@@ -5,7 +5,7 @@ function mysql_modSelectedCharacter(con, newCharacter){
         if (err) throw err;
         console.log("Connected!");
         // As stated in README_MySQL.txt, I will merge this with the facilities list whose facility ID match the facility ID provided in each reservation.
-        var sql = `UPDATE characters SET characterName=${newCharacter.characterName}, characterIcon=${newCharacter.characterIcon}, characterStory=${newCharacter.characterStory} WHERE characterId=${characterId} ;`
+        var sql = `UPDATE characters SET characterName=${newCharacter.characterName}, characterIcon=${newCharacter.characterIcon}, characterStory=${newCharacter.characterStory} WHERE characterId=${newCharacter.characterId} ;`
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log(result);

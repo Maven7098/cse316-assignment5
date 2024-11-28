@@ -24,17 +24,25 @@ function mysql_getSelectedUser(con, userId){
 
                 // Define the returning user
                 // The list of worlds and characters, being lists, are stringified before exit
-                const ret = {
-                    userId:result[0].userId,
-                    userName:result[0].userName,
-                    userPasswd:result[0].userPasswd,
-                    userIcon:result[0].userIcon,
-                    userEmail:result[0].userEmail,
-                    userWorlds:JSON.stringify(userWorlds),
-                    userCharacters:JSON.stringify(userCharacters)
+                console.log(result)
+                // IF result is defined, and has more than 1 element, return the user item
+                if(result !== undefined && result.length > 0){
+                    const ret = {
+                        userId:result[0].userId,
+                        userName:result[0].userName,
+                        userPasswd:result[0].userPasswd,
+                        userIcon:result[0].userIcon,
+                        userEmail:result[0].userEmail,
+                        userWorlds:JSON.stringify(userWorlds),
+                        userCharacters:JSON.stringify(userCharacters)
+                    }
+                    // Only return the first user found (not that multiple users will share IDs)
+                    resolve(ret);
                 }
-                // Only return the first user found (not that multiple users will share IDs)
-                resolve(ret);
+                // Else reject the promise
+                else{
+                    reject("No user with given ID found");
+                }
             });
         });
     });

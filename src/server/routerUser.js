@@ -75,10 +75,10 @@ routerUser.put('/users/:id', async (req,res)=>{
         // a newUser object to be sent to SQL call 
         const newUser = {
           userId: req.params.id,
-          userName: "'" + req.body.userName + "'",
-          userPasswd: "'" + req.body.userPasswd + "'",
-          userEmail: "'" + req.body.userEmail + "'",
-          userIcon: "'" + req.body.userIcon + "'"
+          userName: "'" + req.body.userName.replaceAll("'","\\'") + "'",
+          userPasswd: "'" + req.body.userPasswd.replaceAll("'","\\'") + "'",
+          userEmail: "'" + req.body.userEmail.replaceAll("'","\\'") + "'",
+          userIcon: "'" + req.body.userIcon.replaceAll("'","\\'") + "'"
         }
 
         // Modify the data in database
@@ -93,15 +93,15 @@ routerUser.put('/users/:id', async (req,res)=>{
 });
 
 // POST - worlds
-routerUser.post('/worlds/:id', async (req,res)=>{
+routerUser.post('/worlds/', async (req,res)=>{
     // Instantiate newFacility object
     try {
       // a newWorld object to be sent to SQL call 
       const newWorld = {
         worldId: req.params.id,
-        worldName: "'" + req.body.worldName + "'",
-        worldIcon: "'" + req.body.worldIcon + "'",
-        worldStory: "'" + req.body.worldStory + "'",
+        worldName: "'" + req.body.worldName.replaceAll("'","\\'") + "'",
+        worldIcon: "'" + req.body.worldIcon.replaceAll("'","\\'") + "'",
+        worldStory: "'" + req.body.worldStory.replaceAll("'","\\'") + "'",
         worldCreator: req.body.worldCreator
       }
 
@@ -124,9 +124,9 @@ routerUser.put('/worlds/:id', async (req,res)=>{
       // worldCreator cannot be changed once created
       const newWorld = {
         worldId: req.params.id,
-        worldName: "'" + req.body.worldName + "'",
-        worldIcon: "'" + req.body.worldIcon + "'",
-        worldStory: "'" + req.body.worldStory + "'"
+        worldName: "'" + req.body.worldName.replaceAll("'","\\'") + "'",
+        worldIcon: "'" + req.body.worldIcon.replaceAll("'","\\'") + "'",
+        worldStory: "'" + req.body.worldStory.replaceAll("'","\\'") + "'"
       }
 
       // Modify the data in database
@@ -146,9 +146,9 @@ routerUser.post('/characters', async (req,res)=>{
     let newCharacter={
       // For some reason, when forms are submitted this way, the brackets come off
       // "'" was added for strings and the date type for this reason
-      characterName: "'"+req.body.characterName+"'",
-      characterIcon: "'" + req.body.characterIcon + "'",
-      characterStory: "'" + req.body.characterStory + "'",
+      characterName: "'" + req.body.characterName.replaceAll("'","\\'") + "'",
+      characterIcon: "'" + req.body.characterIcon.replaceAll("'","\\'") + "'",
+      characterStory: "'" + req.body.characterStory.replaceAll("'","\\'") + "'",
       characterWorld: req.body.characterWorld,
       characterCreator: req.body.characterCreator
     }
@@ -167,9 +167,9 @@ routerUser.put('/characters/:id', async (req,res)=>{
     // characterWorld and characterCreator cannot be changed once character is created
     const newCharacter = {
       characterId: req.params.id,
-      characterName: "'"+req.body.characterName+"'",
-      characterIcon: "'" + req.body.characterIcon + "'",
-      characterStory: "'" + req.body.characterStory + "'"
+      characterName: "'" + req.body.characterName.replaceAll("'","\\'") + "'",
+      characterIcon: "'" + req.body.characterIcon.replaceAll("'","\\'") + "'",
+      characterStory: "'" + req.body.characterStory.replaceAll("'","\\'") + "'"
     }
 
     // Modify the data in database
@@ -199,10 +199,10 @@ routerUser.post('/messages/:id', async (req,res)=>{
     let newMessage={
       // For some reason, when forms are submitted this way, the brackets come off
       // "'" was added for strings and the date type for this reason
-      messageTitle: "'" + req.body.messageTitle + "'",
+      messageTitle: "'" + req.body.messageTitle.replaceAll("'","\\'") + "'",
       messageReplyId: req.body.messageReplyId,
       messageSenderId: req.body.messageSenderId,
-      messageContent: "'" + req.body.messageContent + "'"
+      messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
     const result = await mysql_addMessage(con, newMessage);
     res.send(result)
@@ -211,14 +211,14 @@ routerUser.post('/messages/:id', async (req,res)=>{
   }
 });
 // POST - posts
-routerUser.post('/messages/:id', async (req,res)=>{
+routerUser.post('/posts/:id', async (req,res)=>{
   try {
     let newPost={
       // For some reason, when forms are submitted this way, the brackets come off
       // "'" was added for strings and the date type for this reason
-      messageTitle: "'" + req.body.messageTitle + "'",
+      messageTitle: "'" + req.body.messageTitle.replaceAll("'","\\'") + "'",
       messageSenderId: req.params.id,
-      messageContent: "'" + req.body.messageContent + "'"
+      messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
     const result = await mysql_addPost(con, newPost);
     res.send(result)
@@ -234,7 +234,7 @@ routerUser.put('/messages/:id', async (req,res)=>{
     // messageReplyId and messageSenderId cannot be changed once message is sent
     const newMessage = {
       messageId: req.body.messageId,
-      messageContent: "'" + req.body.messageContent + "'"
+      messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
 
     // Modify the data in database
@@ -248,14 +248,14 @@ routerUser.put('/messages/:id', async (req,res)=>{
 }
 });
 // PUT - posts
-routerUser.put('/messages/:id', async (req,res)=>{
+routerUser.put('/posts/:id', async (req,res)=>{
   // Instantiate newFacility object
   try {
     // a newCharacter object to be sent to SQL call 
     // postId
     const newPost = {
       messageId: req.body.messageId,
-      messageContent: "'" + req.body.messageContent + "'"
+      messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
 
     // Modify the data in database
@@ -274,7 +274,7 @@ const storage = multer.diskStorage({
   // Does multer use relative or absolute directories? Go check out
   destination: (request, file, callback) => {
     console.log(file);
-    callback(null, path.join(__dirname, '/AssignImages'));
+    callback(null, path.join(__dirname, '/assets'));
   },
   filename: (request, file, callback) => {
     console.log(file);
