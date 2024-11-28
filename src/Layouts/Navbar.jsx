@@ -30,8 +30,9 @@ import {Link, Outlet} from 'react-router-dom'
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 
-const Navbar = (currentUserId, setCurrentUserId) => {
+const Navbar = ({currentUserId, setCurrentUserId}) => {
     console.log(currentUserId);
+    console.log(setCurrentUserId);
 
     const [currentUser, setCurrentUser] = React.useState({
         userId: undefined,
@@ -42,7 +43,7 @@ const Navbar = (currentUserId, setCurrentUserId) => {
     })
 
     React.useEffect(() => {
-        axios.get(`http://localhost:3000/api/users/${currentUserId.userId}`)
+        axios.get(`http://localhost:3000/api/users/${currentUserId}`)
           .then(response => setCurrentUser(response.data))
           .catch(function (error) {
             console.log(error);

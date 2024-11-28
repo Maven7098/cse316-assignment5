@@ -25,7 +25,7 @@ import Cookies from 'js-cookie'
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
 
 // TODO: Set the state to current user once you log in
-const NavbarGuest = (setCurrentUserId) => {
+const NavbarGuest = ({setCurrentUserId}) => {
     console.log(setCurrentUserId);
 
     // Blank strings are given, as otherwise React will complain as if we are using uncontrolled forms
@@ -85,6 +85,7 @@ const NavbarGuest = (setCurrentUserId) => {
             console.log(Cookies.get());
 
             setCurrentUserId(response.data.currentUser);
+            location.reload();
         })
           .catch(error => console.log(error));
     }

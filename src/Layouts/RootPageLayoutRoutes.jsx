@@ -8,8 +8,9 @@ import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
 import ErrorPage from "../ErrorPage.jsx"
 
-function RootPageLayoutRoutes (currentUserId, {setCurrentUserId}){
+function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
   console.log(currentUserId);
+  console.log(setCurrentUserId);
   if(currentUserId != undefined){
     return (
       <>

@@ -12,6 +12,8 @@ import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes";
 
 export default function App() {
     const [currentUserId, setCurrentUserId] = useState();
+    console.log(currentUserId);
+    console.log(setCurrentUserId);
 
     const accessToken = Cookies.get("accessToken");
     const currentUser = Cookies.get("currentUser");
