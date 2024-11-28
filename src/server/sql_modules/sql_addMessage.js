@@ -8,7 +8,7 @@ function mysql_addMessage(con, newMessage){
             var sql = `INSERT INTO messages (messageType, messageTitle, messageReplyId, messageSenderId, messageContent) VALUES (true, ${newMessage.messageTitle}, ${newMessage.messageReplyId}, ${newMessage.messageSenderId}, ${newMessage.messageContent});`
             con.query(sql, function (err, result) {
                 if (err) reject(err);
-                resolve(`Message ${newMessage.messageTitle} Added!`);
+                resolve(`Message ${newMessage.messageTitle} Posted!`);
             });
         });
     })
