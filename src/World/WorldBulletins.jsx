@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { onChangeForm } from '../onChangeForm';
-
-// Dummy assets to get us started with the posts.
-// import assets from "../assets/producer.p_message.json"
+import { validateFail } from '../validateFail';
 
 const WorldBulletins = ({currentUserId}) => {
     // Due to the parameters being the user object itself
@@ -71,14 +69,6 @@ const WorldBulletins = ({currentUserId}) => {
       .catch(error => console.log(error));
   }, [varTable]);
 
-  const validateFail = (item) => {
-      alert(item);
-      console.log(newMessage.messageSenderId);
-      console.log(newMessage.messageReplyId);
-      console.log(newMessage.messageTitle);
-      console.log(newMessage.messageContent);
-  }
-
   const addNewPost = (event)=> {
       // Prevent automatic reloading of page
       event.preventDefault();
@@ -97,7 +87,7 @@ const WorldBulletins = ({currentUserId}) => {
       messageContent: newMessage.messageContent,
       messageReplyId: newMessage.messageReplyId,
       messageSenderId: newMessage.messageSenderId,
-      }).then(validateFail("Message written!"))
+      }).then(validateFail("Message written!", newMessage))
         .catch(error => console.log(error));
   }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { onChangeForm } from '../onChangeForm';
+import { validateFail } from '../validateFail';
 
 const UserBulletins = ({currentUserId}) => {
 
@@ -19,13 +21,6 @@ const UserBulletins = ({currentUserId}) => {
     messageContent: undefined
   });
 
-  const onChangeForm = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      // Set the values in [Key,Value] pairs
-      setNewPost(values => ({...values, [name]: value}))
-  }
-
   // TODO: Get the user data from the backend
   const [postTable, setPostTable] = useState([]);
   const [varTable, setVarTable] = useState(0);
@@ -34,12 +29,6 @@ const UserBulletins = ({currentUserId}) => {
       .then(response => setPostTable(response.data))
       .catch(error => console.log(error));
   }, [varTable]);
-
-  const validateFail = (item) => {
-      alert(item);
-      console.log(newPost.messageTitle);
-      console.log(newPost.messageContent);
-  }
 
   const addNewPost = (event)=> {
       // Prevent automatic reloading of page
@@ -58,7 +47,7 @@ const UserBulletins = ({currentUserId}) => {
       messageTitle: newPost.messageTitle,
       messageContent: newPost.messageContent,
       messageSenderId: currentUserId,
-      }).then(validateFail("Message written!"))
+      }).then(validateFail("Message written!", newPost))
         .catch(error => console.log(error));
   }
 
@@ -86,13 +75,13 @@ const UserBulletins = ({currentUserId}) => {
                         {/* Post title */}
                         <label htmlFor="messageTitle" className="form-label">Title:</label>
                         <br></br>
-                        <input type="text" name="messageTitle" value={newPost.messageTitle} onChange={onChangeForm} className="form-control"></input>
+                        <input type="text" name="messageTitle" value={newPost.messageTitle} onChange={(event)=>onChangeForm(event,setNewPost)} className="form-control"></input>
                         <br></br>
                         {/* Your story */}
                         <label htmlFor="messageContent">Story: </label>
                         <br></br>
                         {/* The textarea for React is slightly different from normal HTML */}
-                        <textarea value={newPost.messageContent} name='messageContent' onChange={onChangeForm} className="form-control" maxLength={512}></textarea>
+                        <textarea value={newPost.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewPost)} className="form-control" maxLength={512}></textarea>
                         <br></br>
                         <button type="submit" className="btn btn-primary">Submit</button>
                       </form>

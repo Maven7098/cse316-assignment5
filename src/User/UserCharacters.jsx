@@ -1,5 +1,4 @@
 import React from 'react'
-import SidebarUser from "../Layouts/SidebarUser.jsx"
 
 import { useState, useEffect } from 'react';
 
@@ -16,12 +15,17 @@ const UserCharacters = () => {
 
 // This is how we grab a list of characters in this user.
 useEffect(() => {
+  // Re-initialize table upon subsequent calls
+  setCharacterList([]);
   axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
     .then(function (response){
       console.log(JSON.parse(response.data.userCharacters));
       // Parse the useCharacters back into array, and map them to get the actual characters
       JSON.parse(response.data.userCharacters).map((character)=>{axios.get(`http://localhost:3000/api/characters/${character}`)
-      .then((response)=>setCharacterList(characterList => [...characterList, response.data]))}
+      .then((response)=>{
+        setCharacterList(characterList => [...characterList, response.data])
+      })
+    }
     )})
     .catch(error => console.log(error))
   }, []);

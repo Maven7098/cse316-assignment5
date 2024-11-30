@@ -69,7 +69,7 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
 
     return (
         <>
-        <nav className="navbar navbar-dark bg-dark fixed-top">
+        <nav className="navbar navbar-dark bg-dark">
             <div className="container-fluid">
                 {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
                 <Link className="navbar-brand" to="/">Assignment 5</Link>

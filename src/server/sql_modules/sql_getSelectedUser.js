@@ -8,7 +8,7 @@ function mysql_getSelectedUser(con, userId){
             console.log("Connected!");
 
             // In addition to all user information, also grab the list of worlds and characters of the user
-            var sql = `SELECT u.*, w.worldId, c.characterId FROM users u LEFT JOIN characters c ON c.characterCreator = u.userId LEFT JOIN worlds w ON c.characterWorld = w.worldId WHERE u.userId = ${userId};`
+            var sql = `SELECT u.*, w.worldId, c.characterId FROM users u LEFT JOIN characters c ON c.characterCreator = u.userId LEFT JOIN worlds w ON u.userId = w.worldCreator OR c.characterWorld = w.worldId WHERE u.userId = ${userId};`
             
             con.query(sql, function (err, result) {
                 if (err) reject(err);

@@ -29,7 +29,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
             {/* <Route index element={<Home />} /> */}
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
-                <Route index element={<UserMain />} />
+                <Route index element={<UserMain currentUserId={currentUserId} />} />
                 <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} />} />
                 <Route path={`characters`} element={<UserCharacters />} />
                 <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} />} />
