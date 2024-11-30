@@ -46,16 +46,11 @@ const SidebarUser = () => {
     return (
         <>
             <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
-                <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                    <svg className="bi pe-none me-2" width="40" height="32"><use xlinkHref="#bootstrap"/></svg>
-                    <span className="fs-4">User</span>
-                </a>
-                <hr />
                 <ul className="nav nav-pills flex-column mb-auto">
                     <li className="nav-item">
                         <Link to={`/users/${selectedUser.userId}`}>
                             <img src={`/${selectedUser.userIcon}`} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
-                            <a aria-current="page" href="userhome.html">{selectedUser.userName}</a>
+                            <span aria-current="page">{selectedUser.userName}</span>
                         </Link>
                     </li>
                     <hr />

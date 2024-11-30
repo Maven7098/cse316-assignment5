@@ -1,5 +1,4 @@
 import React from 'react'
-import SidebarUser from "../Layouts/SidebarUser.jsx"
 
 import { useState, useEffect } from 'react';
 
@@ -12,21 +11,18 @@ import {Link, useParams} from 'react-router-dom'
 const UserCharacters = () => {
   const selectedUserId = useParams().userId;
   // Get a list of characters from this user.
-    const [characterList, setCharacterList] = useState([]);
+  const [selectedUserCharacters, setSelectedUserCharacters] = useState([]);
 
-// This is how we grab a list of characters in this user.
-useEffect(() => {
-  axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
-    .then(function (response){
-      console.log(JSON.parse(response.data.userCharacters));
-      // Parse the useCharacters back into array, and map them to get the actual characters
-      JSON.parse(response.data.userCharacters).map((character)=>{axios.get(`http://localhost:3000/api/characters/${character}`)
-      .then((response)=>setCharacterList(characterList => [...characterList, response.data]))}
-    )})
-    .catch(error => console.log(error))
+  // This is how we grab a list of characters in this user.
+  useEffect(() => {
+    // Re-initialize table upon subsequent calls
+    setSelectedUserCharacters([]);
+    axios.get(`http://localhost:3000/api/users/characters/${selectedUserId}`)
+      .then(res => setSelectedUserCharacters(res.data))
+      .catch(error => console.log(error))
   }, []);
 
-  console.log(characterList)
+  console.log(selectedUserCharacters)
 
   // Grab the list of worldnames
   const [worldList, setWorldList] = useState([]);
@@ -43,16 +39,18 @@ useEffect(() => {
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
-              {characterList.length > 0 && (
-                characterList.map((char) => (
+              {selectedUserCharacters.length > 0 && (
+                selectedUserCharacters.map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
-                      <img src={char.characterImg} className="card-img-top" alt={char.characterName}></img>
+                      <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
                       <div className="card-body">
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
-                          <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1].worldName}</Link>
+                          {worldList != undefined && (
+                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1]?.worldName}</Link>
+                          )}
                           {/* Upon clicking this button, a modal will pop up */}
                           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#characterModal${char.characterId}`}>More...</button>
                       </div>
@@ -66,7 +64,7 @@ useEffect(() => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div className="modal-body">
-                                <img src={char.characterIcon} className="card-img-top" alt={char.characterName}></img>
+                                <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
                                 <p>{char.characterStory}</p>
                               </div>
                               <div className="modal-footer">

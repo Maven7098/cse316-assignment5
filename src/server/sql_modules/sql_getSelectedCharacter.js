@@ -11,7 +11,7 @@ function mysql_getSelectedCharacter(con, characterId){
             con.query(sql, function (err, result) {
                 if (err) reject(err);
                 console.log(result);
-                if(result != undefined){
+                if(result != undefined && result.length > 0){
                     // The fact that 1 character only belongs to 1 world is a design choice
                     const ret = {
                         characterId: result[0].characterId,

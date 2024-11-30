@@ -48,6 +48,8 @@ import mysql_getSelectedCharacter from './sql_modules/sql_getSelectedCharacter.j
 // GET
 import mysql_getPosts from './sql_modules/sql_getPosts.js' // Get a list of posts (for selected user)
 import mysql_getMessages from './sql_modules/sql_getMessages.js'; // Get a list of messages (for selected world)
+import mysql_getWorldCharacters from './sql_modules/sql_getWorldCharacters';
+import mysql_getUserCharacters from './sql_modules/sql_getUserCharacters';
 // POST - served in routerUser.js
 // PUT - served in routerUser.js
 // DELETE - May not be needed
@@ -196,5 +198,42 @@ routerGuest.get('/messages/:id', async (req,res)=>{
     }
 });
 
+// GET - Get a list of characters of a user
+routerGuest.get('/users/characters/:id', async (req,res)=>{
+  try {
+      // Find the facility with the matching ID
+      const result = await mysql_getUserCharacters(con, req.params.id);
+      // If the facility is not found, return 404
+      if(!result){
+          res.status(404).send('The world with given id was not found');
+          return;
+      }
+      res.send(result)
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        error: err,
+      })
+    }
+});
+
+// GET - Get a list of characters of a world
+routerGuest.get('/worlds/characters/:id', async (req,res)=>{
+  try {
+      // Find the facility with the matching ID
+      const result = await mysql_getWorldCharacters(con, req.params.id);
+      // If the facility is not found, return 404
+      if(!result){
+          res.status(404).send('The world with given id was not found');
+          return;
+      }
+      res.send(result)
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        error: err,
+      })
+    }
+});
 
 export default routerGuest;

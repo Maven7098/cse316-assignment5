@@ -8,7 +8,7 @@ function mysql_getSelectedUser(con, userId){
             console.log("Connected!");
 
             // In addition to all user information, also grab the list of worlds and characters of the user
-            var sql = `SELECT u.*, w.worldId, c.characterId FROM users u LEFT JOIN characters c ON c.characterCreator = u.userId LEFT JOIN worlds w ON c.characterWorld = w.worldId WHERE u.userId = ${userId};`
+            var sql = `SELECT u.*, w.worldId, c.characterId FROM users u LEFT JOIN characters c ON c.characterCreator = u.userId LEFT JOIN worlds w ON u.userId = w.worldCreator OR c.characterWorld = w.worldId WHERE u.userId = ${userId};`
             
             con.query(sql, function (err, result) {
                 if (err) reject(err);
@@ -19,13 +19,21 @@ function mysql_getSelectedUser(con, userId){
                 // IF result is defined, and has more than 1 element, return the user item
                 if(result != undefined && result.length > 0){
                     // Create an array of facilities to be returned
-                    const userWorlds = [];
-                    const userCharacters = [];
+                    const userWorldsTemp = [];
+                    const userCharactersTemp = [];
+                    
                     // Turn the worldId and characterId as arrays
+                    // Due to IDs being unique, I only need to take the unique values.
                     result.map((user)=>{
-                        userWorlds.push(user.worldId)
-                        userCharacters.push(user.characterId)
+                        userWorldsTemp.push(user.worldId);
+                        userCharactersTemp.push(user.characterId);
                     })
+                    // Convert to set to make them unique
+                    const userWorldsSet = new Set(userWorldsTemp);
+                    const userWorlds = [...userWorldsSet]
+                    const userCharactersSet = new Set(userCharactersTemp);
+                    const userCharacters = [...userCharactersSet]
+
                     const ret = {
                         userId:result[0].userId,
                         userName:result[0].userName,

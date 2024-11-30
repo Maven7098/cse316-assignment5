@@ -4,11 +4,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import axios from 'axios'
 import { onChangeForm } from '../onChangeForm.js';
+import { hashutil } from "../Hashutil.js";
+import { validateFail } from '../validateFail.js';
 
 import {State, useState} from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { hashutil } from "../Hashutil.js";
 import Cookies from 'js-cookie'
 
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
@@ -40,13 +41,6 @@ const NavbarGuest = ({setCurrentUserId}) => {
         userPasswd: ''
     })
 
-    const validateFail = (item) => {
-        alert(item);
-        console.log(newUser.userName);
-        console.log(newUser.userPasswd);
-        console.log(newUser.userEmail);
-    }
-
     const addNewUser = (event)=> {
         // Prevent automatic reloading of page
         event.preventDefault();
@@ -60,7 +54,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
             userName: newUser.userName,
             userPasswd: newPasswd,
             userEmail: newUser.userEmail
-        }).then(validateFail("User Creation Success!"))
+        }).then(validateFail("User Creation Success!", userName))
           .catch(error => console.log(error));
     }
 
@@ -91,7 +85,8 @@ const NavbarGuest = ({setCurrentUserId}) => {
     }
 
   return (
-    <nav className="navbar navbar-dark bg-dark fixed-top">
+    <>
+    <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
             {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
             <a className="navbar-brand" href="#">Assignment 5</a>
@@ -142,8 +137,9 @@ const NavbarGuest = ({setCurrentUserId}) => {
             </div>
             </div>
         </div>
-        <Outlet />
     </nav>
+    <Outlet />
+    </>
   )
 }
 
