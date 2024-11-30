@@ -145,7 +145,7 @@ const UserWorlds = ({currentUserId}) => {
             {worldTable.map((world) => (
                 // This consists of a world frame
                 <div className="grid-member card" style={{width: "18rem"}}>
-                  <Link to={`/worlds/${world.worldId}`}>
+                  <Link to={`/worlds/${world.worldId}`} currentUserId={currentUserId}>
                     <img src={`/${world.worldIcon}`} className="card-img-top" alt={world.worldName}></img>
                   </Link>
                     <div className="card-body">

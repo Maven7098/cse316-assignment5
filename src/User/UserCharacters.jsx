@@ -11,26 +11,26 @@ import {Link, useParams} from 'react-router-dom'
 const UserCharacters = () => {
   const selectedUserId = useParams().userId;
   // Get a list of characters from this user.
-    const [characterList, setCharacterList] = useState([]);
+  const [selectedUserCharacters, setSelectedUserCharacters] = useState([]);
 
-// This is how we grab a list of characters in this user.
-useEffect(() => {
-  // Re-initialize table upon subsequent calls
-  setCharacterList([]);
-  axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
-    .then(function (response){
-      console.log(JSON.parse(response.data.userCharacters));
-      // Parse the useCharacters back into array, and map them to get the actual characters
-      JSON.parse(response.data.userCharacters).map((character)=>{axios.get(`http://localhost:3000/api/characters/${character}`)
-      .then((response)=>{
-        setCharacterList(characterList => [...characterList, response.data])
-      })
-    }
-    )})
-    .catch(error => console.log(error))
+  // This is how we grab a list of characters in this user.
+  useEffect(() => {
+    // Re-initialize table upon subsequent calls
+    setSelectedUserCharacters([]);
+    axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
+      .then(function (response){
+        console.log(JSON.parse(response.data.userCharacters));
+        // Parse the useCharacters back into array, and map them to get the actual characters
+        JSON.parse(response.data.userCharacters).map((character)=>{axios.get(`http://localhost:3000/api/characters/${character}`)
+        .then((response)=>{
+          setSelectedUserCharacters(selectedUserCharacters => [...selectedUserCharacters, response.data])
+        })
+      }
+      )})
+      .catch(error => console.log(error))
   }, []);
 
-  console.log(characterList)
+  console.log(selectedUserCharacters)
 
   // Grab the list of worldnames
   const [worldList, setWorldList] = useState([]);
@@ -47,8 +47,8 @@ useEffect(() => {
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
-              {characterList.length > 0 && (
-                characterList.map((char) => (
+              {selectedUserCharacters.length > 0 && (
+                selectedUserCharacters.map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
                       <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>

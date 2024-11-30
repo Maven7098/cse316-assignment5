@@ -8,8 +8,7 @@ const UserBulletins = ({currentUserId}) => {
 
   // Due to the parameters being the user object itself
   // user.userId is the one to use
-  const selectedUser = useParams();
-  const selectedUserId = selectedUser.userId;
+  const selectedUserId = useParams().userId;
 
   console.log(selectedUserId)
   console.log(currentUserId);
