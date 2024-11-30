@@ -51,7 +51,7 @@ useEffect(() => {
                 characterList.map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
-                      <img src={char.characterIcon} className="card-img-top" alt={char.characterName}></img>
+                      <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
                       <div className="card-body">
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>
@@ -70,7 +70,7 @@ useEffect(() => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div className="modal-body">
-                                <img src={char.characterIcon} className="card-img-top" alt={char.characterName}></img>
+                                <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
                                 <p>{char.characterStory}</p>
                               </div>
                               <div className="modal-footer">

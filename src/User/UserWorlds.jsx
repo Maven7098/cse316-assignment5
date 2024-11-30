@@ -53,6 +53,22 @@ const UserWorlds = ({currentUserId}) => {
   // Temporary image state for uploading
   const [image, setImage] = useState("");
 
+  // Upload the image upon new image sent to form
+  // also update the characterIcon on the meanwhile
+  const formData = new FormData();
+  formData.append("file", image);
+  useEffect(()=>{
+    axios.post("http://localhost:3000/api/auth/upload", formData,
+      {headers:{"Content-Type": "multipart/form-data",}, "body":{}}
+    ).then((res) => {
+      setNewWorld(values => ({...values, worldIcon: `src/server/assets/${res.data}`} ));
+      // Should I prevent a creation of a character that shares a name with a existing character or not?");
+      console.log(newWorld.worldName + " / " + newWorld.worldIcon + " / " + newWorld.worldStory + " / " + currentUserId);
+      console.log(image)
+      console.log(res)
+    }).then(res => console.log(res))
+  },[image])
+
   const addNewWorld = (event)=> {
       // Prevent automatic reloading of page
       event.preventDefault();
@@ -62,20 +78,6 @@ const UserWorlds = ({currentUserId}) => {
 
       // Should I prevent a creation of a world that shares an existing world or not?");
       console.log(newWorld.worldName + " / " + newWorld.worldIcon + " / " + newWorld.worldStory + " / " + currentUserId);
-      
-      // Upload the image upon new world submission
-      const formData = new FormData();
-      formData.append("file", image);
-
-      axios.post("http://localhost:3000/api/auth/upload", formData,
-        {headers:{"Content-Type": "multipart/form-data",}, "body":{}}
-      ).then((res) => {
-        console.log(image)
-        console.log(res)
-        setNewWorld(values => ({...values, worldIcon: `src/server/assets/${res.data}`}));
-      }).catch(error => {
-        console.log(error);
-      });
       
       // TODO: Send the user data to the database to create a new user
       axios.post('http://localhost:3000/api/auth/worlds', {

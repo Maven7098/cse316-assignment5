@@ -19,17 +19,21 @@ function mysql_getSelectedUser(con, userId){
                 // IF result is defined, and has more than 1 element, return the user item
                 if(result != undefined && result.length > 0){
                     // Create an array of facilities to be returned
-                    const userWorlds = [];
-                    const userCharacters = [];
+                    const userWorldsTemp = [];
+                    const userCharactersTemp = [];
+                    
                     // Turn the worldId and characterId as arrays
+                    // Due to IDs being unique, I only need to take the unique values.
                     result.map((user)=>{
-                        userWorlds.push(user.worldId)
-                        // Due to the design of the database, it is possible for a world to exist without a character
-                        // (that happens if you created a world and nothing is still in it yet)
-                        if(!user.characterId in userCharacters){
-                            userCharacters.push(user.characterId);
-                        }
+                        userWorldsTemp.push(user.worldId);
+                        userCharactersTemp.push(user.characterId);
                     })
+                    // Convert to set to make them unique
+                    const userWorldsSet = new Set(userWorldsTemp);
+                    const userWorlds = [...userWorldsSet]
+                    const userCharactersSet = new Set(userCharactersTemp);
+                    const userCharacters = [...userCharactersSet]
+
                     const ret = {
                         userId:result[0].userId,
                         userName:result[0].userName,
