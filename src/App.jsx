@@ -5,10 +5,6 @@ import setAuthToken from './setAuthToken';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // Only has top navbar, does not have any sidebar
 import RootPageLayoutRoutes from "./Layouts/RootPageLayoutRoutes";
-// Has a user sidebar
-import UserLayoutRoutes from "./Layouts/UserLayoutRoutes";
-// Has a world sidebar
-import WorldLayoutRoutes from "./Layouts/WorldLayoutRoutes";
 
 export default function App() {
     const [currentUserId, setCurrentUserId] = useState();
@@ -31,9 +27,8 @@ export default function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<RootPageLayoutRoutes currentUserId={currentUserId} setCurrentUserId={setCurrentUserId} />} />
-                <Route path="/users" element={<UserLayoutRoutes />} />
-                <Route path="/worlds" element={<WorldLayoutRoutes />}/>
+                <Route path="*" element={<RootPageLayoutRoutes currentUserId={currentUserId} setCurrentUserId={setCurrentUserId} />}>
+                </Route>
             </Routes>
         </Router>
     );

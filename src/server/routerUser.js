@@ -194,7 +194,7 @@ routerUser.put('/characters/:id', async (req,res)=>{
 // })
 
 // POST - messages
-routerUser.post('/messages/:id', async (req,res)=>{
+routerUser.post('/messages/', async (req,res)=>{
   try {
     let newMessage={
       // For some reason, when forms are submitted this way, the brackets come off
@@ -211,13 +211,13 @@ routerUser.post('/messages/:id', async (req,res)=>{
   }
 });
 // POST - posts
-routerUser.post('/posts/:id', async (req,res)=>{
+routerUser.post('/posts/', async (req,res)=>{
   try {
     let newPost={
       // For some reason, when forms are submitted this way, the brackets come off
       // "'" was added for strings and the date type for this reason
       messageTitle: "'" + req.body.messageTitle.replaceAll("'","\\'") + "'",
-      messageSenderId: req.params.id,
+      messageSenderId: req.body.messageSenderId,
       messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
     const result = await mysql_addPost(con, newPost);
@@ -233,7 +233,7 @@ routerUser.put('/messages/:id', async (req,res)=>{
     // a newCharacter object to be sent to SQL call 
     // messageReplyId and messageSenderId cannot be changed once message is sent
     const newMessage = {
-      messageId: req.body.messageId,
+      messageId: req.params.id,
       messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
 
@@ -251,10 +251,9 @@ routerUser.put('/messages/:id', async (req,res)=>{
 routerUser.put('/posts/:id', async (req,res)=>{
   // Instantiate newFacility object
   try {
-    // a newCharacter object to be sent to SQL call 
-    // postId
+    // a modified Post/Message object to be sent to SQL call
     const newPost = {
-      messageId: req.body.messageId,
+      messageId: req.params.id,
       messageContent: "'" + req.body.messageContent.replaceAll("'","\\'") + "'"
     }
 

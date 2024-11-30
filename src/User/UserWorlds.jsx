@@ -1,14 +1,11 @@
 import React from 'react'
-// TODO: Replace this with the back-end data
-// import assets from '../assets/producer.p_world.json'
-import SidebarUser from '../Layouts/SidebarUser';
 import {Link} from 'react-router-dom'
 
-const UserWorlds = (currentUserId, selectedUser) => {
-    // TODO: Back-end data
+const UserWorlds = (currentUserId, selectedUserId) => {
+    // TODO: construct user from given userId
     const [assets, setAssets] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/users/${selectedUser.userId}`)
+        axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
           .then(response => setAssets(response.data))
           .catch(error => console.log(error));
       }, []);
@@ -32,9 +29,9 @@ const UserWorlds = (currentUserId, selectedUser) => {
   const [worldTable, setWorldTable] = React.useState([]);
   const [varTable, setVarTable] = React.useState(0);
   useEffect(() => {
-      axios.get('http://localhost:3000/api/users')
-      .then(response => setUserTable(response.data))
-      .then(console.log(userTable)).then("Table Reset")
+      axios.get('http://localhost:3000/api/worlds')
+      .then(response => setWorldTable(response.data))
+      .then(console.log(worldTable)).then("Table Reset")
       .catch(error => console.log(error));
   }, [varTable]);
 
@@ -70,7 +67,6 @@ const UserWorlds = (currentUserId, selectedUser) => {
 
   return (
     <>
-      <SidebarUser selectedUser={selectedUser} />
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>

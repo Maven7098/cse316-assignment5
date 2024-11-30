@@ -10,18 +10,24 @@ function mysql_getSelectedCharacter(con, characterId){
             var sql = `SELECT * from characters WHERE characterId=${characterId};`
             con.query(sql, function (err, result) {
                 if (err) reject(err);
-                
-                // The fact that 1 character only belongs to 1 world is a design choice
-                const ret = {
-                    characterId: result.characterId,
-                    characterName: result.characterName,
-                    characterIcon: result.characterIcon,
-                    characterStory: result.characterStory,
-                    characterWorld: result.characterWorld,
-                    characterCreator: result.characterCreator
+                console.log(result);
+                if(result != undefined){
+                    // The fact that 1 character only belongs to 1 world is a design choice
+                    const ret = {
+                        characterId: result[0].characterId,
+                        characterName: result[0].characterName,
+                        characterIcon: result[0].characterIcon,
+                        characterStory: result[0].characterStory,
+                        characterWorld: result[0].characterWorld,
+                        characterCreator: result[0].characterCreator
+                    }
+                    // Resolve the character object we just created
+                    resolve(ret);
                 }
-                // Resolve the character object we just created
-                resolve(ret);
+                else{
+                    reject(characterId);
+                }
+                
             });
         });
     });

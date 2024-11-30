@@ -146,6 +146,7 @@ routerGuest.get('/characters/:id', async (req,res)=>{
           res.status(404).send('The character with given id was not found');
           return;
       }
+      console.log(result);
       res.send(result)
     } catch (err) {
       res.status(500).send({

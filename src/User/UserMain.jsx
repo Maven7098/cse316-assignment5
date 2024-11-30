@@ -1,13 +1,13 @@
 import React from 'react'
 import UserCharacters from './UserCharacters'
 import UserWorlds from './UserWorlds'
+import { useParams } from 'react-router-dom'
 
-const UserMain = (selectedUser) => {
-    JSON
+const UserMain = (currentUserId) => {
   return (
     <div>
-        <UserCharacters selectedUser={selectedUser} />
-        <UserWorlds selectedUser={selectedUser} />
+        <UserCharacters />
+        <UserWorlds currentUserId={currentUserId} />
     </div>
   )
 }
