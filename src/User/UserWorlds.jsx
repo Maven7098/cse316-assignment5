@@ -1,18 +1,15 @@
 import React from 'react'
-// TODO: Replace this with the back-end data
-import assets from '../assets/producer.p_world.json'
-import SidebarUser from '../Layouts/SidebarUser';
 import {Link} from 'react-router-dom'
 
-const UserWorlds = (currentUser, selectedUser) => {
-    // TODO: Back-end data
-    // const [assets, setAssets] = useState([]);
-    // useEffect(() => {
-    //     axios.get(`http://localhost:3000/api/users/${user.id}`)
-    //       .then(response => setAssets(response.data))
-    //       .catch(error => console.log(error));
-    //   }, []);
-    //   console.log(assets);
+const UserWorlds = (currentUserId, selectedUserId) => {
+    // TODO: construct user from given userId
+    const [assets, setAssets] = useState([]);
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
+          .then(response => setAssets(response.data))
+          .catch(error => console.log(error));
+      }, []);
+      console.log(assets);
 
   // TODO: Add a backend to send the messages over
   const [newWorld, setNewWorld] = React.useState({
@@ -31,12 +28,12 @@ const UserWorlds = (currentUser, selectedUser) => {
   // TODO: Get the world data from the backend
   const [worldTable, setWorldTable] = React.useState([]);
   const [varTable, setVarTable] = React.useState(0);
-  // useEffect(() => {
-  //     axios.get('http://localhost:3000/api/users')
-  //     .then(response => setUserTable(response.data))
-  //     .then(console.log(userTable)).then("Table Reset")
-  //     .catch(error => console.log(error));
-  // }, [varTable]);
+  useEffect(() => {
+      axios.get('http://localhost:3000/api/worlds')
+      .then(response => setWorldTable(response.data))
+      .then(console.log(worldTable)).then("Table Reset")
+      .catch(error => console.log(error));
+  }, [varTable]);
 
   const validateFail = (item) => {
       alert(item);
@@ -55,7 +52,7 @@ const UserWorlds = (currentUser, selectedUser) => {
       // BEYOND CSE316 - Longer posts? Or a word counter?
       // Should I prevent a creation of a world that shares an existing world or not?");
 
-      console.log(newWorld.worldName + " / " + newWorld.worldIcon + " / " + newWorld.worldStory + " / " + currentUser.userId);
+      console.log(newWorld.worldName + " / " + newWorld.worldIcon + " / " + newWorld.worldStory + " / " + currentUserId.userId);
       // axios.post('http://localhost:3000/api/users', null)
       // .catch((err)=>"Dummy Error to force 1st POST request");
       // // TODO: Send the user data to the database to create a new user
@@ -63,14 +60,13 @@ const UserWorlds = (currentUser, selectedUser) => {
       // postId: newPost.postId,
       // postTitle: newPost.postTitle,
       // postContent: newPost.postContent,
-      // postUserId: currentUser.userId,
+      // postUserId: currentUserId.userId,
       // }).then(validateFail("The facility is now reserved"))
       //   .catch(error => console.log(error));
   }
 
   return (
     <>
-      <SidebarUser selectedUser={selectedUser} />
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>

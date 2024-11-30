@@ -2,12 +2,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-// import axios from 'axios'
+import axios from 'axios'
+import { onChangeForm } from '../onChangeForm.js';
 
 import {State, useState} from 'react'
-import {Link, Outlet} from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
-// import { generate_hash } from '../hashutil.js'
+import { hashutil } from "../Hashutil.js";
+import Cookies from 'js-cookie'
 
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
@@ -21,65 +23,72 @@ import {Link, Outlet} from 'react-router-dom'
 
 // React states: How can I make sure the user is "logged in" or not?
 // Example from https://getbootstrap.com/docs/5.3/components/navbar/#offcanvas
-const NavbarGuest = () => {
+
+// TODO: Set the state to current user once you log in
+const NavbarGuest = ({setCurrentUserId}) => {
+    console.log(setCurrentUserId);
+
+    // Blank strings are given, as otherwise React will complain as if we are using uncontrolled forms
     const [newUser, setNewUser] = useState({
-        userName: undefined,
-        userPasswd: undefined,
-        userEmail: undefined
+        userName: '',
+        userPasswd: '',
+        userEmail: ''
     });
 
-    const onChangeForm = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        // Set the values in [Key,Value] pairs
-        setNewUser(values => ({...values, [name]: value}))
-    }
-
-    // TODO: Get the user data from the backend
-    const [userTable, setUserTable] = useState([]);
-    const [varTable, setVarTable] = useState(0);
-    // useEffect(() => {
-    //     axios.get('http://localhost:3000/api/users')
-    //     .then(response => setUserTable(response.data))
-    //     .then(console.log(userTable)).then("Table Reset")
-    //     .catch(error => console.log(error));
-    // }, [varTable]);
+    const [oldUser, setOldUser] = useState({
+        userName: '',
+        userPasswd: ''
+    })
 
     const validateFail = (item) => {
         alert(item);
-        console.log(userName);
-        console.log(userPasswd);
-        console.log(userEmail);
+        console.log(newUser.userName);
+        console.log(newUser.userPasswd);
+        console.log(newUser.userEmail);
     }
 
     const addNewUser = (event)=> {
-        // Force update of Table upon submission
-        setVarTable(varTable+1);
-
         // Prevent automatic reloading of page
         event.preventDefault();
 
-        // Prevent user creation if the combination of the userName and userPasswd exists in userTable
-        // AND, not OR
-        if(newUser.userName in userTable && newUser.userPasswd in userTable){
-            // We can make this look better, but that's for Beyond CSE316
-            validateFail("The user with the username and password combination exists.");
-        }
-
         // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
-        // const newPasswd = generate_hash(newUser.userEmail, newUser.userPasswd);
+        const newPasswd = hashutil(newUser.userName, newUser.userPasswd);
         console.log(newUser.userName, newUser.userPasswd, newUser.userEmail);
-        // axios.post('http://localhost:3000/api/users', null)
-        // .catch((err)=>"Dummy Error to force 1st POST request");
-        // // TODO: Send the user data to the database to create a new user
-        // axios.post('http://localhost:3000/api/users', {
-        //     userName: newUser.userName,
-        //     userPasswd: newPasswd,
-        //     userEmail: newUser.userEmail
-        // }).then(validateFail("The facility is now reserved"))
-        //   .catch(error => console.log(error));
+
+        // TODO: Send the user data to the database to create a new user
+        axios.post('http://localhost:3000/signup', {
+            userName: newUser.userName,
+            userPasswd: newPasswd,
+            userEmail: newUser.userEmail
+        }).then(validateFail("User Creation Success!"))
+          .catch(error => console.log(error));
     }
 
+    const loginUser = (event)=> {
+        // Prevent automatic reloading of page
+        event.preventDefault();
+
+        // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
+        const newPasswd = hashutil(oldUser.userName, oldUser.userPasswd);
+        console.log(oldUser.userName, oldUser.userPasswd);
+
+        // TODO: Send the user data to the database to log in
+        // TODO: Send the user data to the database to create a new user
+        axios.post('http://localhost:3000/login', {
+            userName: oldUser.userName,
+            userPasswd: newPasswd
+        }).then(function (response){
+            // Once authenticated, set the token and user
+            console.log(response.data);
+            Cookies.set("accessToken",response.data.accessToken);
+            Cookies.set("currentUser",response.data.user.userId);
+            console.log(Cookies.get());
+
+            setCurrentUserId(response.data.currentUser);
+            location.reload();
+        })
+          .catch(error => console.log(error));
+    }
 
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top">
@@ -98,18 +107,18 @@ const NavbarGuest = () => {
             {/* Guest Mode */}
             <div className="offcanvas-body">
                 {/* Register */}
-                <form>
+                <form onSubmit={addNewUser}>
                     {/* Name input */}
                     <label htmlFor="userName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={onChangeForm} /><br />
+                    <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
 
                     {/* Password input */}
                     <label htmlFor="userPasswd" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={onChangeForm} /><br />
+                    <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
 
                     {/* Email button */}
                     <label htmlFor="userEmail" className="col-sm-2 col-form-label">Email:</label>
-                    <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={onChangeForm} /><br />
+                    <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
                     
                     {/* TODO: Create a user with a userName, userPasswd and userEmail values */}
                     {/* Using POST request */}
@@ -119,13 +128,13 @@ const NavbarGuest = () => {
                 {/* Sign in */}
                 <span style={{marginRight: "16px"}}>Already registered?</span>
                 <button className="btn btn-outline-primary">Sign In</button>
-                <form>
+                <form onSubmit={loginUser}>
                     {/* Name input */}
-                    <label htmlFor="userName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" id="userName" name="userName" /><br />
+                    <label htmlFor="oldUserName" className="col-sm-2 col-form-label">Username:</label>
+                    <input type="text" className="form-control" id="oldUserName" name="userName" value={oldUser.userName} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
                     {/* Password input */}
-                    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" id="inputPassword" /><br />
+                    <label htmlFor="oldUserPasswd" className="col-sm-2 col-form-label">Password:</label>
+                    <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
                     {/* TODO: Fetch the user with the correct password and username from the database */}
                     {/* Using GET request */}
                     <button className="btn btn-primary">Sign In</button>
