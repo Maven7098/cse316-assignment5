@@ -98,6 +98,7 @@ const UserWorlds = ({currentUserId}) => {
             <button type="button" className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Create!</button>
             }
 
+            {/* Modal for creating a new World */}
             <div className="card-modal">
               <div className="modal fade" id={`writeModal`} tabIndex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -138,6 +139,7 @@ const UserWorlds = ({currentUserId}) => {
               </div>
             </div>
             
+            {/* Modal for existing worlds */}
             {worldTable.map((world) => (
                 // This consists of a world frame
                 <div className="grid-member card" style={{width: "18rem"}}>

@@ -85,6 +85,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
     }
 
   return (
+    <>
     <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
             {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
@@ -136,8 +137,9 @@ const NavbarGuest = ({setCurrentUserId}) => {
             </div>
             </div>
         </div>
-        <Outlet />
     </nav>
+    <Outlet />
+    </>
   )
 }
 

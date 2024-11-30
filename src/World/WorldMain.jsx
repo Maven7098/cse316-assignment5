@@ -1,22 +1,34 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import Navbar from '../Layouts/Navbar.jsx'
-// import NavbarGuest from './NavbarGuest.jsx'
-import NavbarWorld from './NavbarWorld.jsx'
-import './index.css'
-import AddUniverse from './AddUniverse.jsx'
+import React, { useState, useEffect } from 'react'
+import WorldCharacters from './WorldCharacters'
+import WorldMembers from './WorldMembers'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Navbar />
-    {/* <NavbarGuest /> */}
-    {/* Unfortunately, we cannot put Index as a child of SidebarUser */}
-    {/* Nor can I do without the two div's */}
-    <div className="container-fluid">
-      <div className="row flex-nowrap">
-        <NavbarWorld />
-        <AddUniverse />
-      </div>
+const UserMain = (currentUserId) => {
+  const selectedWorldId = useParams().worldId;
+  const [selectedWorld, setSelectedWorld] = useState();
+  useEffect(() => {
+  axios.get(`http://localhost:3000/api/worlds/${selectedWorldId}`)
+    // Grab only the titles; that's all what matters!
+    .then((response) => setSelectedWorld(response.data))
+    .catch(error => console.log(error))
+  }, []);
+
+  return (
+    <div>
+      {selectedWorld ?(
+        <div>
+          <h1>{selectedWorld.worldName}'s Story</h1>
+          <p>{selectedWorld.worldStory}</p>
+          <h2>Characters</h2>
+          <WorldCharacters />
+          <h2>Members</h2>
+          <WorldMembers currentUserId={currentUserId} />
+        </div>) : 
+        <h1>Loading</h1>
+      }
     </div>
-  </StrictMode>,
-)
+  )
+}
+
+export default UserMain

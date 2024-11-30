@@ -1,6 +1,6 @@
 export function validateFail (message, newItem) {
     alert(message);
-    for(item of newItem){
-        console.log(item);
+    for(const item in newItem){
+        console.log(newItem[item]);
     }
 }

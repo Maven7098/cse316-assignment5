@@ -24,7 +24,11 @@ function mysql_getSelectedUser(con, userId){
                     // Turn the worldId and characterId as arrays
                     result.map((user)=>{
                         userWorlds.push(user.worldId)
-                        userCharacters.push(user.characterId)
+                        // Due to the design of the database, it is possible for a world to exist without a character
+                        // (that happens if you created a world and nothing is still in it yet)
+                        if(!user.characterId in userCharacters){
+                            userCharacters.push(user.characterId);
+                        }
                     })
                     const ret = {
                         userId:result[0].userId,
