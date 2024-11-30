@@ -12,6 +12,7 @@ import UserWorlds from "../User/UserWorlds.jsx";
 import SidebarUser from './SidebarUser.jsx';
 import SidebarWorld from './SidebarWorld.jsx';
 
+import WorldMain from '../World/WorldMain.jsx'
 import WorldBulletins from '../World/WorldBulletins.jsx';
 import WorldCharacters from '../World/WorldCharacters.jsx';
 import WorldMembers from '../World/WorldMembers.jsx';
@@ -35,6 +36,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
                 <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} />} />
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
+                <Route index element={<WorldMain currentUserId={currentUserId} />} />
                 <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} />} />
                 <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId} />} />
                 <Route path={`members`} element={<WorldMembers />} />

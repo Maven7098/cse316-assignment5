@@ -17,16 +17,8 @@ const UserCharacters = () => {
   useEffect(() => {
     // Re-initialize table upon subsequent calls
     setSelectedUserCharacters([]);
-    axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
-      .then(function (response){
-        console.log(JSON.parse(response.data.userCharacters));
-        // Parse the useCharacters back into array, and map them to get the actual characters
-        JSON.parse(response.data.userCharacters).map((character)=>{axios.get(`http://localhost:3000/api/characters/${character}`)
-        .then((response)=>{
-          setSelectedUserCharacters(selectedUserCharacters => [...selectedUserCharacters, response.data])
-        })
-      }
-      )})
+    axios.get(`http://localhost:3000/api/users/characters/${selectedUserId}`)
+      .then(res => setSelectedUserCharacters(res.data))
       .catch(error => console.log(error))
   }, []);
 
@@ -56,7 +48,9 @@ const UserCharacters = () => {
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
-                          <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1].worldName}</Link>
+                          {worldList != undefined && (
+                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1]?.worldName}</Link>
+                          )}
                           {/* Upon clicking this button, a modal will pop up */}
                           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#characterModal${char.characterId}`}>More...</button>
                       </div>

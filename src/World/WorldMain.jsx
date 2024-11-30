@@ -10,9 +10,10 @@ const UserMain = (currentUserId) => {
   useEffect(() => {
   axios.get(`http://localhost:3000/api/worlds/${selectedWorldId}`)
     // Grab only the titles; that's all what matters!
-    .then((response) => setSelectedWorld(response.data))
+    .then(response => setSelectedWorld(response.data))
     .catch(error => console.log(error))
   }, []);
+  console.log(selectedWorld)
 
   return (
     <div>
