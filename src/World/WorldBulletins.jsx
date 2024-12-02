@@ -24,6 +24,17 @@ const WorldBulletins = ({currentUserId}) => {
         .catch(err => console.log(err))
     }, []);
 
+    const [globalCharacters, setGlobalCharacters] = useState([]);
+    // This is how we grab a list of characters.
+    useEffect(() => {
+      // Re-initialization for repeat calls
+      setGlobalCharacters([]);
+      axios.get(`http://localhost:3000/api/characters`)
+        .then(res => setGlobalCharacters(res.data))
+        .catch(err => console.log(err))
+    }, []);
+    console.log(globalCharacters)
+
     console.log(worldCharacters);
     
     // Does currentUser has a character in this world?
@@ -33,6 +44,9 @@ const WorldBulletins = ({currentUserId}) => {
     console.log(currentUserHasCharacter)
 
     // TODO: Add a backend to send the messages over
+    // messageId is not used for POST operations
+    // but used for reply (to retrieve the messageReplyId)
+    // and for PUT operations
     const [newMessage, setNewMessage] = useState({
       messageId: undefined,
       messageSenderId: undefined,
@@ -71,16 +85,34 @@ const WorldBulletins = ({currentUserId}) => {
 
         // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
         // const newPasswd = generate_hash(newUser.userEmail, newUser.userPasswd);
-        console.log(newMessage.messageTitle + " / " + newMessage.messageContent + " / " + currentUserId.userId);
+        console.log(newMessage.messageTitle + " / " + newMessage.messageContent + " / " + currentUserId);
         // TODO: Send the user data to the database to create a new post
         axios.post('http://localhost:3000/api/auth/messages', {
-        messageTitle: newMessage.messageTitle,
-        messageContent: newMessage.messageContent,
-        messageReplyId: newMessage.messageReplyId,
-        messageSenderId: newMessage.messageSenderId,
+          messageTitle: newMessage.messageTitle,
+          messageContent: newMessage.messageContent,
+          messageReplyId: newMessage.messageReplyId,
+          messageSenderId: newMessage.messageSenderId,
         }).then(validateFail("Message written!", newMessage))
           .catch(error => console.log(error));
     }
+
+    const modNewPost = (event)=> {
+      // Prevent automatic reloading of page
+      event.preventDefault();
+
+      // Force update of Table upon submission
+      setVarTable(varTable+1);
+
+      // BEYOND CSE316 - Longer posts? Or a word counter?
+
+      // Note: Message title cannot be edited!
+      console.log(newMessage.messageContent + " / " + currentUserId);
+      // TODO: Send the user data to the database to modify a post
+      axios.put(`http://localhost:3000/api/auth/messages/${newMessage.messageId}`, {
+        messageContent: newMessage.messageContent,
+      }).then(validateFail("Message written!", newMessage))
+        .catch(error => console.log(error));
+  }
 
   return (
     <>
@@ -91,7 +123,7 @@ const WorldBulletins = ({currentUserId}) => {
               {/* Only if the current user has a character in this world */}
               {/* If Write! button is used to write a message, set the replyId to 0 (no reply) */}
               {currentUserHasCharacter &&
-                <button type="button" onClick={() => setNewMessage(values => ({...values, messageReplyId: 0}))} className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
+                <button type="button" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: 0}))} className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
               }
               {/* A modal to write */}
               <div className="card-modal">
@@ -126,7 +158,44 @@ const WorldBulletins = ({currentUserId}) => {
                         <textarea value={newMessage.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control" maxLength={512}></textarea>
                         <br></br>
                         
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        {/* IF messageContent, messageTitle, messageSenderId are available, then click submit, else disable this button */}
+                        {(newMessage.messageContent && newMessage.messageTitle && newMessage.messageSenderId)
+                        ? <button type="submit" className="btn btn-primary">Submit</button>
+                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                      </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* A modal to edit */}
+              <div className="card-modal">
+                <div className="modal fade" id={`editModal`} tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="messageModalLabel">New Message</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                      <form onSubmit={modNewPost} className='realForm'>
+                        
+                        {/* Your message */}
+                        <label htmlFor="messageContent">Message: </label>
+                        <br></br>
+                        
+                        {/* The textarea for React is slightly different from normal HTML */}
+                        <textarea value={newMessage.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control" maxLength={512}></textarea>
+                        <br></br>
+                        
+                        {/* IF messageContent is available, then click submit, else disable this button */}
+                        {newMessage.messageContent
+                        ? <button type="submit" className="btn btn-primary">Submit</button>
+                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -139,21 +208,21 @@ const WorldBulletins = ({currentUserId}) => {
 
               {/* Post table mapping should only be done if messageTable has more than 1 entry*/}
               {/* else "messageTable is not a function" error is thrown */}
-              {messageTable.length > 0 &&
-                (messageTable.map((message) => (
+              {(messageTable.length > 0 && worldCharacters.length > 0) &&
+                (messageTable.toReversed().map((message) => (
                   // This consists of a card of a message
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">
                       <h5 className="card-title">{message.messageTitle}</h5>
                       {/* TODO: Add a character roundel image */}
-                      <p className="card-text">{message.messageSenderId}</p>
+                      <p className="card-text">{worldCharacters.find((character) => character.characterId === message.messageSenderId).characterName}</p>
                       <p className="card-text">{message.messageContent}</p>
                       {/* Upon clicking this button, a modal will pop up */}
                       <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#messageModal${message.messageId}`}>More...</button>
                       
                       {/* This is to reply to this message */}
                       {/* Set the reply message to the replyId of this message */}
-                      <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>
+                      {currentUserHasCharacter && <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>}
                     </div>
     
                     {/* A modal to read */}
@@ -172,6 +241,9 @@ const WorldBulletins = ({currentUserId}) => {
                               )}
                             </div>
                             <div className="modal-footer">
+                              {/* Edit button here */}
+                              {/* Will leave messageId as this even if other functions are called as the POST function does not require messageId as a requirement. */}
+                              {(worldCharacters.find((character) => character.characterId == message.messageSenderId).characterCreator == currentUserId) && <button type="button" className='btn btn-info' onClick={() => setNewMessage(values => ({...values, messageId: message.messageId, messageContent: message.messageContent}))} data-bs-toggle="modal" data-bs-target={`#editModal`} > Edit...</button>}
                               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                           </div>

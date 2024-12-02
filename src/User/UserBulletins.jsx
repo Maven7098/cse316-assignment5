@@ -50,6 +50,24 @@ const UserBulletins = ({currentUserId}) => {
         .catch(error => console.log(error));
   }
 
+  const modNewPost = (event)=> {
+    // Prevent automatic reloading of page
+    event.preventDefault();
+
+    // Force update of Table upon submission
+    setVarTable(varTable+1);
+
+    // BEYOND CSE316 - Longer posts? Or a word counter?
+
+    // Note: Message title cannot be edited!
+    console.log(newPost.messageContent + " / " + currentUserId);
+    // TODO: Send the user data to the database to modify a post
+    axios.put(`http://localhost:3000/api/auth/messages/${newPost.messageId}`, {
+      messageContent: newPost.messageContent,
+    }).then(validateFail("Message written!", newPost))
+      .catch(error => console.log(error));
+}
+
   return (
     <>
       {/* TODO: Import user bulletin list */}
@@ -82,7 +100,11 @@ const UserBulletins = ({currentUserId}) => {
                         {/* The textarea for React is slightly different from normal HTML */}
                         <textarea value={newPost.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewPost)} className="form-control" maxLength={512}></textarea>
                         <br></br>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+
+                        {/* Disable submit post until messageTitle and messageContent are ready */}
+                        {(newPost.messageTitle && newPost.messageContent)
+                        ? <button type="submit" className="btn btn-primary">Submit</button>
+                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -92,10 +114,46 @@ const UserBulletins = ({currentUserId}) => {
                   </div>
                 </div>
               </div>
+
+              {/* A modal to edit */}
+              <div className="card-modal">
+                <div className="modal fade" id={`editModal`} tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="messageModalLabel">New Message</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                      <form onSubmit={modNewPost} className='realForm'>
+                        
+                        {/* Your message */}
+                        <label htmlFor="messageContent">Story: </label>
+                        <br></br>
+                        
+                        {/* The textarea for React is slightly different from normal HTML */}
+                        <textarea value={newPost.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewPost)} className="form-control" maxLength={512}></textarea>
+                        <br></br>
+                        
+                        {/* IF messageContent is available, then click submit, else disable this button */}
+                        {newPost.messageContent
+                        ? <button type="submit" className="btn btn-primary">Submit</button>
+                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                      </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Post table mapping should only be done if postTable has more than 1 entry*/}
               {/* else "postTable is not a function" error is thrown */}
+              {/* postTable.toReversed().map allows me to see the posts in reverse order (newest first) */}
               {postTable.length > 0 &&
-                (postTable.map((post) => (
+                (postTable.toReversed().map((post) => (
                   // This consists of a card of a post
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">
@@ -118,6 +176,7 @@ const UserBulletins = ({currentUserId}) => {
                               <p>{post.messageContent}</p>
                             </div>
                             <div className="modal-footer">
+                            {(currentUserId == selectedUserId) && <button type="button" className='btn btn-info' onClick={() => setNewPost(values => ({...values, messageId: post.messageId, messageContent: post.messageContent}))} data-bs-toggle="modal" data-bs-target={`#editModal`} > Edit...</button>}
                               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                           </div>

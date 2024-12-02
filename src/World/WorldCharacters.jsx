@@ -120,7 +120,8 @@ useEffect(() => {
                         {/* The textarea for React is slightly different from normal HTML */}
                         <textarea value={newCharacter.characterStory} name='characterStory' onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={512}></textarea>
                         <br></br>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        {/* IF both characterName and characterStory is present, set submit, else set diabled */}
+                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -133,16 +134,21 @@ useEffect(() => {
 
               {/* Only render character frame if there is at least 1 character */}
               {characterList.length > 0 && (
-                characterList.map((char) => (
+                characterList.toReversed().map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
-                      <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
+                      {/* Insert character icon... Or throw placeholder if there is none */}
+                      {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                      <img src={`/${char.characterIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/user.png";
+                        }} className="card-img-top" alt={char.characterName}></img>
                       <div className="card-body">
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
                           {userList != undefined && (
-                            <Link to={`/users/${char.characterCreator}`} className="btn btn-primary"><i className="bi bi-house"></i>{userList[char.characterCreator - 1]?.userName}</Link>
+                            <Link to={`/users/${char.characterCreator}`} className="btn btn-primary"><i className="bi bi-house"></i>{userList.find((user)=>user.userId == char.characterCreator)?.userName}</Link>
                           )}
                           
                           {/* Upon clicking this button, a modal will pop up */}

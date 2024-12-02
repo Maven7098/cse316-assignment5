@@ -40,16 +40,21 @@ const UserCharacters = () => {
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
               {selectedUserCharacters.length > 0 && (
-                selectedUserCharacters.map((char) => (
+                selectedUserCharacters.toReversed().map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
-                      <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
+                      {/* Insert character icon... Or throw placeholder if there is none */}
+                      {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                      <img src={`/${char.characterIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/user.png";
+                        }} className="card-img-top" alt={char.characterName}></img>
                       <div className="card-body">
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
                           {worldList != undefined && (
-                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1]?.worldName}</Link>
+                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList.find((world)=>world.worldId == char.characterWorld)?.worldName}</Link>
                           )}
                           {/* Upon clicking this button, a modal will pop up */}
                           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#characterModal${char.characterId}`}>More...</button>

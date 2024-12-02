@@ -49,7 +49,12 @@ const SidebarUser = () => {
                 <ul className="nav nav-pills flex-column mb-auto">
                     <li className="nav-item">
                         <Link to={`/users/${selectedUser.userId}`}>
-                            <img src={`/${selectedUser.userIcon}`} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
+                            {/* Insert character icon... Or throw placeholder if there is none */}
+                            {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                            <img src={`/${selectedUser.userIcon}`} onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src="/src/server/placeholder/user.png";
+                                }} className="card-img-top" style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
                             <span aria-current="page">{selectedUser.userName}</span>
                         </Link>
                     </li>
