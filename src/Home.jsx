@@ -9,7 +9,7 @@ const Home = () => {
                     <h1>List of Worlds</h1>
                 </div>
                 <div>
-                    <HomeWorld />
+                    {/*<HomeWorld />*/}
                 </div>
             </div>
             <div>

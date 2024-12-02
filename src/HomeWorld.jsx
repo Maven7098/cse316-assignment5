@@ -1,29 +1,28 @@
+import axios from 'axios';
 import { react, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 
 const HomeWorld = () => {
     const [worldList, setWorldList] = useState([]);
+    const [userList, setUserList] = useState([]);
 
     useEffect(() => {
-        fetch("https://localhost:3000/worlds")
-            .then(response => {
-                if(!response.ok){
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const formatData = data.map(item => ({
-                    worldId: item.worldId,
-                    worldName: item.worldName,
-                    worldIcon: item.worldIcon,
-                    worldStory: item.worldStory,
-                    worldCreator: item.worldCreator
-                }
-                ));
-                setWorldList(formatData);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        axios.get(`http://localhost:3000/api/worlds`)
+          // Grab only the titles; that's all what matters!
+          .then((response) => setWorldList(response.data))
+          .catch(error => console.log(error))
     }, []);
+    
+    console.log("homeworld world list: ", worldList);
+
+    useEffect(() => {
+        // Re-initialize table upon subsequent calls
+        axios.get(`http://localhost:3000/api/users/`)
+          .then(res => setUserList(res.data))
+          .catch(error => console.log(error))
+      }, []);
+    
+      console.log("homechar user list: ", userList);
 
     if(!worldList){
         return(
