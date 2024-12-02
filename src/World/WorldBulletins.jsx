@@ -24,17 +24,6 @@ const WorldBulletins = ({currentUserId}) => {
         .catch(err => console.log(err))
     }, []);
 
-    const [globalCharacters, setGlobalCharacters] = useState([]);
-    // This is how we grab a list of characters.
-    useEffect(() => {
-      // Re-initialization for repeat calls
-      setGlobalCharacters([]);
-      axios.get(`http://localhost:3000/api/characters`)
-        .then(res => setGlobalCharacters(res.data))
-        .catch(err => console.log(err))
-    }, []);
-    console.log(globalCharacters)
-
     console.log(worldCharacters);
     
     // Does currentUser has a character in this world?
