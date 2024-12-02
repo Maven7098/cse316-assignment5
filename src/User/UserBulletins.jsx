@@ -4,7 +4,9 @@ import axios from 'axios';
 import { onChangeForm } from '../onChangeForm';
 import { validateFail } from '../validateFail';
 
-const UserBulletins = ({currentUserId}) => {
+import ReactPaginate from 'react-paginate';
+
+const UserBulletins = ({currentUserId, paginationOn}) => {
 
   // Due to the parameters being the user object itself
   // user.userId is the one to use
@@ -68,8 +70,53 @@ const UserBulletins = ({currentUserId}) => {
       .catch(error => console.log(error));
 }
 
+// TODO - Implement pagination
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 - 1 = 9 items per page. The user creation modal takes up 1 card, but is not part of the list.
+  const itemsPerPage = 9;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = postTable.toReversed().slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(postTable.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % postTable.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+    {/* Pagination */}
+    {paginationOn && (
+      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    )}
+
       {/* TODO: Import user bulletin list */}
       <div className="container-fluid">
           <div className="row flex-nowrap">
@@ -152,8 +199,8 @@ const UserBulletins = ({currentUserId}) => {
               {/* Post table mapping should only be done if postTable has more than 1 entry*/}
               {/* else "postTable is not a function" error is thrown */}
               {/* postTable.toReversed().map allows me to see the posts in reverse order (newest first) */}
-              {postTable.length > 0 &&
-                (postTable.toReversed().map((post) => (
+              {currentItems.length > 0 &&
+                (currentItems.map((post) => (
                   // This consists of a card of a post
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">

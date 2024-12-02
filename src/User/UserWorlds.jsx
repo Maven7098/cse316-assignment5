@@ -7,7 +7,9 @@ import {Link, useParams} from 'react-router-dom'
 import { onChangeForm } from '../onChangeForm';
 import { validateFail } from '../validateFail';
 
-const UserWorlds = ({currentUserId}) => {
+import ReactPaginate from 'react-paginate';
+
+const UserWorlds = ({currentUserId, paginationOn}) => {
   // Selected user Id is identical to parameters
   const selectedUserId = useParams().userId;
   
@@ -89,8 +91,53 @@ const UserWorlds = ({currentUserId}) => {
         .catch(error => console.log(error));
   }
 
+  // TODO - Implement pagination
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 - 1 = 9 items per page. The world creation modal takes up 1 card, but is not part of the list.
+  const itemsPerPage = 9;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = worldTable.toReversed().slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(worldTable.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % worldTable.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+    {/* Pagination */}
+    {paginationOn && (
+      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    )}
+
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
@@ -142,7 +189,7 @@ const UserWorlds = ({currentUserId}) => {
             </div>
             
             {/* Modal for existing worlds */}
-            {worldTable.map((world) => (
+            {currentItems.map((world) => (
                 // This consists of a world frame
                 <div className="grid-member card" style={{width: "18rem"}}>
                   <Link to={`/worlds/${world.worldId}`} currentUserId={currentUserId}>

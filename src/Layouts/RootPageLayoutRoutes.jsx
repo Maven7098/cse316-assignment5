@@ -31,15 +31,15 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
                 <Route index element={<UserMain currentUserId={currentUserId} />} />
-                <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} />} />
-                <Route path={`characters`} element={<UserCharacters />} />
-                <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} />} />
+                <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`characters`} element={<UserCharacters paginationOn={true}/>} />
+                <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} paginationOn={true} />} />
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
                 <Route index element={<WorldMain currentUserId={currentUserId} />} />
-                <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} />} />
-                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId} />} />
-                <Route path={`members`} element={<WorldMembers />} />
+                <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`members`} element={<WorldMembers paginationOn={true} />} />
               </Route>
             <Route path="/*" element={<ErrorPage />} />
           </Route>
@@ -57,13 +57,13 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
                 <Route index element={<UserMain currentUserId={currentUserId} />} />
-                <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} />} />
-                <Route path={`characters`} element={<UserCharacters />} />
-                <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} />} />
+                <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`characters`} element={<UserCharacters paginationOn={true} />} />
+                <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} paginationOn={true} />} />
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
-                <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} />} />
-                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId} />} />
+                <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId}  />} />
                 <Route path={`members`} element={<WorldMembers />} />
               </Route>
             <Route path="/*" element={<ErrorPage />} />

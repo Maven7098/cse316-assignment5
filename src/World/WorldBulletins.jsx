@@ -4,7 +4,9 @@ import axios from 'axios';
 import { onChangeForm } from '../onChangeForm';
 import { validateFail } from '../validateFail';
 
-const WorldBulletins = ({currentUserId}) => {
+import ReactPaginate from 'react-paginate';
+
+const WorldBulletins = ({currentUserId, paginationOn}) => {
     // Due to the parameters being the user object itself
     // user.userId is the one to use
     
@@ -103,8 +105,52 @@ const WorldBulletins = ({currentUserId}) => {
         .catch(error => console.log(error));
   }
 
+  // TODO - Implement pagination
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 - 1 = 9 items per page. The user creation modal takes up 1 card, but is not part of the list.
+  const itemsPerPage = 9;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = messageTable.toReversed().slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(messageTable.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % messageTable.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+    {paginationOn && (
+      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    )}
+
       <div className="container-fluid">
       <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
@@ -195,10 +241,10 @@ const WorldBulletins = ({currentUserId}) => {
                 </div>
               </div>
 
-              {/* Post table mapping should only be done if messageTable has more than 1 entry*/}
-              {/* else "messageTable is not a function" error is thrown */}
-              {(messageTable.length > 0 && worldCharacters.length > 0) &&
-                (messageTable.toReversed().map((message) => (
+              {/* Post table mapping should only be done if currentItems has more than 1 entry*/}
+              {/* else "currentItems is not a function" error is thrown */}
+              {(currentItems.length > 0 && worldCharacters.length > 0) &&
+                (currentItems.map((message) => (
                   // This consists of a card of a message
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">
