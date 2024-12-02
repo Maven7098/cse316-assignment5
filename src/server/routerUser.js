@@ -98,7 +98,6 @@ routerUser.post('/worlds/', async (req,res)=>{
     try {
       // a newWorld object to be sent to SQL call 
       const newWorld = {
-        worldId: req.params.id,
         worldName: "'" + req.body.worldName.replaceAll("'","\\'") + "'",
         worldIcon: "'" + req.body.worldIcon.replaceAll("'","\\'") + "'",
         worldStory: "'" + req.body.worldStory.replaceAll("'","\\'") + "'",
@@ -124,7 +123,6 @@ routerUser.put('/worlds/:id', async (req,res)=>{
       // worldCreator cannot be changed once created
       const newWorld = {
         worldId: req.params.id,
-        worldName: "'" + req.body.worldName.replaceAll("'","\\'") + "'",
         worldIcon: "'" + req.body.worldIcon.replaceAll("'","\\'") + "'",
         worldStory: "'" + req.body.worldStory.replaceAll("'","\\'") + "'"
       }
@@ -167,7 +165,6 @@ routerUser.put('/characters/:id', async (req,res)=>{
     // characterWorld and characterCreator cannot be changed once character is created
     const newCharacter = {
       characterId: req.params.id,
-      characterName: "'" + req.body.characterName.replaceAll("'","\\'") + "'",
       characterIcon: "'" + req.body.characterIcon.replaceAll("'","\\'") + "'",
       characterStory: "'" + req.body.characterStory.replaceAll("'","\\'") + "'"
     }
