@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -34,7 +34,7 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
     console.log(currentUserId);
     console.log(setCurrentUserId);
 
-    const [currentUser, setCurrentUser] = React.useState({
+    const [currentUser, setCurrentUser] = useState({
         userId: undefined,
         userName: '',
         userPasswd: '',
@@ -42,7 +42,7 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
         userEmail: ''
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${currentUserId}`)
           .then(response => setCurrentUser(response.data))
           .catch(error => console.log(error))
@@ -67,6 +67,11 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
         .catch(err=>console.log(err));
       }
 
+    // Set up a search query
+    const [searchQuery, setSearchQuery] = useState();
+
+    // How to set up a search menu?
+
     return (
         <>
         <nav className="navbar navbar-dark bg-dark">
@@ -77,8 +82,8 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
                 <div className="d-flex flex-row">
                     {/* Not sure if I need a search button */}
                     {/* Handy, but can also be used for doxxing or other bad faith actions */}
-                    <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <form className="d-flex" onSubmit={(event)=>{event.preventDefault(); console.log(searchQuery)}} role="search">
+                    <input className="form-control me-2" type="search" name="searchQuery" value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Search" aria-label="Search" />
                     <button className="btn btn-success" type="submit">Search</button>
                     </form>
 
