@@ -18,8 +18,6 @@ const UserMain = (currentUserId) => {
     <div>
       {selectedUser ?(
         <div>
-          <h1>{selectedUser.userName}'s Story</h1>
-          <p>{selectedUser.userStory}</p>
           <h2>{selectedUser.userName}'s Characters</h2>
           <UserCharacters />
           <h2>{selectedUser.userName}'s Worlds</h2>
