@@ -60,7 +60,7 @@ import mysql_getUserCharacters from './sql_modules/sql_getUserCharacters';
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "pass4root",
+  password: "jiwoo@mysql0404",
   database: "cse316_assignment5"
 });
 

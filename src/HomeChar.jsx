@@ -4,7 +4,7 @@ const HomeChar = () => {
     const [charList, setCharList] = useState([]);
 
     useEffect(() => {
-        fetch("https://localhost:3000/users")
+        axios.post("https://localhost:3000/users")
             .then(response => {
                 if(!response.ok){
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -16,14 +16,16 @@ const HomeChar = () => {
                     charId: item.characterId,
                     charName: item.characterName,
                     charIcon: item.characterIcon,
-                    userIcon: item.userIcon,
-                    userEmail: item.userEmail
+                    charStory: item.characterStory,
+                    charWorld: item.characterWorld,
+                    charCreator: item.characterCreator
                 }
                 ));
                 setCharList(formatData);
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
+    
 
     
 

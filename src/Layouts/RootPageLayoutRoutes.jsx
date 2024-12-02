@@ -55,7 +55,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
       <>
         <Routes>
             <Route path="/" element={<NavbarGuest setCurrentUserId={setCurrentUserId} />}>
-              {/* <Route index element={<Home />} /> */}
+              { <Route index element={<Home />} /> }
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
                 <Route index element={<UserMain currentUserId={currentUserId} />} />
