@@ -111,7 +111,9 @@ const WorldBulletins = ({currentUserId, paginationOn}) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   // 10 - 1 = 9 items per page. The user creation modal takes up 1 card, but is not part of the list.
-  const itemsPerPage = 9;
+  let itemsPerPage = 10;
+  if(currentUserHasCharacter?.length > 0)
+    itemsPerPage = 9;
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = messageTable.toReversed().slice(itemOffset, endOffset);

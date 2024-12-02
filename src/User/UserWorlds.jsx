@@ -17,6 +17,10 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
   // This is how we grab a list of characters in this user.
   const [worldTable, setWorldTable] = useState([]);
   const [varTable, setVarTable] = useState(0);
+
+  // Did you create this world?
+  const [onlyCreated, setOnlyCreated] = useState(false);
+
   useEffect(() => {
     // Re-initialize table upon subsequent calls
     setWorldTable([]);
@@ -97,11 +101,17 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   // 10 - 1 = 9 items per page. The world creation modal takes up 1 card, but is not part of the list.
-  const itemsPerPage = 9;
+  let itemsPerPage = 10;
+  if(currentUserId == selectedUserId)
+    itemsPerPage = 9;
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = worldTable.toReversed().slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(worldTable.length / itemsPerPage);
+  let currentItems = worldTable.toReversed().slice(itemOffset, endOffset);
+  let pageCount = Math.ceil(worldTable.length / itemsPerPage);
+  if(onlyCreated){
+    currentItems = worldTable.filter((world)=>world.worldCreator == selectedUserId).slice(itemOffset, endOffset) 
+    pageCount = Math.ceil(worldTable.filter((world)=>world.worldCreator == selectedUserId).length / itemsPerPage);
+  }
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -114,9 +124,10 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
 
   return (
     <>
-    {/* Pagination */}
+    {/* Pagination and switch */}
     {paginationOn && (
-      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <>
+      {/* Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
       <ReactPaginate
         previousLabel="<<"
         nextLabel=">>"
@@ -136,6 +147,15 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
         containerClassName="pagination"
         activeClassName="active"
       />
+
+      {/* Filter if this world was created by you or not */}
+      <div class="form-check form-switch" style={{marginLeft:"300px"}}>
+        <input class="form-check-input" type="checkbox" role="switch" checked={onlyCreated} onClick={() => setOnlyCreated(!onlyCreated)} id="flexSwitchCheckDefault" />
+        {/* Find the current username, since I did not bring the user data here */}
+        <label class="form-check-label" for="flexSwitchCheckDefault">Worlds created by {users.find((user)=> user.userId == selectedUserId)?.userName}</label>
+      </div>
+
+      </>
     )}
 
         <div className="container-fluid">
@@ -204,8 +224,7 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
                         <h5 className="card-title">{world.worldName}</h5>
                         <p className="card-text">{world.worldStory}</p>
                       {/* Upon clicking this button, the user will be sent to the creator of this world */}
-                      {/* TODO: How to pass children if we were to travel through links? */}
-                      {/* Also, world.worldCreator - 1 since SQL is 1-indexed but JS is 0-indexed - preventing off-by-one errors- */}
+                      {/* users.find((user)=> user.userId == world.worldCreator)?.userName - Find the user from users, where world.worldCreator matches userName */}
                       <Link className="btn btn-primary" to={`/users/${world.worldCreator}`}><i className="bi bi-people"></i>{users.find((user)=> user.userId == world.worldCreator)?.userName}</Link>
                     </div>
                   </div>

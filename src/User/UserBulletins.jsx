@@ -76,7 +76,9 @@ const UserBulletins = ({currentUserId, paginationOn}) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   // 10 - 1 = 9 items per page. The user creation modal takes up 1 card, but is not part of the list.
-  const itemsPerPage = 9;
+  let itemsPerPage = 10;
+  if(currentUserId == selectedUserId)
+    itemsPerPage = 9;
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = postTable.toReversed().slice(itemOffset, endOffset);
