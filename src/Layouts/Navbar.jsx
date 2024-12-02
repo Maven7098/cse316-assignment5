@@ -113,9 +113,8 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
                             {/* Other actions with your profile */}
                             <li className="nav-item">
                                 {/* Chose to do 3 for the sake of rule of 3 */}
-                                <Link className="Navbar-item" to={`users/${currentUser.userId}/profile`}>Profile</Link>
-                                <br />
-                                <button className="Navbar-item" onClick={logout}>Sign out</button>
+                                <Link className="nav-link" to={`users/${currentUser.userId}/profile`}>Profile</Link>
+                                <button className="btn btn-primary" onClick={logout}>Sign out</button>
                             </li>
                         </ul>
                     </div>
