@@ -209,7 +209,7 @@ const WorldBulletins = ({currentUserId}) => {
               {/* Post table mapping should only be done if messageTable has more than 1 entry*/}
               {/* else "messageTable is not a function" error is thrown */}
               {(messageTable.length > 0 && worldCharacters.length > 0) &&
-                (messageTable.map((message) => (
+                (messageTable.toReversed().map((message) => (
                   // This consists of a card of a message
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">

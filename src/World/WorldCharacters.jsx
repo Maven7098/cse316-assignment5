@@ -134,7 +134,7 @@ useEffect(() => {
 
               {/* Only render character frame if there is at least 1 character */}
               {characterList.length > 0 && (
-                characterList.map((char) => (
+                characterList.toReversed().map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
                       {/* Insert character icon... Or throw placeholder if there is none */}

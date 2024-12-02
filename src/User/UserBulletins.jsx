@@ -82,7 +82,11 @@ const UserBulletins = ({currentUserId}) => {
                         {/* The textarea for React is slightly different from normal HTML */}
                         <textarea value={newPost.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewPost)} className="form-control" maxLength={512}></textarea>
                         <br></br>
-                        <button type="submit" className="btn btn-primary">Submit</button>
+
+                        {/* Disable submit post until messageTitle and messageContent are ready */}
+                        {(newPost.messageTitle && newPost.messageContent)
+                        ? <button type="submit" className="btn btn-primary">Submit</button>
+                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -94,8 +98,9 @@ const UserBulletins = ({currentUserId}) => {
               </div>
               {/* Post table mapping should only be done if postTable has more than 1 entry*/}
               {/* else "postTable is not a function" error is thrown */}
+              {/* postTable.toReversed().map allows me to see the posts in reverse order (newest first) */}
               {postTable.length > 0 &&
-                (postTable.map((post) => (
+                (postTable.toReversed().map((post) => (
                   // This consists of a card of a post
                   <div className="grid-member card" style={{width: "18rem"}}>
                     <div className="card-body">

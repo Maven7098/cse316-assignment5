@@ -40,7 +40,7 @@ const UserCharacters = () => {
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
               {selectedUserCharacters.length > 0 && (
-                selectedUserCharacters.map((char) => (
+                selectedUserCharacters.toReversed().map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
                       {/* Insert character icon... Or throw placeholder if there is none */}
