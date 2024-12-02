@@ -60,7 +60,7 @@ const WorldBulletins = ({currentUserId}) => {
         axios.get(`http://localhost:3000/api/messages/${selectedWorld}`)
         .then(response => setMessageTable(response.data))
         .catch(error => console.log(error));
-    }, [varTable]);
+    }, [varTable, selectedWorld]);
     console.log(messageTable)
 
     const addNewPost = (event)=> {
@@ -111,7 +111,7 @@ const WorldBulletins = ({currentUserId}) => {
               {/* TODO: Add a modal form to write a new message */}
               {/* Only if the current user has a character in this world */}
               {/* If Write! button is used to write a message, set the replyId to 0 (no reply) */}
-              {currentUserHasCharacter &&
+              {currentUserHasCharacter.length > 0 &&
                 <button type="button" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: 0}))} className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
               }
               {/* A modal to write */}
@@ -211,7 +211,7 @@ const WorldBulletins = ({currentUserId}) => {
                       
                       {/* This is to reply to this message */}
                       {/* Set the reply message to the replyId of this message */}
-                      {currentUserHasCharacter && <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>}
+                      {currentUserHasCharacter.length > 0 && <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>}
                     </div>
     
                     {/* A modal to read */}

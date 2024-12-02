@@ -12,7 +12,7 @@ const UserMain = (currentUserId) => {
     // Grab only the titles; that's all what matters!
     .then((response) => setSelectedUser(response.data))
     .catch(error => console.log(error))
-  }, []);
+  }, [selectedUserId]);
 
   return (
     <div>

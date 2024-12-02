@@ -27,7 +27,7 @@ const UserBulletins = ({currentUserId}) => {
       axios.get(`http://localhost:3000/api/posts/${selectedUserId}`)
       .then(response => setPostTable(response.data))
       .catch(error => console.log(error));
-  }, [varTable]);
+  }, [varTable, selectedUserId]);
 
   const addNewPost = (event)=> {
       // Prevent automatic reloading of page

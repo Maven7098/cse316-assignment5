@@ -165,6 +165,7 @@ routerUser.put('/characters/:id', async (req,res)=>{
     // characterWorld and characterCreator cannot be changed once character is created
     const newCharacter = {
       characterId: req.params.id,
+      characterName: "'" + req.body.characterName.replaceAll("'","\\'") + "'",
       characterIcon: "'" + req.body.characterIcon.replaceAll("'","\\'") + "'",
       characterStory: "'" + req.body.characterStory.replaceAll("'","\\'") + "'"
     }

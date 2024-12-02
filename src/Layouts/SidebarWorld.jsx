@@ -40,7 +40,7 @@ const SidebarUser = () => {
         axios.get(`http://localhost:3000/api/worlds/${selectedWorldId}`)
           .then(response => setSelectedWorld(response.data))
           .catch(error => console.log(error))
-        }, []);
+        }, [selectedWorldId]);
     console.log(selectedWorld);
 
     return (

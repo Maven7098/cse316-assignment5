@@ -33,7 +33,7 @@ const UserWorlds = ({currentUserId}) => {
           })
           .catch(error => console.log(error))
         })})
-      }, [varTable]);
+      }, [varTable, selectedUserId]);
 
   // TODO: Add a backend to send the messages over
   const [newWorld, setNewWorld] = useState({
