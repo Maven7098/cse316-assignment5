@@ -63,7 +63,7 @@ import mysql_modSelectedPost from './sql_modules/sql_modSelectedPost.js'; // Sho
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "jiwoo@mysql0404",
+  password: "pass4root",
   database: "cse316_assignment5"
 });
 
@@ -94,7 +94,7 @@ routerUser.put('/users/:id', async (req,res)=>{
 
 // POST - worlds
 routerUser.post('/worlds/', async (req,res)=>{
-    // Instantiate newFacility object
+    // Instantiate newWorld object
     try {
       // a newWorld object to be sent to SQL call 
       const newWorld = {
@@ -117,7 +117,7 @@ routerUser.post('/worlds/', async (req,res)=>{
 
 // PUT - worlds
 routerUser.put('/worlds/:id', async (req,res)=>{
-    // Instantiate newFacility object
+    // Instantiate newWorld object
     try {
       // a newWorld object to be sent to SQL call 
       // worldCreator cannot be changed once created
@@ -159,7 +159,7 @@ routerUser.post('/characters', async (req,res)=>{
 
 // PUT - characters
 routerUser.put('/characters/:id', async (req,res)=>{
-  // Instantiate newFacility object
+  // Instantiate newCharacter object
   try {
     // a newCharacter object to be sent to SQL call 
     // characterWorld and characterCreator cannot be changed once character is created
@@ -226,9 +226,9 @@ routerUser.post('/posts/', async (req,res)=>{
 });
 // PUT - messages
 routerUser.put('/messages/:id', async (req,res)=>{
-  // Instantiate newFacility object
+  // Instantiate new new message object
   try {
-    // a newCharacter object to be sent to SQL call 
+    // a new message object to be sent to SQL call 
     // messageReplyId and messageSenderId cannot be changed once message is sent
     const newMessage = {
       messageId: req.params.id,
@@ -247,7 +247,7 @@ routerUser.put('/messages/:id', async (req,res)=>{
 });
 // PUT - posts
 routerUser.put('/posts/:id', async (req,res)=>{
-  // Instantiate newFacility object
+  // Instantiate newPost object
   try {
     // a modified Post/Message object to be sent to SQL call
     const newPost = {
