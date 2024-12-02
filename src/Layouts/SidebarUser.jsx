@@ -40,7 +40,7 @@ const SidebarUser = () => {
         axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
           .then(response => setSelectedUser(response.data))
           .catch(error => console.log(error))
-        }, []);
+        }, [selectedUserId]);
     console.log(selectedUser);
 
     return (

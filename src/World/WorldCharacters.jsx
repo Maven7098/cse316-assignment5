@@ -35,6 +35,7 @@ useEffect(() => {
 
   // TODO: Add a backend to send the messages over
   const [newCharacter, setNewCharacter] = useState({
+    characterId: undefined,
     characterName: "",
     characterStory: "",
     characterIcon: ""
@@ -79,6 +80,25 @@ useEffect(() => {
       });
   }
 
+  // Now for modified character
+  const modNewCharacter = (event)=> {
+    // Prevent automatic reloading of page
+    event.preventDefault();
+
+    // Force update of Table upon submission
+    setVarTable(varTable+1);
+    
+    console.log(newCharacter)
+    axios.put(`http://localhost:3000/api/auth/characters/${newCharacter.characterId}`, {
+      characterName: newCharacter.characterName,
+      characterIcon: newCharacter.characterIcon,
+      characterStory: newCharacter.characterStory
+      }).then(validateFail("Congratulations in the creation of a new character!", newCharacter))
+    .catch(error => {
+      console.log(error);
+    });
+}
+
   return (
     <>
         <div className="container-fluid">
@@ -101,13 +121,13 @@ useEffect(() => {
                       </div>
                       <div className="modal-body">
                       <form onSubmit={addNewCharacter} className='realForm'>
-                        {/* World Name */}
+                        {/* Character Name */}
                         <label htmlFor="characterName" className="form-label">Name: </label>
                         <br></br>
                         <input type="text" name="characterName" value={newCharacter.characterName} onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={256}></input>
                         <br></br>
 
-                        {/* World Icon */}
+                        {/* Character Icon */}
                         <label htmlFor="characterIcon" className="form-label">Image: </label>
                         <br></br>
                         <input type="file" name="image" onChange={event => setImage(event.target.files[0])} className="form-control"></input>
@@ -121,7 +141,49 @@ useEffect(() => {
                         <textarea value={newCharacter.characterStory} name='characterStory' onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={512}></textarea>
                         <br></br>
                         {/* IF both characterName and characterStory is present, set submit, else set diabled */}
-                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button> : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
+                      </form>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal for modifying an existing character */}
+              <div className="card-modal">
+                <div className="modal fade" id={`editModal`} tabIndex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="postModalLabel">Modify This Character</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                      <form onSubmit={modNewCharacter} className='realForm'>
+                        {/* Character Name */}
+                        <label htmlFor="characterName" className="form-label">Name: </label>
+                        <br></br>
+                        <input type="text" name="characterName" value={newCharacter.characterName} onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={256}></input>
+                        <br></br>
+
+                        {/* Character Icon */}
+                        <label htmlFor="characterIcon" className="form-label">Image: </label>
+                        <br></br>
+                        <input type="file" name="image" onChange={event => setImage(event.target.files[0])} className="form-control"></input>
+                        <br></br>
+
+                        {/* Your story */}
+                        <label htmlFor="characterStory">Backstory: </label>
+                        <br></br>
+
+                        {/* The textarea for React is slightly different from normal HTML */}
+                        <textarea value={newCharacter.characterStory} name='characterStory' onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={512}></textarea>
+                        <br></br>
+                        {/* IF both characterName and characterStory is present, set submit, else set diabled */}
+                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button> : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -168,6 +230,11 @@ useEffect(() => {
                                 <p>{char.characterStory}</p>
                               </div>
                               <div className="modal-footer">
+                                {/* If you are the owner of this character, modify it! */}
+                                {/* Will leave messageId as this even if other functions are called as the POST function does not require messageId as a requirement. */}
+                                {/* Unlike Worlds, Posts or Messages, Characters can be renamed */}
+                                {(char.characterCreator == currentUserId) && <button type="button" className='btn btn-info'
+                                onClick={() => setNewCharacter(values => ({...values, characterId: char.characterId, characterName: char.characterName, characterStory: char.characterStory, characterIcon: char.characterIcon}))} data-bs-toggle="modal" data-bs-target={`#editModal`} > Edit...</button>}
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                               </div>
                             </div>

@@ -5,7 +5,7 @@ function mysql_modSelectedWorld(con, newWorld){
         if (err) throw err;
         console.log("Connected!");
         // As stated in README_MySQL.txt, I will merge this with the facilities list whose facility ID match the facility ID provided in each reservation.
-        var sql = `UPDATE worlds SET worldId=${newWorld.worldId}, worldName=${newWorld.worldName}, worldIcon=${newWorld.worldIcon}, worldStory=${newWorld.worldStory} WHERE worldId=${newWorld.worldId} ;`
+        var sql = `UPDATE worlds SET worldIcon=${newWorld.worldIcon}, worldStory=${newWorld.worldStory} WHERE worldId=${newWorld.worldId} ;`
         con.query(sql, function (err, result) {
             if (err) throw err;
             console.log(result);

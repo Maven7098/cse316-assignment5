@@ -54,7 +54,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
             userName: newUser.userName,
             userPasswd: newPasswd,
             userEmail: newUser.userEmail
-        }).then(validateFail("User Creation Success!", userName))
+        }).then(validateFail("User Creation Success!", newUser))
           .catch(error => console.log(error));
     }
 

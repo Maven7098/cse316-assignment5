@@ -20,7 +20,7 @@ const UserCharacters = () => {
     axios.get(`http://localhost:3000/api/users/characters/${selectedUserId}`)
       .then(res => setSelectedUserCharacters(res.data))
       .catch(error => console.log(error))
-  }, []);
+  }, [selectedUserId]);
 
   console.log(selectedUserCharacters)
 
@@ -31,7 +31,7 @@ const UserCharacters = () => {
     // Grab only the titles; that's all what matters!
     .then((response) => setWorldList(response.data))
     .catch(error => console.log(error))
-  }, []);
+  }, [selectedUserId]);
 
   return (
     <>
