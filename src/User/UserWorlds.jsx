@@ -130,7 +130,7 @@ const UserWorlds = ({currentUserId}) => {
                       {/* The textarea for React is slightly different from normal HTML */}
                       <textarea value={newWorld.worldStory} name='worldStory' onChange={(event)=>onChangeForm(event, setNewWorld)} className="form-control" maxLength={512}></textarea>
                       <br></br>
-                      {(newWorld.worldStory && newWorld.worldName) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                      {(newWorld.worldStory && newWorld.worldName) ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button> : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                     </form>
                     </div>
                     <div className="modal-footer">

@@ -103,8 +103,8 @@ const UserBulletins = ({currentUserId}) => {
 
                         {/* Disable submit post until messageTitle and messageContent are ready */}
                         {(newPost.messageTitle && newPost.messageContent)
-                        ? <button type="submit" className="btn btn-primary">Submit</button>
-                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                        : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -137,8 +137,8 @@ const UserBulletins = ({currentUserId}) => {
                         
                         {/* IF messageContent is available, then click submit, else disable this button */}
                         {newPost.messageContent
-                        ? <button type="submit" className="btn btn-primary">Submit</button>
-                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                        : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">

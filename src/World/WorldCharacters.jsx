@@ -141,7 +141,7 @@ useEffect(() => {
                         <textarea value={newCharacter.characterStory} name='characterStory' onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={512}></textarea>
                         <br></br>
                         {/* IF both characterName and characterStory is present, set submit, else set diabled */}
-                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button> : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -183,7 +183,7 @@ useEffect(() => {
                         <textarea value={newCharacter.characterStory} name='characterStory' onChange={(event)=>onChangeForm(event, setNewCharacter)} className="form-control" maxLength={512}></textarea>
                         <br></br>
                         {/* IF both characterName and characterStory is present, set submit, else set diabled */}
-                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        {(newCharacter.characterName && newCharacter.characterStory) ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button> : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">

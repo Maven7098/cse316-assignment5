@@ -149,8 +149,8 @@ const WorldBulletins = ({currentUserId}) => {
                         
                         {/* IF messageContent, messageTitle, messageSenderId are available, then click submit, else disable this button */}
                         {(newMessage.messageContent && newMessage.messageTitle && newMessage.messageSenderId)
-                        ? <button type="submit" className="btn btn-primary">Submit</button>
-                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                        : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
@@ -183,8 +183,8 @@ const WorldBulletins = ({currentUserId}) => {
                         
                         {/* IF messageContent is available, then click submit, else disable this button */}
                         {newMessage.messageContent
-                        ? <button type="submit" className="btn btn-primary">Submit</button>
-                        : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
+                        ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                        : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                       </form>
                       </div>
                       <div className="modal-footer">
