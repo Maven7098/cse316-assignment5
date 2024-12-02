@@ -7,7 +7,9 @@ import {Link, useParams} from 'react-router-dom'
 import { onChangeForm } from '../onChangeForm';
 import { validateFail } from '../validateFail';
 
-const UserWorlds = ({currentUserId}) => {
+import ReactPaginate from 'react-paginate';
+
+const UserWorlds = ({currentUserId, paginationOn}) => {
   // Selected user Id is identical to parameters
   const selectedUserId = useParams().userId;
   
@@ -15,6 +17,10 @@ const UserWorlds = ({currentUserId}) => {
   // This is how we grab a list of characters in this user.
   const [worldTable, setWorldTable] = useState([]);
   const [varTable, setVarTable] = useState(0);
+
+  // Did you create this world?
+  const [onlyCreated, setOnlyCreated] = useState(false);
+
   useEffect(() => {
     // Re-initialize table upon subsequent calls
     setWorldTable([]);
@@ -89,8 +95,69 @@ const UserWorlds = ({currentUserId}) => {
         .catch(error => console.log(error));
   }
 
+  // TODO - Implement pagination
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 - 1 = 9 items per page. The world creation modal takes up 1 card, but is not part of the list.
+  let itemsPerPage = 10;
+  if(currentUserId == selectedUserId)
+    itemsPerPage = 9;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  let currentItems = worldTable.toReversed().slice(itemOffset, endOffset);
+  let pageCount = Math.ceil(worldTable.length / itemsPerPage);
+  if(onlyCreated){
+    currentItems = worldTable.filter((world)=>world.worldCreator == selectedUserId).slice(itemOffset, endOffset) 
+    pageCount = Math.ceil(worldTable.filter((world)=>world.worldCreator == selectedUserId).length / itemsPerPage);
+  }
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % worldTable.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+    {/* Pagination and switch */}
+    {paginationOn && (
+      <>
+      {/* Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+
+      {/* Filter if this world was created by you or not */}
+      <div class="form-check form-switch" style={{marginLeft:"300px"}}>
+        <input class="form-check-input" type="checkbox" role="switch" checked={onlyCreated} onClick={() => setOnlyCreated(!onlyCreated)} id="flexSwitchCheckDefault" />
+        {/* Find the current username, since I did not bring the user data here */}
+        <label class="form-check-label" for="flexSwitchCheckDefault">Worlds created by {users.find((user)=> user.userId == selectedUserId)?.userName}</label>
+      </div>
+
+      </>
+    )}
+
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
@@ -142,7 +209,7 @@ const UserWorlds = ({currentUserId}) => {
             </div>
             
             {/* Modal for existing worlds */}
-            {worldTable.map((world) => (
+            {currentItems.map((world) => (
                 // This consists of a world frame
                 <div className="grid-member card" style={{width: "18rem"}}>
                   <Link to={`/worlds/${world.worldId}`} currentUserId={currentUserId}>
@@ -157,8 +224,7 @@ const UserWorlds = ({currentUserId}) => {
                         <h5 className="card-title">{world.worldName}</h5>
                         <p className="card-text">{world.worldStory}</p>
                       {/* Upon clicking this button, the user will be sent to the creator of this world */}
-                      {/* TODO: How to pass children if we were to travel through links? */}
-                      {/* Also, world.worldCreator - 1 since SQL is 1-indexed but JS is 0-indexed - preventing off-by-one errors- */}
+                      {/* users.find((user)=> user.userId == world.worldCreator)?.userName - Find the user from users, where world.worldCreator matches userName */}
                       <Link className="btn btn-primary" to={`/users/${world.worldCreator}`}><i className="bi bi-people"></i>{users.find((user)=> user.userId == world.worldCreator)?.userName}</Link>
                     </div>
                   </div>

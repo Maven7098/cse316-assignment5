@@ -1,14 +1,12 @@
 import React from 'react'
-
 import { useState, useEffect } from 'react';
 
 import axios from 'axios';
-
 import {Link, useParams} from 'react-router-dom'
 
-// TODO: Replace this with the back-end data
+import ReactPaginate from 'react-paginate';
 
-const UserCharacters = () => {
+const WorldMembers = ({paginationOn}) => {
   const selectedWorldId = useParams().worldId;
   // Get a list of members from this world.
     const [memberList, setMemberList] = useState([]);
@@ -30,14 +28,57 @@ useEffect(() => {
     .catch(error => console.log(error))
   }, []);
 
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 items per page
+  const itemsPerPage = 10;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = memberList.toReversed().slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(memberList.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % memberList.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+     {paginationOn && (
+      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    )}
+
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render user frame if there is at least 1 member */}
-              {memberList.length > 0 && (
-                memberList.map((user) => (
+              {currentItems.length > 0 && (
+                currentItems.map((user) => (
                   // This consists of a character frame
                   <Link to={`/users/${user.userId}`} className="grid-member card" style={{width: "18rem"}}>
                       {/* Insert character icon... Or throw placeholder if there is none */}
@@ -60,4 +101,4 @@ useEffect(() => {
   )
 }
 
-export default UserCharacters
+export default WorldMembers

@@ -6,9 +6,12 @@ import axios from 'axios';
 
 import {Link, useParams} from 'react-router-dom'
 
+import ReactPaginate from 'react-paginate';
+
 // TODO: Replace this with the back-end data
 
-const UserCharacters = () => {
+// paginationOn - enable pagination clicker (it is not enabled for overview pages)
+const UserCharacters = ({paginationOn}) => {
   const selectedUserId = useParams().userId;
   // Get a list of characters from this user.
   const [selectedUserCharacters, setSelectedUserCharacters] = useState([]);
@@ -33,14 +36,56 @@ const UserCharacters = () => {
     .catch(error => console.log(error))
   }, [selectedUserId]);
 
+  // Here we use item offsets; we could also use page offsets
+  // following the API or data you're working with.
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // 10 items per page
+  const itemsPerPage = 10;
+  const endOffset = itemOffset + itemsPerPage;
+  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  const currentItems = selectedUserCharacters.toReversed().slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(selectedUserCharacters.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % selectedUserCharacters.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
+    {paginationOn && (
+      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+      <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName="pagination"
+        activeClassName="active"
+      />
+    )}
         <div className="container-fluid">
           <div className="row flex-nowrap">
             <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
-              {selectedUserCharacters.length > 0 && (
-                selectedUserCharacters.toReversed().map((char) => (
+              {currentItems.length > 0 && (
+                currentItems.map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
                       {/* Insert character icon... Or throw placeholder if there is none */}
