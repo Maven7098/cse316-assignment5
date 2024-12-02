@@ -40,7 +40,12 @@ useEffect(() => {
                 memberList.map((user) => (
                   // This consists of a character frame
                   <Link to={`/users/${user.userId}`} className="grid-member card" style={{width: "18rem"}}>
-                    <img src={`/${user.userIcon}`} className="card-img-top" alt={user.userName}></img>
+                      {/* Insert character icon... Or throw placeholder if there is none */}
+                      {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                      <img src={`/${user.userIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/user.png";
+                        }} className="card-img-top" alt={user.userName}></img>
                     <div className="card-body">
                       <h5 className="card-title">{user.userName}</h5>
                       <p className="card-text">{user.userStory}</p>

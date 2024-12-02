@@ -43,7 +43,12 @@ const UserCharacters = () => {
                 selectedUserCharacters.map((char) => (
                   // This consists of a character frame
                   <div className="grid-member card" style={{width: "18rem"}}>
-                      <img src={`/${char.characterIcon}`} className="card-img-top" alt={char.characterName}></img>
+                      {/* Insert character icon... Or throw placeholder if there is none */}
+                      {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                      <img src={`/${char.characterIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/user.png";
+                        }} className="card-img-top" alt={char.characterName}></img>
                       <div className="card-body">
                           <h5 className="card-title">{char.characterName}</h5>
                           <p className="card-text">{char.characterStory}</p>

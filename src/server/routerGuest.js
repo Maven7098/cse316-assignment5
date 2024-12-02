@@ -35,7 +35,7 @@ import mysql_getSelectedWorld from './sql_modules/sql_getSelectedWorld.js'; // G
 
 // For Characters
 // GET
-// Not sure if I need to get a list of characters.
+import mysql_getCharacters from './sql_modules/sql_getCharacters.js'
 // A list of Individual Characters can be obtained in the getSelectedUser getSelectedWorld
 import mysql_getSelectedCharacter from './sql_modules/sql_getSelectedCharacter.js'; // 
 // POST - served in routerUser.js
@@ -137,6 +137,21 @@ routerGuest.get('/worlds/:id', async (req,res)=>{
 // In world pages and user pages, you will receive a list of character Ids
 // user.userCharacters.map((character)=>{axios.get(`localhost:3000/api/characters/character.characterId`, (req,res...))})
 // As the list of character Ids are stringified for both, we need to parse them in the front-end whenever you need a list of characters
+
+// Get the list of characters
+routerGuest.get('/characters/', async (req,res)=>{
+  try {
+      // Find the character with the matching ID
+      const result = await mysql_getCharacters(con, req.params.id);
+      console.log(result);
+      res.send(result)
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        error: err,
+      })
+    }
+});
 
 // Get the selected character
 routerGuest.get('/characters/:id', async (req,res)=>{

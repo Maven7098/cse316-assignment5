@@ -130,7 +130,7 @@ const UserWorlds = ({currentUserId}) => {
                       {/* The textarea for React is slightly different from normal HTML */}
                       <textarea value={newWorld.worldStory} name='worldStory' onChange={(event)=>onChangeForm(event, setNewWorld)} className="form-control" maxLength={512}></textarea>
                       <br></br>
-                      <button type="submit" className="btn btn-primary">Submit</button>
+                      {(newWorld.worldStory && newWorld.worldName) ? <button type="submit" className="btn btn-primary">Submit</button> : <button type="submit" className="btn btn-secondary" disabled>Submit</button>}
                     </form>
                     </div>
                     <div className="modal-footer">
@@ -146,7 +146,12 @@ const UserWorlds = ({currentUserId}) => {
                 // This consists of a world frame
                 <div className="grid-member card" style={{width: "18rem"}}>
                   <Link to={`/worlds/${world.worldId}`} currentUserId={currentUserId}>
-                    <img src={`/${world.worldIcon}`} className="card-img-top" alt={world.worldName}></img>
+                    {/* Insert character icon... Or throw placeholder if there is none */}
+                    {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                    <img src={`/${world.worldIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/world.png";
+                        }} className="card-img-top" alt={world.worldName}></img>
                   </Link>
                     <div className="card-body">
                         <h5 className="card-title">{world.worldName}</h5>
