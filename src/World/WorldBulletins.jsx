@@ -85,7 +85,7 @@ const WorldBulletins = ({currentUserId}) => {
 
         // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
         // const newPasswd = generate_hash(newUser.userEmail, newUser.userPasswd);
-        console.log(newMessage.messageTitle + " / " + newMessage.messageContent + " / " + currentUserId.userId);
+        console.log(newMessage.messageTitle + " / " + newMessage.messageContent + " / " + currentUserId);
         // TODO: Send the user data to the database to create a new post
         axios.post('http://localhost:3000/api/auth/messages', {
           messageTitle: newMessage.messageTitle,
@@ -106,7 +106,7 @@ const WorldBulletins = ({currentUserId}) => {
       // BEYOND CSE316 - Longer posts? Or a word counter?
 
       // Note: Message title cannot be edited!
-      console.log(newMessage.messageContent + " / " + currentUserId.userId);
+      console.log(newMessage.messageContent + " / " + currentUserId);
       // TODO: Send the user data to the database to modify a post
       axios.put(`http://localhost:3000/api/auth/messages/${newMessage.messageId}`, {
         messageContent: newMessage.messageContent,

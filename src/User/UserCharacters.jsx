@@ -54,7 +54,7 @@ const UserCharacters = () => {
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
                           {worldList != undefined && (
-                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList[char.characterWorld - 1]?.worldName}</Link>
+                            <Link to={`/worlds/${char.characterWorld}`} className="btn btn-primary"><i className="bi bi-house"></i>{worldList.find((world)=>world.worldId == char.characterWorld)?.worldName}</Link>
                           )}
                           {/* Upon clicking this button, a modal will pop up */}
                           <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#characterModal${char.characterId}`}>More...</button>

@@ -148,7 +148,7 @@ useEffect(() => {
                           <p className="card-text">{char.characterStory}</p>
                           {/* Upon clicking this button, the user will be sent to a world */}
                           {userList != undefined && (
-                            <Link to={`/users/${char.characterCreator}`} className="btn btn-primary"><i className="bi bi-house"></i>{userList[char.characterCreator - 1]?.userName}</Link>
+                            <Link to={`/users/${char.characterCreator}`} className="btn btn-primary"><i className="bi bi-house"></i>{userList.find((user)=>user.userId == char.characterCreator)?.userName}</Link>
                           )}
                           
                           {/* Upon clicking this button, a modal will pop up */}

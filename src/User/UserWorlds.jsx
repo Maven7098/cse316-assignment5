@@ -159,7 +159,7 @@ const UserWorlds = ({currentUserId}) => {
                       {/* Upon clicking this button, the user will be sent to the creator of this world */}
                       {/* TODO: How to pass children if we were to travel through links? */}
                       {/* Also, world.worldCreator - 1 since SQL is 1-indexed but JS is 0-indexed - preventing off-by-one errors- */}
-                      <Link className="btn btn-primary" to={`/users/${world.worldCreator}`}><i className="bi bi-people"></i>{users[world.worldCreator - 1].userName}</Link>
+                      <Link className="btn btn-primary" to={`/users/${world.worldCreator}`}><i className="bi bi-people"></i>{users.find((user)=> user.userId == world.worldCreator)?.userName}</Link>
                     </div>
                   </div>
             ))}
