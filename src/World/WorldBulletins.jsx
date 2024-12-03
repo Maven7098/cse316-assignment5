@@ -40,7 +40,7 @@ const WorldBulletins = ({currentUserId}) => {
     // and for PUT operations
     const [newMessage, setNewMessage] = useState({
       messageId: undefined,
-      messageSenderId: undefined,
+      messageSenderId: 0,
       messageReplyId: 0,
       messageTitle: '',
       messageContent: ''
@@ -83,7 +83,7 @@ const WorldBulletins = ({currentUserId}) => {
           messageTitle: newMessage.messageTitle,
           messageContent: newMessage.messageContent,
           messageReplyId: newMessage.messageReplyId,
-          messageSenderId: newMessage.messageSenderId,
+          messageSenderId: (newMessage.messageSenderId == 0 ? currentUserHasCharacter[0].characterId : newMessage.messageSenderId),
         }).then(validateFail("Message written!", newMessage))
           .catch(error => console.log(error));
     }
@@ -113,8 +113,9 @@ const WorldBulletins = ({currentUserId}) => {
 
   // 10 - 1 = 9 items per page. The user creation modal takes up 1 card, but is not part of the list.
   let itemsPerPage = 10;
-  if(currentUserHasCharacter?.length > 0)
+  if(currentUserHasCharacter?.length > 0){
     itemsPerPage = 9;
+  }
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
   const currentItems = messageTable.toReversed().slice(itemOffset, endOffset);
@@ -199,7 +200,9 @@ const WorldBulletins = ({currentUserId}) => {
                           <br></br>
                           
                           {/* IF messageContent, messageTitle, messageSenderId are available, then click submit, else disable this button */}
-                          {(newMessage.messageContent && newMessage.messageTitle && newMessage.messageSenderId)
+                          {/* && newMessage.messageSenderId was deleted as I wanted the default value to 0, which, if left alone, chooses the default choice (first character use have) */}
+                          {/* But just like C, 0 is considered "FALSE" */}
+                          {(newMessage.messageContent && newMessage.messageTitle)
                           ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
                           : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
                         </form>
