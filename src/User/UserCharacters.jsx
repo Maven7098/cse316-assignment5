@@ -59,30 +59,33 @@ const UserCharacters = ({paginationOn}) => {
   return (
     <>
     {paginationOn && (
-      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
-      <ReactPaginate
-        previousLabel="<<"
-        nextLabel=">>"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName="pagination"
-        activeClassName="active"
-      />
-    )}
+      <div style={{marginTop:"16px", marginLeft:"16px"}}>
+      {/* // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
+        <ReactPaginate
+          previousLabel="<<"
+          nextLabel=">>"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName="pagination"
+          activeClassName="active"
+        />
+      </div>
+    )
+    }
         <div className="container-fluid">
           <div className="row flex-nowrap">
-            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
               {/* Only render character frame if there is at least 1 character */}
               {currentItems.length > 0 && (
                 currentItems.map((char) => (

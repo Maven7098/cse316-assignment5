@@ -126,7 +126,7 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
     <>
     {/* Pagination and switch */}
     {paginationOn && (
-      <>
+      <div style={{marginTop:"16px", marginLeft:"16px"}}>
       {/* Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
       <ReactPaginate
         previousLabel="<<"
@@ -149,18 +149,17 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
       />
 
       {/* Filter if this world was created by you or not */}
-      <div className="form-check form-switch" style={{marginLeft:"300px"}}>
+      <div className="form-check form-switch" style={{marginLeft:"16px"}}>
         <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={onlyCreated} onClick={() => setOnlyCreated(!onlyCreated)} id="flexSwitchCheckDefault" />
         {/* Find the current username, since I did not bring the user data here */}
         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Worlds created by {users.find((user)=> user.userId == selectedUserId)?.userName}</label>
       </div>
-
-      </>
+      </div>
     )}
 
         <div className="container-fluid">
           <div className="row flex-nowrap">
-            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
             {/* Create a world, ONLY IF the currentUser === selectedUser */}
             {currentUserId === selectedUserId &&
             // {/* TODO: Create a "Create World" modal */}

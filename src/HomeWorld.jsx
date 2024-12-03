@@ -41,7 +41,7 @@ const HomeWorld = () => {
         <>
         <div className="container-fluid">
               <div className="row flex-nowrap">
-                <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+                <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
                   {/* Only render character frame if there is at least 1 character */}
                   {/* Modal for existing worlds */}
                   {currentItems.map((world) => (

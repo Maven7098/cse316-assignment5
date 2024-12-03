@@ -6,7 +6,7 @@ import { validateFail } from '../validateFail';
 
 import ReactPaginate from 'react-paginate';
 
-const WorldBulletins = ({currentUserId, paginationOn}) => {
+const WorldBulletins = ({currentUserId}) => {
     // Due to the parameters being the user object itself
     // user.userId is the one to use
     
@@ -130,8 +130,10 @@ const WorldBulletins = ({currentUserId, paginationOn}) => {
 
   return (
     <>
-    {paginationOn && (
-      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
+
+    {/* No pagination switch, as worldBulletins are never called by WorldMain or Root pages */}
+    {/* // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
+    <div style={{marginTop:"16px", marginLeft:"16px"}}>
       <ReactPaginate
         previousLabel="<<"
         nextLabel=">>"
@@ -151,11 +153,11 @@ const WorldBulletins = ({currentUserId, paginationOn}) => {
         containerClassName="pagination"
         activeClassName="active"
       />
-    )}
+    </div>
 
       <div className="container-fluid">
       <div className="row flex-nowrap">
-            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
               {/* TODO: Add a modal form to write a new message */}
               {/* Only if the current user has a character in this world */}
               {/* If Write! button is used to write a message, set the replyId to 0 (no reply) */}

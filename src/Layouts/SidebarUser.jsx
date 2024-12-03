@@ -44,8 +44,8 @@ const SidebarUser = () => {
     console.log(selectedUser);
 
     return (
-        <>
-            <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
+        <div style={{display:"flex", flexGrow:"1", flexShrink:"0", overflow:"hidden"}}>
+            <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary overflow-scroll" style={{width:"280px", float:"left"}}>
                 <ul className="nav nav-pills flex-column mb-auto">
                     <li className="nav-item">
                         <Link to={`/users/${selectedUser.userId}`}>
@@ -72,8 +72,10 @@ const SidebarUser = () => {
                     <hr />
                 </ul>
             </div>
-            <Outlet />
-        </>
+            <div style={{display:"block"}}>
+                <Outlet />
+            </div>
+        </div>
   )
 }
 
