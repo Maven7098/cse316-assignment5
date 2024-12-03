@@ -45,6 +45,7 @@ const WorldBulletins = ({currentUserId}) => {
       messageTitle: '',
       messageContent: ''
     });
+    console.log(newMessage);
 
     // Only for the select character part of the modal.
     const onChangeHandler = (event) => {
@@ -161,55 +162,57 @@ const WorldBulletins = ({currentUserId}) => {
               {/* TODO: Add a modal form to write a new message */}
               {/* Only if the current user has a character in this world */}
               {/* If Write! button is used to write a message, set the replyId to 0 (no reply) */}
-              {currentUserHasCharacter.length > 0 &&
-                <button type="button" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: 0}))} className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
-              }
-              {/* A modal to write */}
-              <div className="card-modal">
-                <div className="modal fade" id={`writeModal`} tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="messageModalLabel">New Message</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div className="modal-body">
-                      <form onSubmit={addNewPost} className='realForm'>
-                        
-                        {/* Post title */}
-                        <label htmlFor="messageTitle" className="form-label">Title:</label>
-                        <br></br>
-                        <input type="text" name="messageTitle" value={newMessage.messageTitle} onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control"></input>
-                        
-                        {/* Select Character */}
-                        <label htmlFor="messageSenderId" className="form-label">Write as:</label>
-                        <select onChange={onChangeHandler} className="form-select" name="messageSenderId" id="messageSenderId">
-                        <br></br>
-                        {currentUserHasCharacter.map((character)=>{
-                            return (<option value={character.characterId}>{character.characterName}</option>)})}</select>
-                        <br></br>
-                        
-                        {/* Your message */}
-                        <label htmlFor="messageContent">Message: </label>
-                        <br></br>
-                        
-                        {/* The textarea for React is slightly different from normal HTML */}
-                        <textarea value={newMessage.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control" maxLength={512}></textarea>
-                        <br></br>
-                        
-                        {/* IF messageContent, messageTitle, messageSenderId are available, then click submit, else disable this button */}
-                        {(newMessage.messageContent && newMessage.messageTitle && newMessage.messageSenderId)
-                        ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
-                        : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
-                      </form>
-                      </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              {currentUserHasCharacter.length > 0 && (
+                <>
+                <button type="button" onClick={() => setNewMessage(values => ({...values, messageReplyId: 0}))} className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
+                {/* A modal to write */}
+                <div className="card-modal">
+                  <div className="modal fade" id={`writeModal`} tabIndex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="messageModalLabel">New Message</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                        <form onSubmit={addNewPost} className='realForm'>
+                          
+                          {/* Post title */}
+                          <label htmlFor="messageTitle" className="form-label">Title:</label>
+                          <br></br>
+                          <input type="text" name="messageTitle" value={newMessage.messageTitle} onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control"></input>
+                          
+                          {/* Select Character */}
+                          <label htmlFor="messageSenderId" className="form-label">Write as:</label>
+                          <select onChange={onChangeHandler} className="form-select" name="messageSenderId" defaultValue={currentUserHasCharacter[0].characterId} id="messageSenderId">
+                          <br></br>
+                          {currentUserHasCharacter.map((character)=>{
+                              return (<option value={character.characterId}>{character.characterName}</option>)})}</select>
+                          <br></br>
+                          
+                          {/* Your message */}
+                          <label htmlFor="messageContent">Message: </label>
+                          <br></br>
+                          
+                          {/* The textarea for React is slightly different from normal HTML */}
+                          <textarea value={newMessage.messageContent} name='messageContent' onChange={(event)=>onChangeForm(event,setNewMessage)} className="form-control" maxLength={512}></textarea>
+                          <br></br>
+                          
+                          {/* IF messageContent, messageTitle, messageSenderId are available, then click submit, else disable this button */}
+                          {(newMessage.messageContent && newMessage.messageTitle && newMessage.messageSenderId)
+                          ? <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                          : <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary" disabled>Submit</button>}
+                        </form>
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
+              )}
 
               {/* A modal to edit */}
               <div className="card-modal">
@@ -261,7 +264,7 @@ const WorldBulletins = ({currentUserId}) => {
                       
                       {/* This is to reply to this message */}
                       {/* Set the reply message to the replyId of this message */}
-                      {currentUserHasCharacter.length > 0 && <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageSenderId: currentUserHasCharacter[0].characterId, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>}
+                      {currentUserHasCharacter.length > 0 && <button type="button" className="btn btn-primary" onClick={() => setNewMessage(values => ({...values, messageReplyId: message.messageId}))} data-bs-toggle="modal" data-bs-target={`#writeModal`} >Reply...</button>}
                     </div>
     
                     {/* A modal to read */}

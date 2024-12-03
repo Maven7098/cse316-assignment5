@@ -45,7 +45,7 @@ const SidebarUser = () => {
 
     return (
     <div style={{display:"flex", flexGrow:"1", flexShrink:"0", overflow:"hidden"}}>
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
+        <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", minHeight:"calc(100vh - 56px)", float:"left"}}>
             <ul className="nav nav-pills flex-column mb-auto">
                 <li className="nav-item">
                     <Link to={`/worlds/${selectedWorld.worldId}`}>
