@@ -80,49 +80,51 @@ const Search = () => {
     return (
         <>
         {/* House the 3 switches - user, world, character */}
-        <div>
-            <div className="form-check form-switch" style={{marginLeft:"300px"}}>
-                <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showUsers} onClick={() => setShowUsers(!showUsers)} id="flexSwitchCheckDefault" />
-                {/* Find the current username, since I did not bring the user data here */}
-                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Users</label>
+        <div style={{marginLeft:"16px", marginTop:"8px"}}>
+            <div style={{marginBottom:"8px"}}>
+                <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showUsers} onClick={() => setShowUsers(!showUsers)} id="flexSwitchCheckDefault" />
+                    {/* Find the current username, since I did not bring the user data here */}
+                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Users</label>
+                </div>
+                <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showWorlds} onClick={() => setShowWorlds(!showWorlds)} id="flexSwitchCheckDefault" />
+                    {/* Find the current username, since I did not bring the user data here */}
+                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Worlds</label>
+                </div>
+                <div className="form-check form-switch">
+                    <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showCharacters} onClick={() => setShowCharacters(!showCharacters)} id="flexSwitchCheckDefault" />
+                    {/* Find the current username, since I did not bring the user data here */}
+                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Characters</label>
+                </div>
             </div>
-            <div className="form-check form-switch" style={{marginLeft:"300px"}}>
-                <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showWorlds} onClick={() => setShowWorlds(!showWorlds)} id="flexSwitchCheckDefault" />
-                {/* Find the current username, since I did not bring the user data here */}
-                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Worlds</label>
-            </div>
-            <div className="form-check form-switch" style={{marginLeft:"300px"}}>
-                <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={showCharacters} onClick={() => setShowCharacters(!showCharacters)} id="flexSwitchCheckDefault" />
-                {/* Find the current username, since I did not bring the user data here */}
-                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Show Characters</label>
-            </div>
-        </div>
 
-        {/* Pagination is always ON in search menu */}
-        <ReactPaginate
-            previousLabel="<<"
-            nextLabel=">>"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakLabel="..."
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName="pagination"
-            activeClassName="active"
-        />
+            {/* Pagination is always ON in search menu */}
+            <ReactPaginate
+                previousLabel="<<"
+                nextLabel=">>"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName="pagination"
+                activeClassName="active"
+            />
+        </div>
 
         {/* div to house the rest of the contents */}
         <div className="container-fluid">
             <div className="row flex-nowrap">
-            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
                 {/* Only render character frame if there is at least 1 character */}
                 {currentItems.length > 0 && (
                 currentItems.map((char) => (

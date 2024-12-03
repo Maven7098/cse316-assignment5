@@ -44,36 +44,38 @@ const SidebarUser = () => {
     console.log(selectedWorld);
 
     return (
-        <>
-            <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", height:"100%", float:"left"}}>
-                <ul className="nav nav-pills flex-column mb-auto">
-                    <li className="nav-item">
-                        <Link to={`/worlds/${selectedWorld.worldId}`}>
-                            {/* Insert character icon... Or throw placeholder if there is none */}
-                            {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
-                            <img src={`/${selectedWorld.worldIcon}`} onError={({ currentTarget }) => {
-                                currentTarget.onerror = null; // prevents looping
-                                currentTarget.src="/src/server/placeholder/world.png";
-                                }} className="card-img-top" style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
-                            <span aria-current="page">{selectedWorld.worldName}</span>
-                        </Link>
-                    </li>
-                    <hr />
-                    {/* List the bulletins/characters/universes */}
-                    {/* The worldName should be the person you are viewing */}
-                    <li className="nav-item">
-                        <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/bulletins`}>Bulletins</Link>
-                        <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/characters`}>Characters</Link>
-                        {/* This page will not only list the universes you made, but all worlds you are currently in */}
-                        {/* They will be divided later on */}
-                        <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/members`}>Members</Link>
-                    </li>
-                    
-                    <hr />
-                </ul>
-            </div>
+    <div style={{display:"flex", flexGrow:"1", flexShrink:"0", overflow:"hidden"}}>
+        <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style={{width:"280px", minHeight:"calc(100vh - 56px)", float:"left"}}>
+            <ul className="nav nav-pills flex-column mb-auto">
+                <li className="nav-item">
+                    <Link to={`/worlds/${selectedWorld.worldId}`}>
+                        {/* Insert character icon... Or throw placeholder if there is none */}
+                        {/* Code taken from https://stackoverflow.com/questions/34097560/react-js-replace-img-src-onerror */}
+                        <img src={`/${selectedWorld.worldIcon}`} onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // prevents looping
+                            currentTarget.src="/src/server/placeholder/world.png";
+                            }} className="card-img-top" style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
+                        <span aria-current="page">{selectedWorld.worldName}</span>
+                    </Link>
+                </li>
+                <hr />
+                {/* List the bulletins/characters/universes */}
+                {/* The worldName should be the person you are viewing */}
+                <li className="nav-item">
+                    <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/bulletins`}>Bulletins</Link>
+                    <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/characters`}>Characters</Link>
+                    {/* This page will not only list the universes you made, but all worlds you are currently in */}
+                    {/* They will be divided later on */}
+                    <Link className="nav-link" aria-current="page" to={`/worlds/${selectedWorld.worldId}/members`}>Members</Link>
+                </li>
+                
+                <hr />
+            </ul>
+        </div>
+        <div style={{display:"block"}}>
             <Outlet />
-        </>
+        </div>
+    </div>
   )
 }
 

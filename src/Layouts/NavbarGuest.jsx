@@ -7,8 +7,8 @@ import { onChangeForm } from '../onChangeForm.js';
 import { hashutil } from "../Hashutil.js";
 import { validateFail } from '../validateFail.js';
 
-import {State, useState} from 'react'
-import { Outlet } from 'react-router-dom'
+import {useState} from 'react'
+import {Link, Outlet, useNavigate, useSearchParams} from 'react-router-dom';
 
 import Cookies from 'js-cookie'
 
@@ -55,7 +55,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
             userPasswd: newPasswd,
             userEmail: newUser.userEmail
         }).then(validateFail("User Creation Success!", newUser))
-          .catch(error => console.log(error));
+          .catch(error => validateFail(error.response.data,newUser));
     }
 
     const loginUser = (event)=> {
@@ -81,60 +81,83 @@ const NavbarGuest = ({setCurrentUserId}) => {
             setCurrentUserId(response.data.currentUser);
             location.reload();
         })
-          .catch(error => console.log(error));
+          .catch(error => validateFail(error.response.data,oldUser));
     }
+
+    // Set up a search query
+    // How to set up a search menu?
+    // From https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState(searchParams.get("searchQuery") || "");
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      setSearchParams({ searchQuery: searchQuery });
+      navigate(`/search?searchQuery=${encodeURIComponent(searchQuery)}`);
+    };
 
   return (
     <>
     <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
             {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
-            <a className="navbar-brand" href="#">Assignment 5</a>
-            {/* Should be replaced by the user icon at the end */}
-            <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel">Your Profile</h5>
-                <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            {/* Guest Mode */}
-            <div className="offcanvas-body">
-                {/* Register */}
-                <form onSubmit={addNewUser}>
-                    {/* Name input */}
-                    <label htmlFor="userName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
+            <Link className="navbar-brand" to="/">Assignment 5</Link>
 
-                    {/* Password input */}
-                    <label htmlFor="userPasswd" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
+            <div className="d-flex flex-row">
+                {/* Not sure if I need a search button */}
+                {/* Handy, but can also be used for doxxing or other bad faith actions */}
+                {/* I don't know how search works, so I just chose to make a search button a link */}
+                <form className="d-flex" onSubmit={handleSubmit} >
+                    <input className="form-control me-2" name="searchQuery" value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Search" aria-label="Search" />
+                    <button className="btn btn-success" type="submit">Search</button>
+                </form>
 
-                    {/* Email button */}
-                    <label htmlFor="userEmail" className="col-sm-2 col-form-label">Email:</label>
-                    <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
-                    
-                    {/* TODO: Create a user with a userName, userPasswd and userEmail values */}
-                    {/* Using POST request */}
-                    <button className="btn btn-primary">Continue with Email</button>
-                </form>
-                <br />
-                {/* Sign in */}
-                <span style={{marginRight: "16px"}}>Already registered?</span>
-                <button className="btn btn-outline-primary">Sign In</button>
-                <form onSubmit={loginUser}>
-                    {/* Name input */}
-                    <label htmlFor="oldUserName" className="col-sm-2 col-form-label">Username:</label>
-                    <input type="text" className="form-control" id="oldUserName" name="userName" value={oldUser.userName} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
-                    {/* Password input */}
-                    <label htmlFor="oldUserPasswd" className="col-sm-2 col-form-label">Password:</label>
-                    <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
-                    {/* TODO: Fetch the user with the correct password and username from the database */}
-                    {/* Using GET request */}
-                    <button className="btn btn-primary">Sign In</button>
-                </form>
-            </div>
+                {/* Should be replaced by the user icon at the end */}
+                <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="offcanvas offcanvas-end text-bg-dark" tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div className="offcanvas-header">
+                        <h5 className="offcanvas-title" id="offcanvasDarkNavbarLabel">Your Profile</h5>
+                        <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    {/* Guest Mode */}
+                    <div className="offcanvas-body">
+                        {/* Register */}
+                        <form onSubmit={addNewUser}>
+                            {/* Name input */}
+                            <label htmlFor="userName" className="col-sm-2 col-form-label">Username:</label>
+                            <input type="text" className="form-control" name="userName" value={newUser.userName} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
+
+                            {/* Password input */}
+                            <label htmlFor="userPasswd" className="col-sm-2 col-form-label">Password:</label>
+                            <input type="password" className="form-control" name="userPasswd" value={newUser.userPasswd} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
+
+                            {/* Email button */}
+                            <label htmlFor="userEmail" className="col-sm-2 col-form-label">Email:</label>
+                            <input type="email" className="form-control" name="userEmail" value={newUser.userEmail} onChange={(event)=>onChangeForm(event,setNewUser)} /><br />
+                            
+                            {/* TODO: Create a user with a userName, userPasswd and userEmail values */}
+                            {/* Using POST request */}
+                            <button className="btn btn-primary">Continue with Email</button>
+                        </form>
+                        <br />
+                        {/* Sign in */}
+                        <span style={{marginRight: "16px"}}>Already registered?</span>
+                        <form onSubmit={loginUser}>
+                            {/* Name input */}
+                            <label htmlFor="oldUserName" className="col-sm-2 col-form-label">Username:</label>
+                            <input type="text" className="form-control" id="oldUserName" name="userName" value={oldUser.userName} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
+                            {/* Password input */}
+                            <label htmlFor="oldUserPasswd" className="col-sm-2 col-form-label">Password:</label>
+                            <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
+                            {/* TODO: Fetch the user with the correct password and username from the database */}
+                            {/* Using GET request */}
+                            <button className="btn btn-outline-primary">Sign In</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>

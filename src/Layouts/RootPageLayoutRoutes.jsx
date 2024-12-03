@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 
 import Home from "../Home";
 import Search from "../Search.jsx";
@@ -60,19 +60,20 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
         <Routes>
             <Route path="/" element={<NavbarGuest setCurrentUserId={setCurrentUserId} />}>
               <Route index element={<Home />} />
-                <Route path={`search`} element={<Search />} />
+                <Route path={`/search`} element={<Search />} />
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
                 <Route index element={<UserMain currentUserId={currentUserId} />} />
                 <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} paginationOn={true} />} />
                 <Route path={`characters`} element={<UserCharacters paginationOn={true} />} />
                 <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} paginationOn={true} />} />
-                <Route path={`profile`} element={<Profile currentUserId={currentUserId}/>}/>
+                <Route path={`profile`} element={<Navigate to="/" replace />} />
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
+                <Route index element={<WorldMain currentUserId={currentUserId} />} />
                 <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} paginationOn={true} />} />
-                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId}  />} />
-                <Route path={`members`} element={<WorldMembers />} />
+                <Route path={`characters`} element={<WorldCharacters currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`members`} element={<WorldMembers paginationOn={true} />} />
               </Route>
             <Route path="/*" element={<ErrorPage />} />
             </Route>

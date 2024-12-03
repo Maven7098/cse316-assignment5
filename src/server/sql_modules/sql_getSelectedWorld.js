@@ -19,12 +19,13 @@ function mysql_getSelectedWorld(con, worldId){
                 if(result !== undefined && result.length > 0){
                     const worldMembersTemp = [];
                     const worldCharactersTemp = [];
+                    // Founder is naturally a member of the world, even if Founder does not have a character
+                    worldMembersTemp.push(result[0].worldCreator)
                     // Turn the userId and characterId as arrays
                     result.map((world)=>{
                         worldMembersTemp.push(world.characterCreator)
                         worldCharactersTemp.push(world.characterId)
                     })
-
                     // Remove duplicates
                     const worldMembersSet = new Set(worldMembersTemp);
                     const worldMembers = [...worldMembersSet]

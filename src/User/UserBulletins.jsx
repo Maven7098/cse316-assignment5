@@ -6,7 +6,7 @@ import { validateFail } from '../validateFail';
 
 import ReactPaginate from 'react-paginate';
 
-const UserBulletins = ({currentUserId, paginationOn}) => {
+const UserBulletins = ({currentUserId}) => {
 
   // Due to the parameters being the user object itself
   // user.userId is the one to use
@@ -96,33 +96,33 @@ const UserBulletins = ({currentUserId, paginationOn}) => {
   return (
     <>
     {/* Pagination */}
-    {paginationOn && (
-      // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ
-      <ReactPaginate
-        previousLabel="<<"
-        nextLabel=">>"
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName="pagination"
-        activeClassName="active"
-      />
-    )}
+    <div style={{marginTop:"16px", marginLeft:"16px"}}>
+        {/* // Taken from https://codepen.io/monsieurv/pen/yLoMxYQ */}
+        <ReactPaginate
+          previousLabel="<<"
+          nextLabel=">>"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName="pagination"
+          activeClassName="active"
+        />
+      </div>
 
       {/* TODO: Import user bulletin list */}
       <div className="container-fluid">
           <div className="row flex-nowrap">
-            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"72px", flex:"1"}}>
+            <div className="grid-container" style={{display:"flex", flexWrap:"wrap", marginTop:"16px", flex:"1"}}>
               {/* TODO: Add a modal form to write a new message */}
               {selectedUserId === currentUserId &&
                 <button type="button" className="grid-member card btn btn-primary" data-bs-toggle="modal" data-bs-target={`#writeModal`} style={{width: "18rem", textAlign:"center"}}>Write!</button>
