@@ -149,10 +149,10 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
       />
 
       {/* Filter if this world was created by you or not */}
-      <div class="form-check form-switch" style={{marginLeft:"300px"}}>
-        <input class="form-check-input" type="checkbox" role="switch" checked={onlyCreated} onClick={() => setOnlyCreated(!onlyCreated)} id="flexSwitchCheckDefault" />
+      <div className="form-check form-switch" style={{marginLeft:"300px"}}>
+        <input className="form-check-input" type="checkbox" role="switch" readOnly={true} checked={onlyCreated} onClick={() => setOnlyCreated(!onlyCreated)} id="flexSwitchCheckDefault" />
         {/* Find the current username, since I did not bring the user data here */}
-        <label class="form-check-label" for="flexSwitchCheckDefault">Worlds created by {users.find((user)=> user.userId == selectedUserId)?.userName}</label>
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Worlds created by {users.find((user)=> user.userId == selectedUserId)?.userName}</label>
       </div>
 
       </>
