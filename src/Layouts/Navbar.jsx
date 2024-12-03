@@ -6,7 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import {Link, Outlet} from 'react-router-dom'
+import {Link, Outlet, useNavigate, useSearchParams} from 'react-router-dom';
 
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
@@ -68,9 +68,17 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
       }
 
     // Set up a search query
-    const [searchQuery, setSearchQuery] = useState();
-
     // How to set up a search menu?
+    // From https://medium.com/@bobjunior542/how-to-use-usesearchparams-in-react-router-6-for-url-search-parameters-c35b5d1ac01c
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState(searchParams.get("searchQuery") || "");
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      setSearchParams({ searchQuery: searchQuery });
+      navigate(`/search?searchQuery=${encodeURIComponent(searchQuery)}`);
+    };
 
     return (
         <>
@@ -82,9 +90,10 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
                 <div className="d-flex flex-row">
                     {/* Not sure if I need a search button */}
                     {/* Handy, but can also be used for doxxing or other bad faith actions */}
-                    <form className="d-flex" onSubmit={(event)=>{event.preventDefault(); console.log(searchQuery)}} role="search">
-                    <input className="form-control me-2" type="search" name="searchQuery" value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-success" type="submit">Search</button>
+                    {/* I don't know how search works, so I just chose to make a search button a link */}
+                    <form className="d-flex" onSubmit={handleSubmit} >
+                        <input className="form-control me-2" name="searchQuery" value={searchQuery} onChange={(event)=>setSearchQuery(event.target.value)} placeholder="Search" aria-label="Search" />
+                        <button className="btn btn-success" type="submit">Search</button>
                     </form>
 
                     {/* Should be replaced by the user icon at the end */}
