@@ -122,7 +122,6 @@ const NavbarGuest = ({setCurrentUserId}) => {
                 <br />
                 {/* Sign in */}
                 <span style={{marginRight: "16px"}}>Already registered?</span>
-                <button className="btn btn-outline-primary">Sign In</button>
                 <form onSubmit={loginUser}>
                     {/* Name input */}
                     <label htmlFor="oldUserName" className="col-sm-2 col-form-label">Username:</label>
@@ -132,7 +131,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
                     <input type="password" className="form-control" id="oldUserPasswd" name="userPasswd" value={oldUser.userPasswd} onChange={(event)=>onChangeForm(event,setOldUser)} /><br />
                     {/* TODO: Fetch the user with the correct password and username from the database */}
                     {/* Using GET request */}
-                    <button className="btn btn-primary">Sign In</button>
+                    <button className="btn btn-outline-primary">Sign In</button>
                 </form>
             </div>
             </div>
