@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 
 import Home from "../Home";
 import Search from "../Search.jsx";
@@ -59,7 +59,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
         <Routes>
             <Route path="/" element={<NavbarGuest setCurrentUserId={setCurrentUserId} />}>
               <Route index element={<Home />} />
-                <Route path={`search`} element={<Search />} />
+                <Route path={`/search`} element={<Navigate to="/" replace />} />
               <Route path={`users/:userId`} element={<SidebarUser />}>
               {/* Hilariously, we need an index element to allow the user sidebar to render */}
                 <Route index element={<UserMain currentUserId={currentUserId} />} />

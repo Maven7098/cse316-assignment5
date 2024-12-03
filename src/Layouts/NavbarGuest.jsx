@@ -8,7 +8,7 @@ import { hashutil } from "../Hashutil.js";
 import { validateFail } from '../validateFail.js';
 
 import {State, useState} from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import Cookies from 'js-cookie'
 
@@ -55,7 +55,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
             userPasswd: newPasswd,
             userEmail: newUser.userEmail
         }).then(validateFail("User Creation Success!", newUser))
-          .catch(error => console.log(error));
+          .catch(error => validateFail(error.response.data,newUser));
     }
 
     const loginUser = (event)=> {
@@ -81,7 +81,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
             setCurrentUserId(response.data.currentUser);
             location.reload();
         })
-          .catch(error => console.log(error));
+          .catch(error => validateFail(error.response.data,oldUser));
     }
 
   return (
@@ -89,7 +89,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
     <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
             {/* Project is unnamed so far, so I call it Assignment 5 for the mock-up */}
-            <a className="navbar-brand" href="#">Assignment 5</a>
+            <Link className="navbar-brand" to="/">Assignment 5</Link>
             {/* Should be replaced by the user icon at the end */}
             <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
