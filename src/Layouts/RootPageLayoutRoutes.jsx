@@ -11,6 +11,7 @@ import UserMain from '../User/UserMain.jsx';
 import UserBulletins from "../User/UserBulletins.jsx";
 import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
+import Profile from "../User/Profile.jsx";
 
 import SidebarUser from './SidebarUser.jsx';
 import SidebarWorld from './SidebarWorld.jsx';
@@ -66,6 +67,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
                 <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} paginationOn={true} />} />
                 <Route path={`characters`} element={<UserCharacters paginationOn={true} />} />
                 <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`profile`} element={<Profile currentUserId={currentUserId}/>}/>
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
                 <Route path={`bulletins`} element={<WorldBulletins currentUserId={currentUserId} paginationOn={true} />} />

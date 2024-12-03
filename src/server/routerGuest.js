@@ -64,7 +64,7 @@ import mysql_getSearch from './sql_modules/sql_getSearch.js';
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "pass4root",
+  password: "jiwoo@mysql0404",
   database: "cse316_assignment5"
 });
 
