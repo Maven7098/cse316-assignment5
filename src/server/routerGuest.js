@@ -255,12 +255,12 @@ routerGuest.get('/worlds/characters/:id', async (req,res)=>{
     }
 });
 
-// GET - Search
+// POST - Search
 // Get a list of items like search
-routerGuest.get('/search', async (req,res)=>{
+routerGuest.post('/search/', async (req,res)=>{
   try {
       // Find the search result
-      const result = await mysql_getSearch(con, req.query.searchQuery);
+      const result = await mysql_getSearch(con, req.body.query);
       // If the search result is not found, return 404
       if(!result){
           res.status(404).send('Search returned null');

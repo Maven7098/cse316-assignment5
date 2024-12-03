@@ -1,17 +1,13 @@
 function mysql_getSearch(con, searchName){
     return new Promise(function(resolve, reject){
         // Get all posts from a selected user
-        // Corresponds to POST - /search/:searchQuery in routerGuest.js
+        // Corresponds to GET - /messages/:userId in routerUser.js
         con.connect(function(err) {
             if (err) throw err;
-            searchName = "'%"+searchName+"%'"
             console.log("Connected!");
-
-            // Should I filter based only on name, or should story be considered too? (for worlds and characters that is)
             var sqlUser = `SELECT * from users WHERE userName LIKE ${searchName};`
             var sqlWorld = `SELECT * from worlds WHERE worldName LIKE ${searchName};`
             var sqlCharacter = `SELECT * from characters WHERE characterName LIKE ${searchName};`
-            
             // A generic object that is supposed to hold the following:
             // objectId - ID of user/world/character
             // objectImage - 
@@ -23,8 +19,6 @@ function mysql_getSearch(con, searchName){
                 // If there is no search returned in user, should be caught
                 // Otherwise we get TypeError: Cannot read properties of undefined (reading 'map')
                 // But don't exit immediately, since we can get results from world or characters
-                console.log("User");
-                console.log(sqlUser);
                 if(result != undefined){
                     console.log(result);
                     result.map((user)=>{
@@ -39,8 +33,6 @@ function mysql_getSearch(con, searchName){
                 con.query(sqlWorld, function (err, result){
                     if (err) reject(err);
                     // Turn the world items into generic and push them into objectArray
-                    console.log("World");
-                    console.log(sqlWorld);
                     if(result != undefined){
                         console.log(result);
                         result.map((world)=>{
@@ -55,13 +47,11 @@ function mysql_getSearch(con, searchName){
                     con.query(sqlCharacter, function (err, result){
                         if (err) reject(err);
                         // Turn the character items into generic and push them into objectArray
-                        console.log("Character");
-                        console.log(sqlCharacter);
                         if(result != undefined){
-                            console.log(result);
                             result.map((character)=>{
+                                console.log(result);
                                 genericObject.push({
-                                    objectId: character.characterWorld,
+                                    objectId: character.characterId,
                                     objectName: character.characterName,
                                     objectIcon: character.characterIcon,
                                     objectType: "char"
