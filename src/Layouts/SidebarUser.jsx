@@ -39,7 +39,7 @@ const SidebarUser = () => {
     useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
           .then(response => setSelectedUser(response.data))
-          .catch(error => console.log(error))
+          .catch(error => console.log(error.response.data))
         }, [selectedUserId]);
     console.log(selectedUser);
 

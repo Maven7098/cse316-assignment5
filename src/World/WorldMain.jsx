@@ -16,7 +16,7 @@ const UserMain = ({currentUserId}) => {
   axios.get(`http://localhost:3000/api/worlds/${selectedWorldId}`)
     // Grab only the titles; that's all what matters!
     .then(response => setSelectedWorld(response.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, []);
   console.log(selectedWorld)
 
@@ -56,12 +56,12 @@ const UserMain = ({currentUserId}) => {
       worldIcon: newWorld.worldIcon,
       worldStory: newWorld.worldStory
       }).then(function(response){
-        validateFail("Congratulations in the creation of a new world!", newWorld);
+        validateFail(response => "Congratulations in the creation of a new world!", newWorld);
 
         // Actually, need to reload the state whole if we were to really update the world sidebar...
         location.reload();
       })
-        .catch(error => console.log(error));
+        .catch(error => validateFail(error.response.data, newWorld));
   }
 
   return (

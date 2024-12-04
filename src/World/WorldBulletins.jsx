@@ -62,7 +62,7 @@ const WorldBulletins = ({currentUserId}) => {
     useEffect(() => {
         axios.get(`http://localhost:3000/api/messages/${selectedWorld}`)
         .then(response => setMessageTable(response.data))
-        .catch(error => console.log(error));
+        .catch(error => console.log(error.response.data));
     }, [varTable, selectedWorld]);
     console.log(messageTable)
 
@@ -84,8 +84,8 @@ const WorldBulletins = ({currentUserId}) => {
           messageContent: newMessage.messageContent,
           messageReplyId: newMessage.messageReplyId,
           messageSenderId: (newMessage.messageSenderId == 0 ? currentUserHasCharacter[0].characterId : newMessage.messageSenderId),
-        }).then(validateFail("Message written!", newMessage))
-          .catch(error => console.log(error));
+        }).then(response => validateFail("Message written!", newMessage))
+          .catch(error => console.log(error.response.data));
     }
 
     const modNewPost = (event)=> {
@@ -102,8 +102,8 @@ const WorldBulletins = ({currentUserId}) => {
       // TODO: Send the user data to the database to modify a post
       axios.put(`http://localhost:3000/api/auth/messages/${newMessage.messageId}`, {
         messageContent: newMessage.messageContent,
-      }).then(validateFail("Message written!", newMessage))
-        .catch(error => console.log(error));
+      }).then(response => validateFail("Message written!", newMessage))
+        .catch(error => console.log(error.response.data));
   }
 
   // TODO - Implement pagination

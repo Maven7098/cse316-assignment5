@@ -22,7 +22,7 @@ useEffect(() => {
   setCharacterList([]);
   axios.get(`http://localhost:3000/api/worlds/characters/${selectedWorldId}`)
     .then(res => setCharacterList(res.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, [varTable]);
   console.log(characterList)
 
@@ -32,7 +32,7 @@ useEffect(() => {
   axios.get(`http://localhost:3000/api/users`)
     // Grab only the titles; that's all what matters!
     .then((response) => setUserList(response.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, []);
   console.log(userList);
 
@@ -77,10 +77,8 @@ useEffect(() => {
         characterStory: newCharacter.characterStory,
         characterCreator: currentUserId,
         characterWorld: selectedWorldId
-        }).then(validateFail("Congratulations in the creation of a new character!", newCharacter))
-      .catch(error => {
-        console.log(error);
-      });
+        }).then(response => validateFail("Congratulations in the creation of a new character!", newCharacter))
+      .catch(error => validateFail(error.response.data,newCharacter));
   }
 
   // Now for modified character
@@ -96,10 +94,8 @@ useEffect(() => {
       characterName: newCharacter.characterName,
       characterIcon: newCharacter.characterIcon,
       characterStory: newCharacter.characterStory
-      }).then(validateFail("Congratulations in the creation of a new character!", newCharacter))
-    .catch(error => {
-      console.log(error);
-    });
+      }).then(response => validateFail("Congratulations in the creation of a new character!", newCharacter))
+    .catch(error => validateFail(error.response.data, newCharacter));
 }
 
   // TODO - Implement pagination

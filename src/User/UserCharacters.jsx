@@ -22,7 +22,7 @@ const UserCharacters = ({paginationOn}) => {
     setSelectedUserCharacters([]);
     axios.get(`http://localhost:3000/api/users/characters/${selectedUserId}`)
       .then(res => setSelectedUserCharacters(res.data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.data))
   }, [selectedUserId]);
 
   console.log(selectedUserCharacters)
@@ -33,7 +33,7 @@ const UserCharacters = ({paginationOn}) => {
   axios.get(`http://localhost:3000/api/worlds`)
     // Grab only the titles; that's all what matters!
     .then((response) => setWorldList(response.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, [selectedUserId]);
 
   // Here we use item offsets; we could also use page offsets

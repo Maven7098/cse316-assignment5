@@ -25,7 +25,7 @@ useEffect(() => {
       })
     }
     )})
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, []);
 
   // Here we use item offsets; we could also use page offsets

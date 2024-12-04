@@ -21,7 +21,7 @@ const Search = () => {
     axios.get(`http://localhost:3000/api/search?searchQuery=${searchQuery}`)
       // Grab only the titles; that's all what matters!
       .then((response) => setGenericList(response.data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.data))
     }, [searchQuery]);
   
     console.log("List of matching stuff: ", genericList);
