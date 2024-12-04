@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 
 import {Link, Outlet, useNavigate, useSearchParams} from 'react-router-dom';
 
+
 // Navbar will be available starting "MEDIUM" screen size (as stated in Bootstrap)
 // MENU------[SIGN IN][REGISTER]-[USER BUTTON]
 // ------------------------------Click to Open

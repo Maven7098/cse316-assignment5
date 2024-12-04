@@ -11,6 +11,7 @@ import UserMain from '../User/UserMain.jsx';
 import UserBulletins from "../User/UserBulletins.jsx";
 import UserCharacters from "../User/UserCharacters.jsx";
 import UserWorlds from "../User/UserWorlds.jsx";
+import Profile from "../User/Profile.jsx";
 
 import SidebarUser from './SidebarUser.jsx';
 import SidebarWorld from './SidebarWorld.jsx';
