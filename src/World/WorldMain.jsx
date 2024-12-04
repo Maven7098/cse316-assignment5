@@ -56,7 +56,7 @@ const UserMain = ({currentUserId}) => {
       worldIcon: newWorld.worldIcon,
       worldStory: newWorld.worldStory
       }).then(function(response){
-        validateFail(response => "Congratulations in the creation of a new world!", newWorld);
+        validateFail("Congratulations in the creation of a new world!", newWorld);
 
         // Actually, need to reload the state whole if we were to really update the world sidebar...
         location.reload();
