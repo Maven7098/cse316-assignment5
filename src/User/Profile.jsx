@@ -10,13 +10,10 @@ import Home from "../Home";
 const Profile = () => {
     const selectedUserId = useParams().userId;
     
-    const [login, setLogin] = useState(false);
-    const [userList, setUserList] = useState([]);
-    const [userId, setUserId] = useState(0);
     const [imgSelected, setImgSelected] = useState(null);
-    const userEmail = localStorage.getItem('email_address');
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
+
+    //const [name, setName] = useState("");
+    //const [password, setPassword] = useState("");
     const [oldRawPassword, setOldRawPassword] = useState("");
     const [newRawPassword, setNewRawPassword] = useState("");
     const accessToken = localStorage.getItem('accessToken');
@@ -37,48 +34,11 @@ const Profile = () => {
     
 
     useEffect(() => {
-        fetch(`http://localhost:3000/users/${userId}`)            
-            .then(response => {
-                if (!response.ok) {
-                    if(response.status === 403){
-                        setLogin(false);
-                    }else{
-                        setLogin(true);
-                    }
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }else{
-                    setLogin(true);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const formatData = data.map(item => ({
-                    id: item.userId,
-                    email: item.userEmail,
-                    userName: item.userName,
-                    password: item.userPasswd,
-                    icon: item.userIcon,
-                }
-                ));
-                setUserList(formatData);
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
-
-
-    
-
-    useEffect(() => {
-        if (userEmail && userList.length > 0) {
-            const currentUser = userList.find(user => user.email === userEmail);
-            if (currentUser && currentUser.id !== userId) {
-                setUserId(currentUser.id);
-                setName(currentUser.userName);
-                setPassword(currentUser.password);
-                setCurrImg(currentUser.icon);
-            }
-        }
-    }, [userEmail, userList, userId]);
+        axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
+          .then(response => setNewUser(response.data))
+          .catch(error => console.log(error))
+        }, []);
+    console.log(newUser);
     
 
     const changeImg = async () => {
@@ -119,19 +79,21 @@ const Profile = () => {
 
         if (response.status === 403) {
             console.log('Access forbidden: Invalid credentials or insufficient permissions.');
-            setLogin(false); // Log the user out
+            //setLogin(false); // Log the user out
             return;
         }
 
         if (response.ok) {
-            setLogin(true);
+            //setLogin(true);
             console.log(data.message || 'User updated successfully!');
         } else {
+            /*
             if(response.status === 403){
                 setLogin(false);
             }else{
                 setLogin(true);
             }
+            */
             console.log(data.message || 'Failed to update user.');
         }
     } catch (error) {
@@ -151,16 +113,16 @@ const Profile = () => {
     };
 
     const changePwd = () => {
-        const hashedOldPassword = hashutil(userEmail, oldRawPassword);
+        const hashedOldPassword = hashutil(newUser.user_name, oldRawPassword);
         alert("password: " + password);
         alert("old raw: " + oldRawPassword);
         alert("old password: " + hashedOldPassword);
-        if(!(password === hashedOldPassword)){
+        if(!(newUser.password === hashedOldPassword)){
             alert("Your original password is wrong");
             return;
         }
 
-        newHashedPassword = hashutil(userEmail, newRawPassword);
+        newHashedPassword = hashutil(newUser.user_name, newRawPassword);
 
         setPassword(newHashedPassword);
 
@@ -175,20 +137,23 @@ const Profile = () => {
         setNewRawPassword(event.target.value);
     }
     
-    if(!login){
+    /*
+    if(!){
         return(
             <>
                 <Home />
             </>
         );
     }
+    */
 
     return (
         <>
             <div className="info_display">
                 <h2>User Information</h2>
-                <img src={currImg || imgSelected /*|| userImg*/} alt="userimg" width="200px" height="200px" />
+                <img src={ 'http://localhost:5173/'+newUser.userIcon /*|| userImg*/} alt="userimg" width="200px" height="200px" />
                 <br/>
+                <p>{newUser.userIcon}</p>
                 
 
                 <div className="box">
@@ -225,7 +190,7 @@ const Profile = () => {
                 <br/>
 
                 <p style={{display: 'inline'}}>Email: </p>
-                <p style={{display: 'inline'}}>{userEmail}</p>
+                <p style={{display: 'inline'}}>{newUser.userEmail}</p>
                 <br/>
                 <br/>
                 <p style={{display: 'inline'}}>Password: </p>
@@ -264,7 +229,7 @@ const Profile = () => {
                 <br/>
                 <br/>
                 <p style={{display: 'inline'}}>Name: </p>
-                <p style={{display: 'inline'}}>{name}</p>
+                <p style={{display: 'inline'}}>{newUser.userName}</p>
 
                 <div className="box">
                     <button type="button" className="button" id="cnm"><a href="#popup-box-n">Change Name</a></button>
