@@ -74,14 +74,6 @@ const Profile = () => {
             validateFail("Current password is incorrect",newUser);
             return;
         }
-        // If userName changed, create a new hash with new username and old password
-        else if(newUser.userName != oldUser.userName){
-            setNewUser(values => ({...values, userPasswd: hashutil(newUser.userName, newUser.userCheckPasswd)}))
-        }
-        // If password is modified, create a new hash with old username and new password
-        else if(newUser.userPasswd != oldUser.userPasswd){
-            setNewUser(values => ({...values, userPasswd: hashutil(newUser.userName, newUser.userCheckPasswd)}))
-        }
 
         // Otherwise, modify the user - email and icon are benign
         axios.put(`http://localhost:3000/api/auth/users/${selectedUserId}`, {
@@ -89,7 +81,8 @@ const Profile = () => {
             userName: newUser.userName,
             userIcon: newUser.userIcon,
             userEmail: newUser.userEmail,
-            userPasswd: newUser.userPasswd,
+            userPasswd: (newUser.userPasswd === oldUser.userPasswd
+                ? newUser.userPasswd : hashutil(newUser.userName, newUser.userPasswd)),
             }).then(function(response){
               validateFail(response => "User Data modified!", newUser);
       
@@ -181,7 +174,6 @@ const Profile = () => {
           </div>
 
           {/* Modal for Email */}
-          {/* Modal for UserName */}
           <div className="modal fade" id="userName" aria-labelledby="userName" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
