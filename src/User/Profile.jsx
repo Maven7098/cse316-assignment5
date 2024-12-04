@@ -34,12 +34,11 @@ const Profile = () => {
     // Get newUser
     useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
-          .then(response =>
-            {setNewUser(response.data);
-            setOldUser(response.data);})
+          .then(response => setOldUser(response.data))
           .catch(error => console.log(error))
         }, []);
     console.log(newUser);
+    console.log(oldUser);
     
      // Temporary image state for uploading
     const [image, setImage] = useState("");
@@ -65,7 +64,7 @@ const Profile = () => {
 
         // Check if userName is changed
         // and the provided "current Password" does not map correctly to the old userName
-        if((newUser.userName != oldUser.userName) &&
+        if((newUser.userName != "") &&
         (hashutil(oldUser.userName, newUser.userCheckPasswd) != oldUser.userPasswd)){
             console.log(hashutil(oldUser.userName, newUser.userPasswd));
             console.log(oldUser.userPasswd);
@@ -75,7 +74,7 @@ const Profile = () => {
         }
         // Check if userPasswd is changed
         // and the provided "current Password" does not map correctly to the old userName
-        else if((newUser.userPasswd != oldUser.userPasswd) && (hashutil(oldUser.userName, newUser.userCheckPasswd) != oldUser.userPasswd)){
+        else if((newUser.userPasswd != "") && (hashutil(oldUser.userName, newUser.userCheckPasswd) != oldUser.userPasswd)){
             console.log(hashutil(oldUser.userName, newUser.userPasswd));
             console.log(oldUser.userPasswd);
             console.log(oldUser.userName);
@@ -84,13 +83,17 @@ const Profile = () => {
         }
 
         // Otherwise, modify the user - email and icon are benign
+        // Apply the user values only if the values are blank
         axios.put(`http://localhost:3000/api/auth/users/${selectedUserId}`, {
             userId: selectedUserId,
-            userName: newUser.userName,
-            userIcon: newUser.userIcon,
-            userEmail: newUser.userEmail,
-            userPasswd: (newUser.userPasswd === oldUser.userPasswd
-                ? newUser.userPasswd : hashutil(newUser.userName, newUser.userPasswd)),
+            userName: (newUser.userName === ""
+                ? oldUser.userName : newUser.userName),
+            userIcon: (newUser.userIcon === ""
+                ? oldUser.userIcon : newUser.userIcon),
+            userEmail: (newUser.userEmail === ""
+                ? oldUser.userEmail : newUser.userEmail),
+            userPasswd: (newUser.userPasswd === ""
+                ? oldUser.userPasswd : hashutil(newUser.userName, newUser.userPasswd)),
             }).then(function(response){
                 response => validateFail("User Data modified!", newUser);
       
@@ -174,15 +177,15 @@ const Profile = () => {
                 <div className="modal-body">
                     <div className="modalContentMiddle">
                         {/* Inspired by the Group Project - I also used a modal form in the Group Project */}
-                            <label htmlFor="userName">New password</label>&ensp;
+                            <label htmlFor="userPasswd">New password</label>&ensp;
                             <input type="password" id="userPasswd" name="userPasswd" value={newUser.userPasswd} onChange={(event)=>onChangeForm(event, setNewUser)} /><br></br>
                             <br></br>
-                            <label htmlFor="userName">Old password</label>&ensp;
+                            <label htmlFor="userCheckPasswd">Old password</label>&ensp;
                             <input type="password" id="userCheckPasswd" name="userCheckPasswd" value={newUser.userCheckPasswd} onChange={(event)=>onChangeForm(event, setNewUser)} />
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" onClick={()=>setNewUser(values => ({...values, userPasswd: oldUser.userPasswd}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onClick={()=>setNewUser(values => ({...values, userPasswd: "", userCheckPasswd: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="submit" value="Save Changes" className="btn btn-primary" />
                 </div>
                 </form>
@@ -207,7 +210,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onClick={()=>setNewUser(values => ({...values, userEmail: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="submit" value="Save Changes" className="btn btn-primary" />
                 </div>
                 </form>
@@ -235,7 +238,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" onClick={()=>setNewUser(values => ({...values, userName: oldUser.userName}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onClick={()=>setNewUser(values => ({...values, userName: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <input type="submit" value="Save Changes" className="btn btn-primary" />
                 </div>
                 </form>

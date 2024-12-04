@@ -112,7 +112,10 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                             {/* Your user icon and name */}
                             <li className="nav-item">
-                                <img src={`/${currentUser.userIcon}`} style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
+                            <img src={`/${currentUser.userIcon}`} onError={({ currentTarget }) => {
+                                currentTarget.onerror = null; // prevents looping
+                                currentTarget.src="/src/server/placeholder/user.png";
+                                }} className="card-img-top" style={{width: "48px", height: "48px", marginRight: "16px"}}></img>
                                 {/* A USERNAME should be provided, but how could I provide it? */}
                                 {/* As a user is created, a new webpage of USERID should also be created */}
                                 <Link aria-current="page" to={`users/${currentUser.userId}`}>{currentUser.userName}</Link>
