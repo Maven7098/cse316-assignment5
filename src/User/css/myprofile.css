@@ -1,0 +1,97 @@
+*{
+    box-sizing: border-box;
+}
+
+.info_display{
+    text-align: center;
+}
+
+.button{
+    background-color: rgb(212, 209, 235);
+    border-color: black;
+    color: black;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.button:hover{
+    background-color: black;
+    color: white;
+}
+
+.fileUp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#fileUpload{
+    padding: 10px;
+    background-color: beige;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box a{
+    padding: 15px;
+    border-radius: 3px;
+    background-color: none;
+    border-color: black;
+    text-decoration: none;
+}
+
+.box a:hover{
+    color: white;
+}
+
+
+.modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.1);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    position: relative;
+    background: white;
+    padding: 2em 4em;
+    border-radius: 4px;
+}
+
+.modal:target{
+    display: flex;
+}
+
+
+.close{
+    padding: 5px;
+    background-color: grey;
+    color: white;
+    border-radius: 3px;
+}
+
+.save_chg{
+    padding: 5px;
+    background-color: blue;
+    color: white;
+    border-radius: 3px;
+}

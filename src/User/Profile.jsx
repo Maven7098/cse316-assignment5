@@ -5,6 +5,7 @@ import { hashutil } from "../Hashutil";
 import { Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Home from "../Home";
+import './css/myprofile.css'
 
 
 const Profile = () => {
@@ -185,12 +186,44 @@ const Profile = () => {
                                     >&times;</a>
                     </div>
                 </div>
+
+                <br/>
+                <br/>
+                <p style={{display: 'inline'}}>Name: </p>
+                <p style={{display: 'inline'}}>{newUser.userName}</p>
+
+                <div className="box">
+                    <button type="button" className="button" id="cnm"><a href="#popup-box-n">Change Name</a></button>
+                </div>
+                <div id="popup-box-n" className="modal">
+                    <Form>
+                        <div className="content">
+                            <h3 style={{textAlign: 'left'}}>Change your name</h3>
+                            <br/>
+                            <p style={{textAlign: 'left'}}>New Name</p>
+                            <br/>
+                            <form>
+                                <input type="text" id="txt" name="txt" onChange={handleName}/>
+                            </form>
+                            <br/>
+                            <a href="#"><button type="button" className="close">Close</button></a>
+                            <a href="#"><button type="submit" className="save_chg" onClick={() => changeName()}>Save Changes</button></a>
+                            <a href="#" style={{position: 'absolute',
+                                            top: '10px',
+                                            right: '10px',
+                                            fontSize: '30px',
+                                            textDecoration: 'none'}}
+                                        >&times;</a>
+                        </div>
+                    </Form>
+                </div>
                 
                 <br/>
                 <br/>
 
                 <p style={{display: 'inline'}}>Email: </p>
                 <p style={{display: 'inline'}}>{newUser.userEmail}</p>
+                
                 <br/>
                 <br/>
                 <p style={{display: 'inline'}}>Password: </p>
@@ -226,36 +259,7 @@ const Profile = () => {
                         </div>
                     </Form>
                 </div>
-                <br/>
-                <br/>
-                <p style={{display: 'inline'}}>Name: </p>
-                <p style={{display: 'inline'}}>{newUser.userName}</p>
-
-                <div className="box">
-                    <button type="button" className="button" id="cnm"><a href="#popup-box-n">Change Name</a></button>
-                </div>
-                <div id="popup-box-n" className="modal">
-                    <Form>
-                        <div className="content">
-                            <h3 style={{textAlign: 'left'}}>Change your name</h3>
-                            <br/>
-                            <p style={{textAlign: 'left'}}>New Name</p>
-                            <br/>
-                            <form>
-                                <input type="text" id="txt" name="txt" onChange={handleName}/>
-                            </form>
-                            <br/>
-                            <a href="#"><button type="button" className="close">Close</button></a>
-                            <a href="#"><button type="submit" className="save_chg" onClick={() => changeName()}>Save Changes</button></a>
-                            <a href="#" style={{position: 'absolute',
-                                            top: '10px',
-                                            right: '10px',
-                                            fontSize: '30px',
-                                            textDecoration: 'none'}}
-                                        >&times;</a>
-                        </div>
-                    </Form>
-                </div>
+                
             </div>
         </>
     );
