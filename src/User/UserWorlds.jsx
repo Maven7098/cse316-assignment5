@@ -88,7 +88,7 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
       // TODO: Send the user data to the database to create a new user
       axios.post('http://localhost:3000/api/auth/worlds', {
       worldName: newWorld.worldName,
-      worldIcon: newWorld.worldIcon,
+      worldIcon: (newWorld.worldIcon == undefined ? "src/server/placeholder/world" : newWorld.worldIcon),
       worldStory: newWorld.worldStory,
       worldCreator: currentUserId
       }).then(response => validateFail("Congratulations in the creation of a new world!", newWorld))
