@@ -37,7 +37,7 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
           .then((response)=>{
             setWorldTable(worldTable => [...worldTable, response.data])
           })
-          .catch(error => console.log(error))
+          .catch(error => console.log(error.response.data))
         })})
       }, [varTable, selectedUserId]);
 
@@ -53,7 +53,7 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
   useEffect(()=>{
     axios.get('http://localhost:3000/api/users')
     .then(response=>setUsers(response.data))
-    .catch(error=>console.log(error))
+    .catch(error=>console.log(error.response.data))
   }, [])
 
   // Temporary image state for uploading
@@ -91,8 +91,8 @@ const UserWorlds = ({currentUserId, paginationOn}) => {
       worldIcon: newWorld.worldIcon,
       worldStory: newWorld.worldStory,
       worldCreator: currentUserId
-      }).then(validateFail("Congratulations in the creation of a new world!", newWorld))
-        .catch(error => console.log(error));
+      }).then(response => validateFail("Congratulations in the creation of a new world!", newWorld))
+        .catch(error => console.log(error.response.data));
   }
 
   // TODO - Implement pagination

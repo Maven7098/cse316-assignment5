@@ -48,8 +48,8 @@ const UserBulletins = ({currentUserId}) => {
       messageTitle: newPost.messageTitle,
       messageContent: newPost.messageContent,
       messageSenderId: currentUserId,
-      }).then(validateFail("Message written!", newPost))
-        .catch(error => console.log(error));
+      }).then(response => validateFail("Message written!", newPost))
+        .catch(error => validateFail(error, newPost));
   }
 
   const modNewPost = (event)=> {
@@ -66,8 +66,8 @@ const UserBulletins = ({currentUserId}) => {
     // TODO: Send the user data to the database to modify a post
     axios.put(`http://localhost:3000/api/auth/messages/${newPost.messageId}`, {
       messageContent: newPost.messageContent,
-    }).then(validateFail("Message written!", newPost))
-      .catch(error => console.log(error));
+    }).then(response => validateFail("Message written!", newPost))
+      .catch(error => validateFail(error.response.data, newPost));
 }
 
 // TODO - Implement pagination

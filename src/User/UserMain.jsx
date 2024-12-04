@@ -11,7 +11,7 @@ const UserMain = (currentUserId) => {
   axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
     // Grab only the titles; that's all what matters!
     .then((response) => setSelectedUser(response.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error.response.data))
   }, [selectedUserId]);
 
   return (

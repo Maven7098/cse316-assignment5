@@ -55,7 +55,7 @@ const UserConfig = ({currentUser}) => {
       })
       .catch((err)=>console.log(err))
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error.response.data));
   }
 
   function sendImage(event) {
@@ -76,7 +76,7 @@ const UserConfig = ({currentUser}) => {
       console.log(res)
       setNewUser(values => ({...values, userIcon: `src/server/AssignImages/${res.data}`}));
     }).catch(error => {
-      console.log(error);
+      console.log(error.response.data);
     });
   }
 

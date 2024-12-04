@@ -10,7 +10,7 @@ const HomeChar = () => {
     axios.get(`http://localhost:3000/api/users`)
       // Grab only the titles; that's all what matters!
       .then((response) => setUserList(response.data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response.data))
     }, []);
 
     console.log("homechar world list: ", userList);
@@ -19,7 +19,7 @@ const HomeChar = () => {
       // Re-initialize table upon subsequent calls
       axios.get(`http://localhost:3000/api/characters/`)
         .then(res => setCharList(res.data))
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.response.data))
     }, []);
   
     console.log("homechar char list: ", charList);
