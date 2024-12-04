@@ -116,26 +116,26 @@ const Profile = () => {
         <br></br>
 
         {/* <!-- Button trigger modal --> */}
-        <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#ImageModal">
+        <button type="button" className="btn btn-outline-dark" onClick={()=> setNewUser(values => ({...values, userName: "", userIcon: "", userEmail: "", userPasswd: "", userCheckPasswd: ""}))} data-bs-toggle="modal" data-bs-target="#ImageModal">
         Change Image
         </button>
 
         {/* Email */}
         <div>Email: {oldUser.userEmail}</div>
         {/* <!-- Button trigger modal --> */}
-        <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#userEmail">Change Email</button>
+        <button type="button" className="btn btn-outline-dark" onClick={()=> setNewUser(values => ({...values, userName: "", userIcon: "", userEmail: "", userPasswd: "", userCheckPasswd: ""}))} data-bs-toggle="modal" data-bs-target="#userEmail">Change Email</button>
 
         {/* Password */}
         <div>Password: ********</div>
         {/* <!-- Button trigger modal --> */}
-        <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#userPasswd">
+        <button type="button" className="btn btn-outline-dark" onClick={()=> setNewUser(values => ({...values, userName: "", userIcon: "", userEmail: "", userPasswd: "", userCheckPasswd: ""}))} data-bs-toggle="modal" data-bs-target="#userPasswd">
         Change Password
         </button>
 
         {/* Name */}
         <div>Name: {oldUser.userName}</div>
         {/* <!-- Button trigger modal --> */}
-        <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#userName">
+        <button type="button" className="btn btn-outline-dark" onClick={()=> setNewUser(values => ({...values, userName: "", userIcon: "", userEmail: "", userPasswd: "", userCheckPasswd: ""}))} data-bs-toggle="modal" data-bs-target="#userName">
         Change Username
         </button>
 
@@ -185,7 +185,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" onClick={()=>setNewUser(values => ({...values, userPasswd: "", userCheckPasswd: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     {(newUser.userPasswd != "" && newUser.userCheckPasswd != "") ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
@@ -210,7 +210,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" onClick={()=>setNewUser(values => ({...values, userEmail: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     {newUser.userEmail != "" ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
@@ -238,7 +238,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" onClick={()=>setNewUser(values => ({...values, userName: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     {(newUser.userName != "" && newUser.userCheckPasswd != "") ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
