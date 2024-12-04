@@ -95,7 +95,7 @@ routerUser.put('/users/:id', async (req,res)=>{
               return;
           }
           // Any chance of hash collision?
-          else if(user.userPasswd === req.body.userPasswd){
+          else if((user.userPasswd === req.body.userPasswd) && (req.params.id != user.userId)){
               res.status(500).send("Username and Password combination exists");
               return;
           }
