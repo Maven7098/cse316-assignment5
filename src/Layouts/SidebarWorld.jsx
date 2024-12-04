@@ -39,7 +39,7 @@ const SidebarUser = () => {
     useEffect(() => {
         axios.get(`http://localhost:3000/api/worlds/${selectedWorldId}`)
           .then(response => setSelectedWorld(response.data))
-          .catch(error => console.log(error))
+          .catch(error => console.log(error.response.data))
         }, [selectedWorldId]);
     console.log(selectedWorld);
 

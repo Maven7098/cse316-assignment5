@@ -46,7 +46,7 @@ const Navbar = ({currentUserId, setCurrentUserId}) => {
     useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${currentUserId}`)
           .then(response => setCurrentUser(response.data))
-          .catch(error => console.log(error))
+          .catch(error => console.log(error.response.data))
         }, []);
     console.log(currentUser);
 
