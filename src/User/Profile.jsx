@@ -86,14 +86,14 @@ const Profile = () => {
         // Apply the user values only if the values are blank
         axios.put(`http://localhost:3000/api/auth/users/${selectedUserId}`, {
             userId: selectedUserId,
-            userName: (newUser.userName === ""
+            userName: (newUser.userName == ""
                 ? oldUser.userName : newUser.userName),
-            userIcon: (newUser.userIcon === ""
+            userIcon: (newUser.userIcon == ""
                 ? oldUser.userIcon : newUser.userIcon),
-            userEmail: (newUser.userEmail === ""
+            userEmail: (newUser.userEmail == ""
                 ? oldUser.userEmail : newUser.userEmail),
-            userPasswd: (newUser.userPasswd === ""
-                ? oldUser.userPasswd : hashutil(newUser.userName, newUser.userPasswd)),
+            userPasswd: ((newUser.userPasswd == "" && newUser.userName == "")
+                ? oldUser.userPasswd : hashutil((newUser.userName == "" ? oldUser.userName : newUser.userName), (newUser.userPasswd == "" ? newUser.userCheckPasswd : newUser.userPasswd))),
             }).then(function(response){
                 response => validateFail("User Data modified!", newUser);
       
@@ -141,28 +141,28 @@ const Profile = () => {
 
         {/* Modal for Image */}
         <div className="modal fade" id="ImageModal" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h1 className="modal-title fs-5" id="imageModalLabel">Change your image</h1>
-                </div>
-                <form onSubmit={updateUser}>
-                <div className="modal-body">
-                    <div className="modalContentMiddle">
-                        </div>
-                            {/* Adapted from https://getbootstrap.com/docs/5.3/forms/input-group/#custom-file-input */}
-                            <p>New Image</p>
-                            <div className="input-group mb-3">
-                                <input type="file" name="image" onChange={e => setImage(e.target.files[0])}/>
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="imageModalLabel">Change your image</h1>
+                    </div>
+                    <form onSubmit={updateUser}>
+                    <div className="modal-body">
+                        <div className="modalContentMiddle">
                             </div>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" value="Save Changes" className="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
+                                {/* Adapted from https://getbootstrap.com/docs/5.3/forms/input-group/#custom-file-input */}
+                                <p>New Image</p>
+                                <div className="input-group mb-3">
+                                    <input type="file" name="image" onChange={e => setImage(e.target.files[0])}/>
+                                </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            {(newUser.userIcon != "") ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
         </div>
 
         {/* Modal for Password */}
@@ -186,7 +186,7 @@ const Profile = () => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" onClick={()=>setNewUser(values => ({...values, userPasswd: "", userCheckPasswd: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="submit" value="Save Changes" className="btn btn-primary" />
+                    {(newUser.userPasswd != "" && newUser.userCheckPasswd != "") ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
             </div>
@@ -211,7 +211,7 @@ const Profile = () => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" onClick={()=>setNewUser(values => ({...values, userEmail: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="submit" value="Save Changes" className="btn btn-primary" />
+                    {newUser.userEmail != "" ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
             </div>
@@ -239,7 +239,7 @@ const Profile = () => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" onClick={()=>setNewUser(values => ({...values, userName: ""}))} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="submit" value="Save Changes" className="btn btn-primary" />
+                    {(newUser.userName != "" && newUser.userCheckPasswd != "") ? <input type="submit" value="Save Changes" className="btn btn-primary" /> : <input type="submit" value="Save Changes" className="btn btn-secondary" disabled />}
                 </div>
                 </form>
             </div>
