@@ -4,24 +4,16 @@ import { useEffect, useState } from "react";
 import { hashutil } from "../Hashutil";
 import { Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import Home from "../Home";
+import { validateFail } from "../validateFail";
+
 import './css/myprofile.css'
 
 
 const Profile = () => {
     const selectedUserId = useParams().userId;
-    
-    const [imgSelected, setImgSelected] = useState(null);
 
-    //const [name, setName] = useState("");
-    //const [password, setPassword] = useState("");
     const [oldRawPassword, setOldRawPassword] = useState("");
     const [newRawPassword, setNewRawPassword] = useState("");
-    const accessToken = localStorage.getItem('accessToken');
-    let newHashedPassword = "";
-
-    const [currImg, setCurrImg] = useState("");
-
 
     // create a new user with the following fields
     const [newUser, setNewUser] = useState({
@@ -32,8 +24,7 @@ const Profile = () => {
       userPasswd: ""
     });
 
-    
-
+    // Get newUser
     useEffect(() => {
         axios.get(`http://localhost:3000/api/users/${selectedUserId}`)
           .then(response => setNewUser(response.data))
@@ -41,63 +32,65 @@ const Profile = () => {
         }, []);
     console.log(newUser);
     
-
-    const changeImg = async () => {
-        // Upload the image upon new image sent to form
+    // Temporary set current imgSelected state
+    const [imgSelected, setImgSelected] = useState("");
+    
+    const changeImg = async (event) => {
+        event.preventDefault();
+        // Upload the imgSelected upon new imgSelected sent to form
         // also update the characterIcon on the meanwhile
         const formData = new FormData();
-        formData.append("file", imgSelected);
-        useEffect(()=>{
-          axios.post("http://localhost:3000/api/auth/upload", formData,
-            {headers:{"Content-Type": "multipart/form-data",}, "body":{}}
-          ).then((res) => {
-            setNewUser(values => ({...values, userIcon: `src/server/assets/${res.data}`} ));
-            // Should I prevent a creation of a character that shares a name with a existing character or not?");
-            console.log(newUser.userName + " / " + newUser.userIcon + " / " + newUser.userEmail + " / " + currentUserId);
-            console.log(imgSelected)
-            console.log(res)
-          }).then(res => console.log(res))
-        },[imgSelected])
+    formData.append("file", imgSelected);
+
+    axios.post("http://localhost:3000/api/auth/upload", formData,
+      {headers:{"Content-Type": "multipart/form-data",}, "body":{}}
+    ).then((res) => {
+      console.log(imgSelected)
+      console.log(res)
+      setNewUser(values => ({...values, userImage: `src/server/assets/${res.data}`}));
+    //   updateUser();
+    }).catch(error => {
+      console.log(error);
+    });
     };
 
-    const updateUser = async (imgURL) => {
+    const updateUser = async () => {
+
     try {
         const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                id: userId,
-                user_name: name,
-                password: newHashedPassword,
-                profile_pic: imgURL,
+                id: newUser.userId,
+                userName: newUser.userName,
+                userPasswd: hashutil(newUser.userName, newUser.userPasswd),
+                userIcon: newUser.userIcon,
             }),
         });
 
         const data = await response.json();
 
         if (response.status === 403) {
+            validateFail("Access forbidden: Invalid credentials or insufficient permissions.", newUser);
             console.log('Access forbidden: Invalid credentials or insufficient permissions.');
-            //setLogin(false); // Log the user out
             return;
         }
 
         if (response.ok) {
-            //setLogin(true);
+            validateFail("User updated successfully!", newUser);
             console.log(data.message || 'User updated successfully!');
+            
+            // Force refresh after successful user update
+            location.reload();
         } else {
-            /*
-            if(response.status === 403){
-                setLogin(false);
-            }else{
-                setLogin(true);
-            }
-            */
+            validateFail("Failed to update user", newUser);
             console.log(data.message || 'Failed to update user.');
         }
     } catch (error) {
+        validateFail(error.response.data, newUser);
         console.log('An error occurred while updating the user.');
         console.error('Error:', error);
 
@@ -106,11 +99,14 @@ const Profile = () => {
 
 
     const handleName = (event) => {
+        // If the user name is changed before the password
+        // the hash is no longer reachable
+        // 
         setName(event.target.value);
     }
 
     const changeName = () => {
-        updateUser(currImg);
+        updateUser();
     };
 
     const changePwd = () => {
@@ -127,7 +123,7 @@ const Profile = () => {
 
         setPassword(newHashedPassword);
 
-        updateUser(currImg);
+        updateUser();
     };
 
     const handleOldPassword = (event) => {
@@ -137,22 +133,15 @@ const Profile = () => {
     const handleNewPassword = (event) => {
         setNewRawPassword(event.target.value);
     }
-    
-    /*
-    if(!){
-        return(
-            <>
-                <Home />
-            </>
-        );
-    }
-    */
 
     return (
         <>
             <div className="info_display">
                 <h2>User Information</h2>
-                <img src={ 'http://localhost:5173/'+newUser.userIcon /*|| userImg*/} alt="userimg" width="200px" height="200px" />
+                <img src={`/${newUser.userIcon}`} onError={({ currentTarget }) => {
+                        currentTarget.onerror = null; // prevents looping
+                        currentTarget.src="/src/server/placeholder/world.png";
+                        }} className="card-img-top" alt={newUser.userName} width="200px" height="200px"></img>
                 <br/>
                 <p>{newUser.userIcon}</p>
                 
@@ -163,20 +152,19 @@ const Profile = () => {
                 
                 <div id="popup-box-img" className="modal">
                     <div className="content">
-                        <h3 style={{textAlign: 'left'}}>Change your image</h3>
+                        <h3 style={{textAlign: 'left'}}>Change your Image</h3>
                         <br/>
                         <p style={{textAlign: 'left'}}>New Image</p>
                         <br/>
-                        <form>
+                        <form onSubmit={changeImg}>
                             <div className="custom-file">
+                            <label className="custom-file-label" htmlFor="customFile">Choose Profile Image</label>
                                 <input type="file" onChange={(event) => setImgSelected(event.target.files?.[0] || null)} className="custom-file-input" id='customFile' accept="images/*"/>
-                                <label className="custom-file-label" htmlFor="customFile">Choose Profile Image</label>
                             </div>
-                            
-                        </form>
                         <br/>
                         <a href="#"><button type="button" className="close">Close</button></a>
-                        <a href="#"><button type="button" onClick={changeImg} className="save_chg">Save Changes</button></a>
+                        <button type="submit" className="save_chg">Save Changes</button>
+                        </form>
                         
                         <a href="#" style={{position: 'absolute',
                                         top: '10px',
