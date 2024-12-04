@@ -64,7 +64,7 @@ const NavbarGuest = ({setCurrentUserId}) => {
 
         // Password salting: We will use the email to salt, as with CSE316 Assignment 4.
         const newPasswd = hashutil(oldUser.userName, oldUser.userPasswd);
-        console.log(oldUser.userName, oldUser.userPasswd);
+        console.log(oldUser.userName, oldUser.userPasswd, newPasswd);
 
         // TODO: Send the user data to the database to log in
         // TODO: Send the user data to the database to create a new user
