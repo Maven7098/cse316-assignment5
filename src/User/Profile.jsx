@@ -1,17 +1,19 @@
 import axios from "axios";
 //import userImg from "../AssignImages/user.png";
-import './css/myprofile.css'
 import { useEffect, useState } from "react";
-import { hashutil } from "./Hashutil";
+import { hashutil } from "../Hashutil";
 import { Form } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import Home from "../Home";
 
 
 const Profile = () => {
+    const selectedUserId = useParams().userId;
+    
     const [login, setLogin] = useState(false);
-    const [userList, setUserList] = useState<User[]>([]);
+    const [userList, setUserList] = useState([]);
     const [userId, setUserId] = useState(0);
-    const [imgSelected, setImgSelected] = useState<File|null>(null);
-    const [imgURL, setImgURL] = useState("");
+    const [imgSelected, setImgSelected] = useState(null);
     const userEmail = localStorage.getItem('email_address');
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -22,10 +24,20 @@ const Profile = () => {
 
     const [currImg, setCurrImg] = useState("");
 
+
+    // create a new user with the following fields
+    const [newUser, setNewUser] = useState({
+      userId: undefined,
+      userName: "",
+      userIcon: "",
+      userEmail: "",
+      userPasswd: ""
+    });
+
     
 
     useEffect(() => {
-        fetch(`http://localhost:3000/users/${selectedUserId}`)            
+        fetch(`http://localhost:3000/users/${userId}`)            
             .then(response => {
                 if (!response.ok) {
                     if(response.status === 403){
@@ -69,32 +81,22 @@ const Profile = () => {
     }, [userEmail, userList, userId]);
     
 
-
     const changeImg = async () => {
+        // Upload the image upon new image sent to form
+        // also update the characterIcon on the meanwhile
         const formData = new FormData();
-        if (imgSelected) {
-            formData.append("file", imgSelected);
-            formData.append("upload_preset", "f3xbagud");
-            console.log("imgSelected: ", imgSelected);
-    
-            try {
-                const response = await axios.post(
-                    "https://api.cloudinary.com/v1_1/dihzxttu8/image/upload",
-                    formData
-                );
-                const url = response.data.url;
-                console.log("Uploaded image URL: ", url);
-                setImgURL(url); // Update the state with the new URL
-                console.log("Updated imgURL state: ", url);
-    
-                updateUser(url); // Pass the URL to update the user
-            } catch (error) {
-                console.error("Error uploading image: ", error);
-                alert("Image upload failed!");
-            }
-        } else {
-            alert("Please select an image first.");
-        }
+        formData.append("file", imgSelected);
+        useEffect(()=>{
+          axios.post("http://localhost:3000/api/auth/upload", formData,
+            {headers:{"Content-Type": "multipart/form-data",}, "body":{}}
+          ).then((res) => {
+            setNewUser(values => ({...values, userIcon: `src/server/assets/${res.data}`} ));
+            // Should I prevent a creation of a character that shares a name with a existing character or not?");
+            console.log(newUser.userName + " / " + newUser.userIcon + " / " + newUser.userEmail + " / " + currentUserId);
+            console.log(imgSelected)
+            console.log(res)
+          }).then(res => console.log(res))
+        },[imgSelected])
     };
 
     const updateUser = async (imgURL) => {
@@ -172,12 +174,20 @@ const Profile = () => {
     const handleNewPassword = (event) => {
         setNewRawPassword(event.target.value);
     }
+    
+    if(!login){
+        return(
+            <>
+                <Home />
+            </>
+        );
+    }
 
     return (
         <>
             <div className="info_display">
                 <h2>User Information</h2>
-                <img src={imgURL || currImg /*|| userImg*/} alt="userimg" width="200px" height="200px" />
+                <img src={currImg || imgSelected /*|| userImg*/} alt="userimg" width="200px" height="200px" />
                 <br/>
                 
 

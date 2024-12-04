@@ -40,6 +40,7 @@ function RootPageLayoutRoutes ({currentUserId, setCurrentUserId}){
                 <Route path={`bulletins`} element={<UserBulletins currentUserId={currentUserId} paginationOn={true} />} />
                 <Route path={`characters`} element={<UserCharacters paginationOn={true}/>} />
                 <Route path={`worlds`} element={<UserWorlds currentUserId={currentUserId} paginationOn={true} />} />
+                <Route path={`profile`} element={<Profile currentUserId={currentUserId}/>}/>
               </Route>
               <Route path={`worlds/:worldId`} element={<SidebarWorld />} >
                 <Route index element={<WorldMain currentUserId={currentUserId} />} />
