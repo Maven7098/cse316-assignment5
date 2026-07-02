@@ -1,3 +1,4 @@
+import 'dotenv/config'
 // This is CommonJS format.
 // As React uses ECMAScript, I will use ECMAScript for the others as well
 import express from 'express';
@@ -62,10 +63,11 @@ import mysql_getSearch from './sql_modules/sql_getSearch.js';
 
 // Shared MySQL open
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "jiwoo@mysql0404",
-  database: "cse316_assignment5"
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "jiwoo@mysql0404",
+  database: process.env.DB_DATABASE || "cse316_assignment5"
 });
 
 // Users

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: cse316-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: jiwoo@mysql0404
+      MYSQL_DATABASE: cse316_assignment5
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      # Mount initialization scripts in order
+      - ./src/server/sql_modules/createDb.sql:/docker-entrypoint-initdb.d/01_createDb.sql
+      - ./src/server/sql_modules/insertData.sql:/docker-entrypoint-initdb.d/02_insertData.sql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ./src/server
+      dockerfile: Dockerfile
+    container_name: cse316-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=jiwoo@mysql0404
+      - DB_DATABASE=cse316_assignment5
+      - ACCESS_TOKEN_SECRET=61b865195c5d914978948f385639a7303848de4dd8a064175d1cd304b692eaab3f6cca9f02fb9d5eb25e20ef4b6a706dc508ca1965f932d5e2849d06cbd88b96
+      - REFRESH_TOKEN_SECRET=c81407ccaf5ba75181c8648473a6f7ca6cd54145df651bb1dac39d4481910f1a73bfad567670b365a756047d5bd08e03b2e126a3206bac823e26e6f9e764d9cb
+    volumes:
+      - ./src/server:/app
+      - /app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cse316-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/src/server/node_modules
+    depends_on:
+      - server
+
+volumes:
+  db_data:

@@ -1,10 +1,8 @@
+import 'dotenv/config'
 import express from 'express';
 const app = express();
 import routerGuest from './routerGuest.js'
 import routerUser from './routerUser.js'
-
-import dotenv from 'dotenv'
-dotenv.config()
 
 import jwt from 'jsonwebtoken'
 
@@ -23,10 +21,11 @@ app.use(express.json());
 app.use(cors());
 
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "jiwoo@mysql0404",
-    database: "cse316_assignment5"
+    host: process.env.DB_HOST || "localhost",
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "jiwoo@mysql0404",
+    database: process.env.DB_DATABASE || "cse316_assignment5"
 });
 
 // Signup, Login and Logout
